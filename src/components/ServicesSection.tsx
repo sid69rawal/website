@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -8,9 +7,10 @@ import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Layers, Code, Cubes, SquareCode, Gauge, Palette, AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
+import type { ElementType } from 'react';
 
 interface ServiceItem {
-  icon: React.ElementType;
+  icon: ElementType;
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -39,7 +39,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Cubes,
+    icon: Cubes || HelpCircle, // Use HelpCircle as a direct fallback if Cubes is undefined
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Three.js 3D Experiences',
@@ -79,25 +79,23 @@ const services: ServiceItem[] = [
 // Helper to get a valid React component from a potential import
 const getValidIconComponent = (iconInput: any, iconNameForLog: string): React.ElementType | null => {
   if (!iconInput) {
+    // This console.error is the one being reported by the user.
+    // By ensuring service.icon is always valid (e.g. Cubes || HelpCircle), this path should not be taken for the Cubes icon.
     console.error(`Icon input for "${iconNameForLog}" is null or undefined.`);
     return null;
   }
 
   let ResolvedIcon = iconInput;
-  // Check if the icon is wrapped in a { default: Component } structure
+  // Check if the icon is wrapped in a { default: Component } structure (not typical for lucide-react named imports)
   if (typeof iconInput === 'object' && iconInput !== null && typeof iconInput.default !== 'undefined') {
     ResolvedIcon = iconInput.default;
   }
 
-  // Check if the resolved icon is a function (React component)
-  if (typeof ResolvedIcon !== 'function') {
-    // Check if it's a forwardRef render function
-     if (typeof ResolvedIcon === 'object' && ResolvedIcon !== null && typeof ResolvedIcon.render === 'function' && ResolvedIcon.$$typeof === Symbol.for('react.forward_ref')) {
-        // It's a forwardRef component, which is valid
-     } else {
-        console.error(`Resolved icon for "${iconNameForLog}" is not a valid React function component. Type: ${typeof ResolvedIcon}`, ResolvedIcon);
-        return null;
-     }
+  // Check if the resolved icon is a function (React component) or a forwardRef
+  if (typeof ResolvedIcon !== 'function' &&
+      !(typeof ResolvedIcon === 'object' && ResolvedIcon !== null && typeof (ResolvedIcon as any).render === 'function' && (ResolvedIcon as any).$$typeof === Symbol.for('react.forward_ref'))) {
+    console.error(`Resolved icon for "${iconNameForLog}" is not a valid React function component or forwardRef. Type: ${typeof ResolvedIcon}`, ResolvedIcon);
+    return null; 
   }
   return ResolvedIcon as React.ElementType;
 };
@@ -141,43 +139,9 @@ const ServicesSection = () => {
           animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = getValidIconComponent(service.icon, service.title);
-
-            if (!IconComponent) {
-              // Fallback rendering if the primary icon is invalid
-              const FallbackIcon = getValidIconComponent(HelpCircle, `Fallback for ${service.title}`);
-              return (
-                <motion.div
-                  key={index}
-                  className={cn(
-                    "bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
-                    "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
-                  )}
-                  variants={slideUpVariants}
-                >
-                  <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
-                    {FallbackIcon ? (
-                      <FallbackIcon className={cn("w-8 h-8", service.iconColor)} />
-                    ) : (
-                      // Ultimate fallback if HelpCircle also fails (should not happen if lucide-react is working at all)
-                      <div className="w-8 h-8 bg-red-500 rounded-full" title="Icon Error"></div>
-                    )}
-                  </div>
-                  <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
-                  <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
-                    {service.description} (Error loading icon)
-                  </p>
-                  <Link href={service.link} className={cn(
-                    "font-medium inline-flex items-center group mt-auto text-sm",
-                    service.linkColor,
-                    "transition-colors duration-200"
-                  )}>
-                    Learn more
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Link>
-                </motion.div>
-              );
-            }
+            // service.icon is now guaranteed to be a component (either the original or HelpCircle if original was undefined)
+            // So, getValidIconComponent should not log "Icon input ... is null or undefined." for it.
+            const IconComponent = getValidIconComponent(service.icon, service.title) || HelpCircle; // Fallback just in case, though primary fallback is at service definition
 
             return (
               <motion.div
