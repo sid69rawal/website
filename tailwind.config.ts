@@ -2,7 +2,11 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}", // Keep if pages dir might be used
+  ],
   theme: {
     extend: {
       borderRadius: {
@@ -79,10 +83,17 @@ export default {
             height: "0",
           },
         },
+        "ripple-animation": { // Added for button ripple effect
+          to: {
+            transform: "scale(4)",
+            opacity: "0",
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "ripple-animation": "ripple-animation 0.6s linear", // Added for button ripple
       },
     },
   },
