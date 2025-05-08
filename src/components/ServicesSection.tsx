@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -6,10 +7,10 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Layers, Code, Cubes, SquareCode, Gauge, Palette, AlertTriangle, ArrowRight } from 'lucide-react'; // Using Lucide icons via direct import
+import { Layers, Code, Cubes, SquareCode, Gauge, Palette, AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
 
 interface ServiceItem {
-  icon: React.ElementType; 
+  icon: React.ElementType;
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -25,7 +26,7 @@ const services: ServiceItem[] = [
     iconColor: 'text-primary',
     title: 'CSS Animation Mastery',
     description: 'High-performance animations using GPU-accelerated properties like transform and opacity for buttery-smooth 60fps experiences.',
-    link: '#features', 
+    link: '#features',
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
@@ -47,7 +48,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: SquareCode, 
+    icon: SquareCode,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Lottie Vector Animations',
@@ -75,25 +76,52 @@ const services: ServiceItem[] = [
   }
 ];
 
+// Helper to get a valid React component from a potential import
+const getValidIconComponent = (iconInput: any, iconNameForLog: string): React.ElementType | null => {
+  if (!iconInput) {
+    console.error(`Icon input for "${iconNameForLog}" is null or undefined.`);
+    return null;
+  }
+
+  let ResolvedIcon = iconInput;
+  // Check if the icon is wrapped in a { default: Component } structure
+  if (typeof iconInput === 'object' && iconInput !== null && typeof iconInput.default !== 'undefined') {
+    ResolvedIcon = iconInput.default;
+  }
+
+  // Check if the resolved icon is a function (React component)
+  if (typeof ResolvedIcon !== 'function') {
+    // Check if it's a forwardRef render function
+     if (typeof ResolvedIcon === 'object' && ResolvedIcon !== null && typeof ResolvedIcon.render === 'function' && ResolvedIcon.$$typeof === Symbol.for('react.forward_ref')) {
+        // It's a forwardRef component, which is valid
+     } else {
+        console.error(`Resolved icon for "${iconNameForLog}" is not a valid React function component. Type: ${typeof ResolvedIcon}`, ResolvedIcon);
+        return null;
+     }
+  }
+  return ResolvedIcon as React.ElementType;
+};
+
+
 const ServicesSection = () => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const { entry, isIntersecting } = useIntersectionObserver(ref, {
     threshold: 0.1,
     rootMargin: '-50px',
-    freezeOnceVisible: true, 
+    freezeOnceVisible: true,
   });
-  
+
   useEffect(() => {
     if (isIntersecting) {
       controls.start('visible');
     }
   }, [controls, isIntersecting]);
-  
+
   return (
     <section id="services" className="py-24 bg-background dark:bg-gray-950 theme-transition">
       <div className="container mx-auto px-6">
-        <motion.div 
+        <motion.div
           ref={ref}
           className="text-center mb-20"
           variants={slideUpVariants}
@@ -105,18 +133,19 @@ const ServicesSection = () => {
             Leveraging cutting-edge technology to create immersive, performant animations that elevate your brand.
           </p>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
           variants={staggerContainerVariants}
           initial="hidden"
           animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = service.icon;
+            const IconComponent = getValidIconComponent(service.icon, service.title);
+
             if (!IconComponent) {
-              // Fallback or error logging if an icon is still undefined
-              console.error(`Icon for service "${service.title}" is undefined.`);
+              // Fallback rendering if the primary icon is invalid
+              const FallbackIcon = getValidIconComponent(HelpCircle, `Fallback for ${service.title}`);
               return (
                 <motion.div
                   key={index}
@@ -127,31 +156,37 @@ const ServicesSection = () => {
                   variants={slideUpVariants}
                 >
                   <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
-                    <AlertTriangle className={cn("w-8 h-8", service.iconColor)} /> 
+                    {FallbackIcon ? (
+                      <FallbackIcon className={cn("w-8 h-8", service.iconColor)} />
+                    ) : (
+                      // Ultimate fallback if HelpCircle also fails (should not happen if lucide-react is working at all)
+                      <div className="w-8 h-8 bg-red-500 rounded-full" title="Icon Error"></div>
+                    )}
                   </div>
                   <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
                   <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
-                    {service.description} (Icon loading error)
+                    {service.description} (Error loading icon)
                   </p>
                   <Link href={service.link} className={cn(
                     "font-medium inline-flex items-center group mt-auto text-sm",
                     service.linkColor,
                     "transition-colors duration-200"
                   )}>
-                    Learn more 
+                    Learn more
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </motion.div>
               );
             }
+
             return (
-              <motion.div 
+              <motion.div
                 key={index}
                 className={cn(
                   "bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
                   "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
                 )}
-                variants={slideUpVariants} 
+                variants={slideUpVariants}
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
                   <IconComponent className={cn("w-8 h-8", service.iconColor)} />
@@ -165,7 +200,7 @@ const ServicesSection = () => {
                   service.linkColor,
                   "transition-colors duration-200"
                 )}>
-                  Learn more 
+                  Learn more
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
