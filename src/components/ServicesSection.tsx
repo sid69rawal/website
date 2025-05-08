@@ -6,7 +6,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import * as LucideIcons from 'lucide-react'; // Using Lucide icons via namespace
+import { Layers, Code, Cubes, SquareCode, Gauge, Palette, AlertTriangle, ArrowRight } from 'lucide-react'; // Using Lucide icons via direct import
 
 interface ServiceItem {
   icon: React.ElementType; 
@@ -20,7 +20,7 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    icon: LucideIcons.Layers,
+    icon: Layers,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'CSS Animation Mastery',
@@ -29,7 +29,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: LucideIcons.Code,
+    icon: Code,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'GSAP Timeline Magic',
@@ -38,7 +38,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: LucideIcons.Cubes,
+    icon: Cubes,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Three.js 3D Experiences',
@@ -47,7 +47,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: LucideIcons.SquareCode, 
+    icon: SquareCode, 
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Lottie Vector Animations',
@@ -56,7 +56,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: LucideIcons.Gauge,
+    icon: Gauge,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Performance Optimization',
@@ -65,7 +65,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: LucideIcons.Palette,
+    icon: Palette,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Motion Design Systems',
@@ -127,7 +127,7 @@ const ServicesSection = () => {
                   variants={slideUpVariants}
                 >
                   <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
-                    <LucideIcons.AlertTriangle className={cn("w-8 h-8", service.iconColor)} /> 
+                    <AlertTriangle className={cn("w-8 h-8", service.iconColor)} /> 
                   </div>
                   <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
                   <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
@@ -139,7 +139,7 @@ const ServicesSection = () => {
                     "transition-colors duration-200"
                   )}>
                     Learn more 
-                    <LucideIcons.ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </motion.div>
               );
@@ -166,7 +166,7 @@ const ServicesSection = () => {
                   "transition-colors duration-200"
                 )}>
                   Learn more 
-                  <LucideIcons.ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             );
