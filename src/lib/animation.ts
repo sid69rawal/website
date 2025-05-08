@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { MotionValue } from "framer-motion"; // Import type for MotionValue
 import { useTransform, useSpring } from "framer-motion";
+import { debounce } from "@/lib/utils"; // Import debounce from utils
 
 // Register GSAP plugins if GSAP is available (runs only in browser)
 if (typeof window !== "undefined" && gsap) {
@@ -116,7 +117,7 @@ export function setupGSAPAnimations() {
   
   ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   
-  const debouncedRefresh = gsap.utils.debounce(() => {
+  const debouncedRefresh = debounce(() => {
     ScrollTrigger.refresh();
   }, 250);
 
@@ -153,3 +154,4 @@ export function createScrollTrigger(
     ...options
   });
 }
+
