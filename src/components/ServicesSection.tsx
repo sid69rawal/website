@@ -6,10 +6,10 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Layers, Code, Cubes, SquareCode, Gauge, Palette, ArrowRight } from 'lucide-react'; // Using Lucide icons
+import * as LucideIcons from 'lucide-react'; // Using Lucide icons via namespace
 
 interface ServiceItem {
-  icon: React.ElementType; // Changed to React.ElementType for Lucide icons
+  icon: React.ElementType; 
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -20,16 +20,16 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    icon: Layers,
+    icon: LucideIcons.Layers,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'CSS Animation Mastery',
     description: 'High-performance animations using GPU-accelerated properties like transform and opacity for buttery-smooth 60fps experiences.',
-    link: '#features', // Link to a relevant section or a dedicated page
+    link: '#features', 
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Code,
+    icon: LucideIcons.Code,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'GSAP Timeline Magic',
@@ -38,7 +38,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Cubes,
+    icon: LucideIcons.Cubes,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Three.js 3D Experiences',
@@ -47,7 +47,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: SquareCode, // Placeholder for Lottie, consider a more specific icon if available
+    icon: LucideIcons.SquareCode, 
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Lottie Vector Animations',
@@ -56,7 +56,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Gauge,
+    icon: LucideIcons.Gauge,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Performance Optimization',
@@ -65,7 +65,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Palette,
+    icon: LucideIcons.Palette,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Motion Design Systems',
@@ -81,7 +81,7 @@ const ServicesSection = () => {
   const { entry, isIntersecting } = useIntersectionObserver(ref, {
     threshold: 0.1,
     rootMargin: '-50px',
-    freezeOnceVisible: true, // Optimize by freezing once visible
+    freezeOnceVisible: true, 
   });
   
   useEffect(() => {
@@ -114,6 +114,36 @@ const ServicesSection = () => {
         >
           {services.map((service, index) => {
             const IconComponent = service.icon;
+            if (!IconComponent) {
+              // Fallback or error logging if an icon is still undefined
+              console.error(`Icon for service "${service.title}" is undefined.`);
+              return (
+                <motion.div
+                  key={index}
+                  className={cn(
+                    "bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
+                    "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+                  )}
+                  variants={slideUpVariants}
+                >
+                  <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
+                    <LucideIcons.AlertTriangle className={cn("w-8 h-8", service.iconColor)} /> 
+                  </div>
+                  <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
+                    {service.description} (Icon loading error)
+                  </p>
+                  <Link href={service.link} className={cn(
+                    "font-medium inline-flex items-center group mt-auto text-sm",
+                    service.linkColor,
+                    "transition-colors duration-200"
+                  )}>
+                    Learn more 
+                    <LucideIcons.ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
+                </motion.div>
+              );
+            }
             return (
               <motion.div 
                 key={index}
@@ -121,7 +151,7 @@ const ServicesSection = () => {
                   "bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
                   "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
                 )}
-                variants={slideUpVariants} // Individual item animation
+                variants={slideUpVariants} 
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
                   <IconComponent className={cn("w-8 h-8", service.iconColor)} />
@@ -136,7 +166,7 @@ const ServicesSection = () => {
                   "transition-colors duration-200"
                 )}>
                   Learn more 
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <LucideIcons.ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             );
