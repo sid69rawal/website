@@ -1,3 +1,4 @@
+
 {
     "$schema": "https://ui.shadcn.com/schema.json",
     "style": "new-york",
@@ -5,7 +6,7 @@
     "tsx": true,
     "tailwind": {
       "config": "tailwind.config.ts",
-      "css": "client/src/index.css",
+      "css": "src/app/globals.css",
       "baseColor": "neutral",
       "cssVariables": true,
       "prefix": ""

@@ -1,3 +1,4 @@
+
 "use client"; // Home.tsx needs to be a client component due to hooks and event listeners
 
 import { useEffect, lazy, Suspense } from 'react';
@@ -58,7 +59,7 @@ export default function HomePage() {
           
           const ripple = document.createElement('span');
           // Use a class that's defined in globals.css for the ripple itself
-          ripple.className = 'ripple-effect-span'; 
+          ripple.className = 'ripple-effect'; 
           ripple.style.left = `${x}px`;
           ripple.style.top = `${y}px`;
           
