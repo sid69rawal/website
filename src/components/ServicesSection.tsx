@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -6,7 +7,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Layers, Code, Cubes, SquareCode, Gauge, Palette, AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
+import { Layers, Code, Package, SquareCode, Gauge, Palette, HelpCircle, ArrowRight } from 'lucide-react'; // Replaced Cubes with Package
 import type { ElementType } from 'react';
 
 interface ServiceItem {
@@ -39,7 +40,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Cubes || HelpCircle, // Use HelpCircle as a direct fallback if Cubes is undefined
+    icon: Package, // Using Package icon
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Three.js 3D Experiences',
@@ -75,30 +76,6 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   }
 ];
-
-// Helper to get a valid React component from a potential import
-const getValidIconComponent = (iconInput: any, iconNameForLog: string): React.ElementType | null => {
-  if (!iconInput) {
-    // This console.error is the one being reported by the user.
-    // By ensuring service.icon is always valid (e.g. Cubes || HelpCircle), this path should not be taken for the Cubes icon.
-    console.error(`Icon input for "${iconNameForLog}" is null or undefined.`);
-    return null;
-  }
-
-  let ResolvedIcon = iconInput;
-  // Check if the icon is wrapped in a { default: Component } structure (not typical for lucide-react named imports)
-  if (typeof iconInput === 'object' && iconInput !== null && typeof iconInput.default !== 'undefined') {
-    ResolvedIcon = iconInput.default;
-  }
-
-  // Check if the resolved icon is a function (React component) or a forwardRef
-  if (typeof ResolvedIcon !== 'function' &&
-      !(typeof ResolvedIcon === 'object' && ResolvedIcon !== null && typeof (ResolvedIcon as any).render === 'function' && (ResolvedIcon as any).$$typeof === Symbol.for('react.forward_ref'))) {
-    console.error(`Resolved icon for "${iconNameForLog}" is not a valid React function component or forwardRef. Type: ${typeof ResolvedIcon}`, ResolvedIcon);
-    return null; 
-  }
-  return ResolvedIcon as React.ElementType;
-};
 
 
 const ServicesSection = () => {
@@ -139,9 +116,7 @@ const ServicesSection = () => {
           animate={controls}
         >
           {services.map((service, index) => {
-            // service.icon is now guaranteed to be a component (either the original or HelpCircle if original was undefined)
-            // So, getValidIconComponent should not log "Icon input ... is null or undefined." for it.
-            const IconComponent = getValidIconComponent(service.icon, service.title) || HelpCircle; // Fallback just in case, though primary fallback is at service definition
+            const IconComponent = service.icon; // Directly use the icon from the service object
 
             return (
               <motion.div
