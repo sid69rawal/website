@@ -137,7 +137,7 @@ const FeaturesSection = () => {
         onEnterBack: () => setActiveFeature(feature),
         // markers: process.env.NODE_ENV === 'development', // For debugging
       });
-      triggers.push(st.scrollTrigger!);
+      triggers.push(st!);
     });
     
     return () => {
