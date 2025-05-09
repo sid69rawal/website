@@ -13,7 +13,7 @@ type ConflictingHTMLAttributes =
   | 'onDragStart' 
   | 'onDragEnd' 
   | 'style'
-  | 'children'; 
+  | 'children'; // `children` can also conflict if MotionProps defines it differently
 
 interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, ConflictingHTMLAttributes>, MotionProps {
   variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted";
@@ -49,12 +49,9 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
     full: "min-h-screen flex items-center py-16", 
   };
 
-  // If Component is a string (e.g., "div"), motion handles it.
-  // If Component is a React component, it needs to be compatible with motion's expectations.
-  // Casting to ComponentType<any> if not a string.
   const MotionComponent = typeof Component === 'string'
     ? motion(Component)
-    : motion(Component as ComponentType<any>); // Explicitly cast to ComponentType for non-string components
+    : motion.custom(Component as ComponentType<any>); // Use motion.custom for non-string components
 
 
   return (
