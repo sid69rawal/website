@@ -5,16 +5,20 @@ import { cn } from "@/lib/utils";
 import { motion, type MotionProps } from "framer-motion";
 
 // Properties that might conflict between HTMLAttributes and MotionProps
-// 'children' was previously handled by explicit redefinition.
-// The current error is specifically about 'onAnimationStart'.
-type ConflictingHTMLAttributes = 'onAnimationStart'; // Add other conflicting props like 'onDrag', 'onDragStart', 'onDragEnd', 'style' if they arise
+type ConflictingHTMLAttributes = 
+  | 'onAnimationStart' 
+  | 'onDrag' 
+  | 'onDragStart' 
+  | 'onDragEnd' 
+  | 'style'
+  | 'children'; // Added children as it also conflicts
 
 interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, ConflictingHTMLAttributes>, MotionProps {
   variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted";
   size?: "sm" | "md" | "lg" | "xl" | "full";
   as?: ElementType; // Allow changing the root element type
   containerClassName?: string; // Allow custom class for the inner container
-  children?: ReactNode; // Explicitly define children to resolve type conflict (as per previous successful fix for children)
+  children?: ReactNode; // Explicitly define children to resolve type conflict
 }
 
 const Section = React.forwardRef<HTMLElement, SectionProps>(({
