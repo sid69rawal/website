@@ -1,5 +1,6 @@
 "use client"; // Uses framer-motion, likely client-side
 
+import * as React from "react"; // Added React import
 import type { HTMLAttributes, ReactNode, ElementType } from "react";
 import { cn } from "@/lib/utils";
 import { motion, type MotionProps } from "framer-motion";
