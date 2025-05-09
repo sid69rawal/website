@@ -26,7 +26,7 @@ const ResizableHandle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ResizablePrimitive.PanelResizeHandle> & {
     withHandle?: boolean
   }
->(({ withHandle, className, ...props }, ref) => (
+>(({ withHandle, className, ...props }: any, ref: React.Ref<React.ElementRef<typeof ResizablePrimitive.PanelResizeHandle>>) => (
   <ResizablePrimitive.PanelResizeHandle
     ref={ref}
     className={cn(
