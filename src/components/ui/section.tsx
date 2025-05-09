@@ -1,18 +1,23 @@
 "use client"; // Uses framer-motion, likely client-side
 
-import { forwardRef, HTMLAttributes, ReactNode, ElementType } from "react"; // Added ReactNode and ElementType
+import type { HTMLAttributes, ReactNode, ElementType } from "react";
 import { cn } from "@/lib/utils";
-import { motion, MotionProps } from "framer-motion";
+import { motion, type MotionProps } from "framer-motion";
 
-interface SectionProps extends HTMLAttributes<HTMLElement>, MotionProps {
+// Properties that might conflict between HTMLAttributes and MotionProps
+// 'children' was previously handled by explicit redefinition.
+// The current error is specifically about 'onAnimationStart'.
+type ConflictingHTMLAttributes = 'onAnimationStart'; // Add other conflicting props like 'onDrag', 'onDragStart', 'onDragEnd', 'style' if they arise
+
+interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, ConflictingHTMLAttributes>, MotionProps {
   variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted";
   size?: "sm" | "md" | "lg" | "xl" | "full";
   as?: ElementType; // Allow changing the root element type
   containerClassName?: string; // Allow custom class for the inner container
-  children?: ReactNode; // Explicitly define children to resolve type conflict
+  children?: ReactNode; // Explicitly define children to resolve type conflict (as per previous successful fix for children)
 }
 
-const Section = forwardRef<HTMLElement, SectionProps>(({
+const Section = React.forwardRef<HTMLElement, SectionProps>(({
   className,
   variant = "default",
   size = "md",
