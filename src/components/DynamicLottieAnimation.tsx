@@ -1,6 +1,6 @@
 "use client"; // Needs client-side hooks and rendering
 
-import React, { useEffect, useRef, useState, Suspense } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type Lottie from 'lottie-web'; // Import type only
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'; // Ensure path is correct
 import { Loader2 } from 'lucide-react'; // Use a spinner from lucide
@@ -14,11 +14,6 @@ interface DynamicLottieAnimationProps {
   className?: string;
 }
 
-// Dynamically import lottie-web only on the client
-const LottiePlayer = React.lazy(() => 
-  import('lottie-web').then(module => ({ default: module.default }))
-);
-
 export function DynamicLottieAnimation({
   animationPath,
   width = '100%',
@@ -29,6 +24,7 @@ export function DynamicLottieAnimation({
 }: DynamicLottieAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<any>(null); // Ref to store Lottie animation instance
+  const [isAnimationLoading, setIsAnimationLoading] = useState(true);
   
   const { isIntersecting } = useIntersectionObserver(containerRef, {
     rootMargin: '100px 0px',
@@ -42,6 +38,7 @@ export function DynamicLottieAnimation({
 
     const loadAnimation = async () => {
         if (isIntersecting && containerRef.current && !animRef.current) {
+            setIsAnimationLoading(true);
             try {
                 // Dynamically import Lottie library
                 lottieInstance = (await import('lottie-web')).default;
@@ -62,7 +59,14 @@ export function DynamicLottieAnimation({
             } catch (err) {
                 console.error('Failed to load Lottie animation:', err);
                 // Handle error state here if needed
+            } finally {
+                setIsAnimationLoading(false);
             }
+        } else if (!isIntersecting) {
+            // Reset loading state if element is not intersecting (e.g., if it scrolls out of view and back in, and we want to re-trigger loading)
+            // This part might need adjustment based on desired behavior if freezeOnceVisible is false.
+            // For freezeOnceVisible: true, this else if might not be strictly necessary as useEffect won't re-run to load again.
+            setIsAnimationLoading(true); 
         }
     };
 
@@ -83,21 +87,17 @@ export function DynamicLottieAnimation({
       className={className}
       style={{ width, height, position: 'relative', overflow: 'hidden' }} // Ensure container has dimensions
     >
-      {/* Render nothing until intersecting to trigger Suspense fallback */}
-      {isIntersecting ? (
-        <Suspense fallback={ // Suspense isn't directly needed here if we manage loading state, but kept for potential future use
-           <div className="absolute inset-0 flex items-center justify-center bg-muted/30">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        }>
-          {/* The div where Lottie renders will be populated by the useEffect */}
-        </Suspense>
-      ) : (
-        // Optional: Render a placeholder before intersection
+      {isIntersecting && isAnimationLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted/30">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      )}
+      {!isIntersecting && (
          <div className="absolute inset-0 flex items-center justify-center bg-muted/10">
            {/* Placeholder content or spinner if desired before intersection */}
          </div>
       )}
+      {/* The div where Lottie renders will be populated by the useEffect */}
     </div>
   );
 }
