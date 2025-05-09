@@ -46,10 +46,11 @@ export default function HomePage() {
     // Add button ripple effect
     const addRippleEffect = () => {
       // Logic adapted for Next.js, ensure 'btn-effect' class exists on target buttons
-      document.querySelectorAll('.btn-effect').forEach(button => {
+      document.querySelectorAll('.btn-effect').forEach(buttonEl => {
+        const button = buttonEl as HTMLElement; // Type assertion for button element
         const existingListener = (button as any).__rippleListener;
         if (existingListener) {
-          button.removeEventListener('mousedown', existingListener);
+          button.removeEventListener('mousedown', existingListener as EventListener);
         }
 
         const listener = (e: MouseEvent) => {
@@ -71,7 +72,7 @@ export default function HomePage() {
         };
         
         (button as any).__rippleListener = listener;
-        button.addEventListener('mousedown', listener);
+        button.addEventListener('mousedown', listener as EventListener);
       });
     };
     
