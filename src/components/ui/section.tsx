@@ -1,14 +1,15 @@
 "use client"; // Uses framer-motion, likely client-side
 
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ReactNode, ElementType } from "react"; // Added ReactNode and ElementType
 import { cn } from "@/lib/utils";
 import { motion, MotionProps } from "framer-motion";
 
 interface SectionProps extends HTMLAttributes<HTMLElement>, MotionProps {
-  variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted"; // Added muted variant
+  variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted";
   size?: "sm" | "md" | "lg" | "xl" | "full";
-  as?: React.ElementType; // Allow changing the root element type
+  as?: ElementType; // Allow changing the root element type
   containerClassName?: string; // Allow custom class for the inner container
+  children?: ReactNode; // Explicitly define children to resolve type conflict
 }
 
 const Section = forwardRef<HTMLElement, SectionProps>(({
