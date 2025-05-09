@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, Suspense } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'; // Ensure path is correct
 import { isLowEndDevice } from '@/lib/utils'; // Ensure path is correct
 import { Loader2 } from 'lucide-react';
@@ -13,8 +13,8 @@ interface DynamicThreeSceneProps {
   complexity?: 'low' | 'medium' | 'high';
 }
 
-// Dynamically import Three.js only on the client
-const ThreeLib = React.lazy(() => import('three'));
+// Removed React.lazy import for 'three' as it's not a React component
+// const ThreeLib = React.lazy(() => import('three')); 
 
 export function DynamicThreeScene({
   width = '100%',
@@ -26,7 +26,8 @@ export function DynamicThreeScene({
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const frameIdRef = useRef<number | null>(null);
+  // frameIdRef was unused, removing it. If needed for animation cleanup, it can be added back.
+  // const frameIdRef = useRef<number | null>(null); 
   const [localLoading, setLocalLoading] = useState(true); // Local loading state for Three.js init
   const [error, setError] = useState<string | null>(null);
 
@@ -37,74 +38,72 @@ export function DynamicThreeScene({
   });
 
   const getPolygonCounts = React.useCallback(() => {
-    const isLowEnd = isLowEndDevice();
+    const isLowEnd = typeof window !== 'undefined' ? isLowEndDevice() : false; // Check low-end device on client
     const complexityMap = {
       low: { sphere: isLowEnd ? 8 : 12, segments: isLowEnd ? 8 : 12 },
       medium: { sphere: isLowEnd ? 12 : 24, segments: isLowEnd ? 12 : 24 },
       high: { sphere: isLowEnd ? 16 : 32, segments: isLowEnd ? 16 : 32 }
     };
     return complexityMap[complexity];
-  }, [complexity]); // Dependency on complexity
+  }, [complexity]); 
 
   useEffect(() => {
-    if (!isIntersecting) return; // Don't initialize if not visible
+    if (!isIntersecting) return; 
 
     let three: typeof THREE | null = null;
     let sphere: THREE.Mesh | null = null;
     let animationFrameId: number | null = null;
 
     const initThreeJs = async () => {
-      if (!containerRef.current || rendererRef.current) return; // Already initialized
+      if (!containerRef.current || rendererRef.current) return; 
 
       setLocalLoading(true);
       setError(null);
 
       try {
-        three = await import('three'); // Dynamically import Three.js
-        const polygons = getPolygonCounts();
-        const container = containerRef.current;
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        three = await import('three'); 
+        if (!three) throw new Error("Three.js library failed to import."); // Guard against failed import
 
-        // Scene
+        const polygons = getPolygonCounts();
+        const currentContainer = containerRef.current; // Capture ref value
+        if(!currentContainer) return; // Guard if container became null
+
+        const containerWidth = currentContainer.clientWidth;
+        const containerHeight = currentContainer.clientHeight;
+
         const scene = new three.Scene();
         sceneRef.current = scene;
 
-        // Camera
-        const camera = new three.PerspectiveCamera(75, width / height, 0.1, 1000);
+        const camera = new three.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
         camera.position.z = 5;
         cameraRef.current = camera;
 
-        // Renderer
         const renderer = new three.WebGLRenderer({ 
-          antialias: !isLowEndDevice(), 
+          antialias: !(typeof window !== 'undefined' ? isLowEndDevice() : false), // Check low-end device on client
           alpha: true 
         });
-        renderer.setSize(width, height);
+        renderer.setSize(containerWidth, containerHeight);
         renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
-        container.appendChild(renderer.domElement);
+        currentContainer.appendChild(renderer.domElement);
         rendererRef.current = renderer;
 
-        // Lights
-        scene.add(new three.AmbientLight(0xcccccc, 0.8)); // Soft ambient light
+        scene.add(new three.AmbientLight(0xcccccc, 0.8)); 
         const dirLight = new three.DirectionalLight(0xffffff, 1.5);
         dirLight.position.set(5, 5, 5);
         scene.add(dirLight);
 
-        // Sphere
         const geometry = new three.SphereGeometry(1.5, polygons.sphere, polygons.segments);
         const material = new three.MeshStandardMaterial({ 
-          color: 0x38bdf8, // Primary color
+          color: 0x38bdf8, 
           roughness: 0.4,
           metalness: 0.1,
-          wireframe: false // Keep wireframe false unless intended
+          wireframe: false 
         });
         sphere = new three.Mesh(geometry, material);
         scene.add(sphere);
 
-        // Animation loop
         const animate = () => {
-          if (!sphere || !rendererRef.current || !sceneRef.current || !cameraRef.current) return; // Guard against null refs
+          if (!sphere || !rendererRef.current || !sceneRef.current || !cameraRef.current) return; 
           sphere.rotation.y += 0.005;
           sphere.rotation.x += 0.002;
           rendererRef.current.render(sceneRef.current, cameraRef.current);
@@ -112,11 +111,11 @@ export function DynamicThreeScene({
         };
         animate();
 
-        // Resize handler
         const handleResize = () => {
-          if (!containerRef.current || !cameraRef.current || !rendererRef.current) return;
-          const newWidth = containerRef.current.clientWidth;
-          const newHeight = containerRef.current.clientHeight;
+          const currentContainerResize = containerRef.current; // Capture ref value for resize
+          if (!currentContainerResize || !cameraRef.current || !rendererRef.current) return;
+          const newWidth = currentContainerResize.clientWidth;
+          const newHeight = currentContainerResize.clientHeight;
           cameraRef.current.aspect = newWidth / newHeight;
           cameraRef.current.updateProjectionMatrix();
           rendererRef.current.setSize(newWidth, newHeight);
@@ -125,30 +124,29 @@ export function DynamicThreeScene({
 
         setLocalLoading(false);
 
-        // Return cleanup function
         return () => {
           window.removeEventListener('resize', handleResize);
           if (animationFrameId !== null) {
             cancelAnimationFrame(animationFrameId);
           }
-          if (rendererRef.current && containerRef.current && rendererRef.current.domElement) {
-             if (containerRef.current.contains(rendererRef.current.domElement)) {
-                 containerRef.current.removeChild(rendererRef.current.domElement);
+          if (rendererRef.current && currentContainer && rendererRef.current.domElement) {
+             if (currentContainer.contains(rendererRef.current.domElement)) {
+                 currentContainer.removeChild(rendererRef.current.domElement);
              }
           }
           geometry?.dispose();
           material?.dispose();
           rendererRef.current?.dispose();
-          rendererRef.current = null; // Reset refs on cleanup
+          rendererRef.current = null; 
           sceneRef.current = null;
           cameraRef.current = null;
         };
 
       } catch (err) {
         console.error("Failed to initialize Three.js scene:", err);
-        setError("Failed to load 3D scene.");
+        setError(err instanceof Error ? err.message : "Failed to load 3D scene.");
         setLocalLoading(false);
-        return () => {}; // Return empty cleanup on error
+        return () => {}; 
       }
     };
 
@@ -158,10 +156,10 @@ export function DynamicThreeScene({
     });
 
     return () => {
-      cleanup?.(); // Call cleanup if it was returned
+      cleanup?.(); 
     };
 
-  }, [isIntersecting, getPolygonCounts, complexity]); // Add complexity and getPolygonCounts as dependencies
+  }, [isIntersecting, getPolygonCounts, complexity]);
 
   return (
     <div 
@@ -170,11 +168,10 @@ export function DynamicThreeScene({
       style={{ 
         width, 
         height,
-        minHeight: '150px', // Ensure minimum height for visibility
+        minHeight: '150px', 
         overflow: 'hidden'
       }}
     >
-      {/* Only render loader/error when intersecting */}
       {isIntersecting && (
         <>
           {localLoading && (
@@ -187,9 +184,8 @@ export function DynamicThreeScene({
               {error}
             </div>
           )}
-        </<>
+        </>
       )}
-       {/* Optional: Placeholder before intersection */}
       {!isIntersecting && (
          <div className="absolute inset-0 bg-muted/10"></div>
       )}
