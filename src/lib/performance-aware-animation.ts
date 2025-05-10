@@ -71,7 +71,7 @@ export function createAnimationPreset(): AnimationPreset {
   
   return {
     durations,
-    easings,
+    easings: easings as { easeOut: string; easeInOut: string; easeOutBack: string; bounce: string | false },
     staggerDelays,
     complexity,
     
