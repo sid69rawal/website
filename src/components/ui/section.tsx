@@ -51,7 +51,7 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
 
   const MotionComponent = typeof Component === 'string'
     ? motion(Component)
-    : motion(Component as ComponentType<any>); 
+    : motion(Component as React.ForwardRefExoticComponent<any>); 
 
 
   return (
