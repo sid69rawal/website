@@ -51,7 +51,7 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
 
   const MotionComponent = typeof Component === 'string'
     ? motion(Component)
-    : motion.custom(Component as ComponentType<any>); // Use motion.custom for non-string components
+    : motion(Component as ComponentType<any>); 
 
 
   return (
