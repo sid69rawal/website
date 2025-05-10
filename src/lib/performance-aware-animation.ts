@@ -1,16 +1,18 @@
 "use client"; // Uses client-side checks (isLowEndDevice) and GSAP
 
 import { gsap } from 'gsap';
-import type { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import type only
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger as a value
 import { isLowEndDevice } from './utils'; // Ensure path is correct
 
 // Register ScrollTrigger if GSAP is available (client-side)
 if (typeof window !== "undefined" && gsap && typeof gsap.registerPlugin === 'function') {
   try {
-    // Dynamically import and register ScrollTrigger if needed, or assume it's loaded elsewhere
-    // import('gsap/ScrollTrigger').then(({ ScrollTrigger: ST }) => gsap.registerPlugin(ST));
-    // For now, assume ScrollTrigger is either globally registered or imported where used.
-    // If ScrollTrigger is consistently used, explicitly import and register it here or in animation-loader.
+    // GSAP plugins should be registered once.
+    // If ScrollTrigger is not already registered by animation-loader or another part of the app,
+    // register it here.
+    if (!(gsap as any).ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+    }
   } catch (e) {
      console.error("Could not register ScrollTrigger", e);
   }
@@ -78,10 +80,10 @@ export function createAnimationPreset(): AnimationPreset {
     complexity,
     
     createScrollTrigger(trigger, animation, options = {}) {
-       // Guard against running on server or if ScrollTrigger isn't loaded
+       // Guard against running on server or if ScrollTrigger isn't loaded/registered
       if (typeof window === "undefined" || !gsap || !(gsap as any).ScrollTrigger) {
-        // Attempt to register ScrollTrigger if not already
-        if (gsap && gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
+        // Attempt to register ScrollTrigger if not already (this check is mostly a fallback)
+        if (gsap && gsap.registerPlugin && ScrollTrigger) {
           gsap.registerPlugin(ScrollTrigger);
         } else {
           console.warn("ScrollTrigger is not available or not registered with GSAP.");
