@@ -543,6 +543,7 @@ type SidebarMenuButtonProps = {
   asChild?: boolean;
   isActive?: boolean;
   tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+  variant?: "default" | "outline";
 } & VariantProps<typeof sidebarMenuButtonVariants> &
   (
     | (React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: never }) // Button props, explicitly no href
