@@ -110,7 +110,7 @@ export function createAnimationPreset(): AnimationPreset {
       // Ensure elements is an array or NodeList for slicing
       let elementsArray: Element[];
        if (elements instanceof NodeList) {
-            elementsArray = Array.from(elements);
+ elementsArray = Array.from<Element>(elements);
        } else if (Array.isArray(elements)) {
             elementsArray = elements;
        } else if (elements instanceof Element) {
