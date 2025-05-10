@@ -110,27 +110,6 @@ const HeroSection = () => {
             Get in Touch
           </Link>
         </motion.div>
-        
-        <motion.div 
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          variants={slideUpVariants}
-          initial="hidden"
-          animate={controls}
-          transition={{ delay: 1.5, type: "spring", stiffness: 100 }}
-        >
-          <Link href="#services" aria-label="Scroll to explore services">
-            <div className="flex flex-col items-center cursor-pointer group">
-              <span className="text-xs text-muted-foreground mb-2 group-hover:text-primary transition-colors">Scroll to explore</span>
-              <div className="w-6 h-10 border-2 border-muted-foreground group-hover:border-primary rounded-full flex justify-center pt-2 transition-colors">
-                <motion.div 
-                  className="w-1 h-2 bg-muted-foreground group-hover:bg-primary rounded-full"
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                ></motion.div>
-              </div>
-            </div>
-          </Link>
-        </motion.div>
       </div>
     </section>
   );
