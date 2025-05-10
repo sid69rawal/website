@@ -470,7 +470,7 @@ SidebarGroupLabel.displayName = "SidebarGroupLabel"
 
 const SidebarGroupAction = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean } // Changed from ComponentProps
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean; showOnHover?: boolean; } // Changed from ComponentProps
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
 
