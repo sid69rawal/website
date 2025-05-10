@@ -5,7 +5,7 @@ import type { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import type only
 import { isLowEndDevice } from './utils'; // Ensure path is correct
 
 // Register ScrollTrigger if GSAP is available (client-side)
-if (typeof window !== "undefined" && gsap && gsap.registerPlugin) {
+if (typeof window !== "undefined" && gsap && typeof gsap.registerPlugin === 'function') {
   try {
     // Dynamically import and register ScrollTrigger if needed, or assume it's loaded elsewhere
     // import('gsap/ScrollTrigger').then(({ ScrollTrigger: ST }) => gsap.registerPlugin(ST));
