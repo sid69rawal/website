@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import React from "react"; // Import React for Fragment
 
 export const metadata: Metadata = {
   title: `Thank You - ${siteConfig.name}`,
@@ -29,14 +30,16 @@ export default function ThankYouPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-lg text-muted-foreground mb-8">
-                {siteConfig.thankYouPage.description}
-              </CardDescription>
-              <Button asChild className="w-full max-w-xs mx-auto btn-effect"> {/* Added btn-effect */}
-                <Link href={siteConfig.thankYouPage.buttonLink}>
-                  {siteConfig.thankYouPage.buttonText}
-                </Link>
-              </Button>
+              <>
+                <CardDescription className="text-lg text-muted-foreground mb-8">
+                  {siteConfig.thankYouPage.description}
+                </CardDescription>
+                <Button asChild className="w-full max-w-xs mx-auto btn-effect"> {/* Added btn-effect */}
+                  <Link href={siteConfig.thankYouPage.buttonLink}>
+                    {siteConfig.thankYouPage.buttonText}
+                  </Link>
+                </Button>
+              </>
             </CardContent>
           </Card>
         </div>
@@ -45,3 +48,4 @@ export default function ThankYouPage() {
     </div>
   );
 }
+
