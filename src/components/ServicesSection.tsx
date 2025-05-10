@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -7,11 +6,29 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package } from 'lucide-react';
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Cubes, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
 import type { ElementType } from 'react';
 
+// Define an icon map to ensure bundler picks up the icons correctly
+const iconMap = {
+  LayoutTemplate,
+  Search,
+  Smartphone,
+  TrendingUp,
+  Users,
+  Settings,
+  ArrowRight,
+  Package,
+  Cubes,
+  Palette,
+  Code,
+  Gauge,
+  HelpCircle,
+  Layers
+};
+
 interface ServiceItem {
-  icon: ElementType;
+  icon: ElementType; // Uses keyof typeof iconMap if we strictly map, but ElementType is fine if direct components are passed
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -22,7 +39,7 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    icon: LayoutTemplate,
+    icon: iconMap.LayoutTemplate,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Custom Website Design',
@@ -31,7 +48,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Search,
+    icon: iconMap.Search,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'SEO & Google Visibility',
@@ -40,7 +57,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Smartphone,
+    icon: iconMap.Smartphone,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Responsive Development',
@@ -49,7 +66,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: TrendingUp,
+    icon: iconMap.TrendingUp,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Conversion Rate Optimization',
@@ -58,7 +75,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Users,
+    icon: iconMap.Users,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Lead Generation Websites',
@@ -67,7 +84,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Settings, // Using Settings as a generic "Maintenance/Support" icon
+    icon: iconMap.Settings, 
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Website Maintenance & Support',
@@ -93,12 +110,18 @@ const ServicesSection = () => {
     }
   }, [controls, isIntersecting]);
   
-  const getValidIconComponent = (iconInput: ElementType | string | undefined, serviceTitle: string): ElementType => {
-    if (typeof iconInput === 'function') {
-      return iconInput;
+  const getValidIconComponent = (iconInput: ElementType | string | undefined | null, serviceTitle: string): ElementType => {
+    // Check if iconInput is a function (typical for React components including lucide-react icons)
+    // Also check if it's an object with a render method (less common for lucide, but good for general components)
+    if (typeof iconInput === 'function' || (typeof iconInput === 'object' && iconInput !== null && 'render' in iconInput)) {
+      return iconInput as ElementType;
     }
-    console.error(`Icon input for "${serviceTitle}" is not a valid component. Received:`, iconInput);
-    return Package; // Fallback icon
+    // Log an error if the icon is not a valid component type and provide more info
+    console.error(
+        `Icon input for "${serviceTitle}" is not a valid component. Received type: ${typeof iconInput}, Value:`, 
+        iconInput === undefined ? 'undefined' : JSON.stringify(iconInput)
+    );
+    return iconMap.Package; // Fallback icon
   };
 
 
@@ -125,16 +148,8 @@ const ServicesSection = () => {
           animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = getValidIconComponent(service.icon, service.title);
-            if (!IconComponent) {
-              console.error(`Icon for service "${service.title}" is undefined.`);
-              return (
-                <motion.div key={index} className="text-red-500 p-4 border border-red-500 rounded-lg">
-                  Error: Icon for "{service.title}" is missing.
-                </motion.div>
-              );
-            }
-
+            const IconComponent = getValidIconComponent(service.icon as ElementType, service.title);
+            
             return (
               <motion.div
                 key={index}
