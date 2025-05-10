@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -6,7 +7,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Cubes, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react'; // Replaced Cubes with Box
 import type { ElementType } from 'react';
 
 // Define an icon map to ensure bundler picks up the icons correctly
@@ -19,7 +20,7 @@ const iconMap = {
   Settings,
   ArrowRight,
   Package,
-  Cubes,
+  Box, // Replaced Cubes with Box
   Palette,
   Code,
   Gauge,
@@ -28,7 +29,7 @@ const iconMap = {
 };
 
 interface ServiceItem {
-  icon: ElementType; // Uses keyof typeof iconMap if we strictly map, but ElementType is fine if direct components are passed
+  icon: ElementType; 
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -75,7 +76,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: iconMap.Users,
+    icon: iconMap.Users, // Consider changing to a more relevant icon like 'Target' or 'Briefcase' if 'Users' doesn't fit 'Lead Generation'
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Lead Generation Websites',
@@ -111,17 +112,14 @@ const ServicesSection = () => {
   }, [controls, isIntersecting]);
   
   const getValidIconComponent = (iconInput: ElementType | string | undefined | null, serviceTitle: string): ElementType => {
-    // Check if iconInput is a function (typical for React components including lucide-react icons)
-    // Also check if it's an object with a render method (less common for lucide, but good for general components)
     if (typeof iconInput === 'function' || (typeof iconInput === 'object' && iconInput !== null && 'render' in iconInput)) {
       return iconInput as ElementType;
     }
-    // Log an error if the icon is not a valid component type and provide more info
     console.error(
-        `Icon input for "${serviceTitle}" is not a valid component. Received type: ${typeof iconInput}, Value:`, 
+        `Icon input for "${serviceTitle}" is null or undefined. Received type: ${typeof iconInput}, Value:`, 
         iconInput === undefined ? 'undefined' : JSON.stringify(iconInput)
     );
-    return iconMap.Package; // Fallback icon
+    return iconMap.Package; 
   };
 
 
@@ -160,7 +158,11 @@ const ServicesSection = () => {
                 variants={slideUpVariants}
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
-                  <IconComponent className={cn("w-8 h-8", service.iconColor)} />
+                  {IconComponent ? (
+                     <IconComponent className={cn("w-8 h-8", service.iconColor)} />
+                  ) : (
+                    <iconMap.Package className={cn("w-8 h-8", service.iconColor)} /> // Fallback icon
+                  )}
                 </div>
                 <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
                 <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
