@@ -537,33 +537,21 @@ SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
   "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding,color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!p-0 [&>span:last-child]:truncate group-data-[collapsible=icon]:[&>span:last-child]:hidden [&>svg]:size-4 [&>svg]:shrink-0", // Updated icon states
-  {
-    variants: {
-      variant: {
-        default: "text-sidebar-foreground", // Base color
-        outline:
-          "bg-transparent border border-sidebar-border shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] data-[active=true]:border-sidebar-accent",
-      },
-      size: {
-        default: "h-8 text-sm",
-        sm: "h-7 text-xs",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:!size-12", // Adjusted icon size for lg
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+);
+
+type SidebarMenuButtonProps = {
+  asChild?: boolean;
+  isActive?: boolean;
+  tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+} & VariantProps<typeof sidebarMenuButtonVariants> &
+  (
+    | (React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: never }) // Button props, explicitly no href
+    | (React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) // Anchor props, href is required
+  );
 
 const SidebarMenuButton = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement, // Allow button or anchor
-  (React.ButtonHTMLAttributes<HTMLButtonElement> | React.AnchorHTMLAttributes<HTMLAnchorElement>) & { // Union of props
-    asChild?: boolean
-    isActive?: boolean
-    tooltip?: string | React.ComponentProps<typeof TooltipContent>
-  } & VariantProps<typeof sidebarMenuButtonVariants>
+  SidebarMenuButtonProps
 >(
   (
     {
@@ -577,7 +565,7 @@ const SidebarMenuButton = React.forwardRef<
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : (props.href ? "a" : "button"); // Detect if it should be an anchor
+    const Comp = asChild ? Slot : (props as any).href ? "a" : "button"; // Detect if it should be an anchor
     const { isMobile, state } = useSidebar();
     const isIconOnly = state === 'collapsed';
 
@@ -588,7 +576,7 @@ const SidebarMenuButton = React.forwardRef<
         data-size={size}
         data-active={isActive}
         className={cn(sidebarMenuButtonVariants({ variant, size, className }))}
-        {...props} // Spread remaining props
+        {...props as any} // Spread remaining props, cast to any for now due to union complexity
       />
     );
 
@@ -612,7 +600,25 @@ const SidebarMenuButton = React.forwardRef<
       </Tooltip>
     );
   }
-)
+);
+sidebarMenuButtonVariants({ // Moved variants definition here
+  variants: {
+    variant: {
+      default: "text-sidebar-foreground", // Base color
+      outline:
+          "bg-transparent border border-sidebar-border shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] data-[active=true]:border-sidebar-accent",
+    },
+    size: {
+      default: "h-8 text-sm",
+      sm: "h-7 text-xs",
+      lg: "h-12 text-sm group-data-[collapsible=icon]:!size-12", // Adjusted icon size for lg
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  },
+});
 SidebarMenuButton.displayName = "SidebarMenuButton";
 
 
