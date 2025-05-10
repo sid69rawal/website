@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useRef, useState, useTransition } from 'react';
+import { useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { slideUpVariants } from '@/lib/animation';
@@ -9,17 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Loader2, Send, CheckCircle } from 'lucide-react'; 
-import { useToast } from '@/hooks/use-toast'; 
-import { handleContactFormSubmission } from '@/app/actions/contactActions'; 
+import { Send } from 'lucide-react'; 
 
 const ContactSection = () => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [isPending, startTransition] = useTransition();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { toast } = useToast();
+  // Removed useState for isPending, isSubmitted, and useTransition as FormSubmit handles submission.
+  // Removed useToast as FormSubmit handles success/error feedback typically via redirection.
 
   const { entry, isIntersecting } = useIntersectionObserver(ref, {
     threshold: 0.1,
@@ -30,27 +28,8 @@ const ContactSection = () => {
     controls.start('visible');
   }
 
-  const handleSubmit = async (formData: FormData) => {
-    startTransition(async () => {
-      const result = await handleContactFormSubmission(formData);
-      if (result.success) {
-        setIsSubmitted(true);
-        toast({
-          title: "Message Sent!",
-          description: "We'll get back to you soon to discuss your project.",
-          variant: "default", // Ensuring this is explicitly 'default' or a success-like variant
-        });
-        formRef.current?.reset(); 
-        setTimeout(() => setIsSubmitted(false), 3000);
-      } else {
-        toast({
-          title: "Error Sending Message",
-          description: result.error || "Failed to send message. Please try again or contact us directly.",
-          variant: "destructive",
-        });
-      }
-    });
-  };
+  // The handleSubmit function and startTransition are no longer needed with FormSubmit.
+  // FormSubmit handles the submission directly via the form's action attribute.
   
   return (
     <section id="contact" className="py-24 bg-muted/30 dark:bg-gray-900 theme-transition">
@@ -76,7 +55,23 @@ const ContactSection = () => {
             animate={controls}
             transition={{ delay: 0.2 }}
           >
-            <form ref={formRef} action={handleSubmit} className="space-y-6">
+            {/* Updated form action to use FormSubmit.co */}
+            <form 
+              ref={formRef} 
+              action="https://formsubmit.co/sidrawal1200@gmail.com" 
+              method="POST" 
+              className="space-y-6"
+            >
+              {/* FormSubmit.co specific hidden inputs */}
+              <input type="hidden" name="_subject" value="New Project Inquiry from YourBusinessOnline Website" />
+              {/* You can enable captcha on FormSubmit.co dashboard if needed */}
+              <input type="hidden" name="_captcha" value="false" /> 
+              {/* Optional: customize the thank you page URL. Create this page in your Next.js app. */}
+              {/* Replace YOUR_WEBSITE_URL with your actual domain and /thank-you page path */}
+              <input type="hidden" name="_next" value="https://yourbusinessonline.dev/thank-you" /> 
+              <input type="hidden" name="_template" value="table" />
+
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Full Name</label>
@@ -141,22 +136,11 @@ const ContactSection = () => {
                     "w-full px-6 py-3 text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/50 transform hover:-translate-y-1",
                     "flex items-center justify-center relative overflow-hidden",
                   )}
-                  disabled={isPending}
-                  aria-live="polite"
+                  // Removed disabled state as FormSubmit handles this.
+                  aria-live="polite" 
                 >
-                  {isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending...
-                    </>
-                  ) : isSubmitted ? (
-                    <>
-                      <CheckCircle className="mr-2 h-5 w-5" /> Message Sent!
-                    </>
-                  ) : (
-                    <>
-                      Send Project Inquiry <Send className="ml-2 h-5 w-5" />
-                    </>
-                  )}
+                  {/* Removed isPending and isSubmitted logic from button text */}
+                  Send Project Inquiry <Send className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </form>
