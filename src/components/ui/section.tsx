@@ -1,8 +1,8 @@
 /** @jsxImportSource react */
-"use client"; // Uses framer-motion, likely client-side
+"use client"; 
 
 import * as React from "react";
-import type { HTMLAttributes, ReactNode, ElementType, ComponentType } from "react";
+import type { HTMLAttributes, ReactNode, ElementType, ComponentType, ForwardedRef } from "react";
 import { cn } from "@/lib/utils";
 import { motion, type MotionProps } from "framer-motion";
 
@@ -13,7 +13,7 @@ type ConflictingHTMLAttributes =
   | 'onDragStart' 
   | 'onDragEnd' 
   | 'style'
-  | 'children'; // `children` can also conflict if MotionProps defines it differently
+  | 'children';
 
 interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, ConflictingHTMLAttributes>, MotionProps {
   variant?: "default" | "primary" | "secondary" | "dark" | "light" | "muted";
@@ -28,11 +28,11 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
   variant = "default",
   size = "md",
   children,
-  as: Component = "section", // Component is of type ElementType here
+  as: ComponentInput = "section", // Renamed to avoid conflict with React.Component
   containerClassName,
-  ...props
-}, ref) => {
-  const variants = {
+  ...props 
+}, ref: ForwardedRef<HTMLElement>) => { 
+  const variantsStyles = {
     default: "bg-background text-foreground",
     primary: "bg-primary text-primary-foreground",
     secondary: "bg-secondary text-secondary-foreground",
@@ -41,7 +41,7 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
     muted: "bg-muted/40 text-foreground", 
   };
 
-  const sizes = {
+  const sizesStyles = {
     sm: "py-8 md:py-12", 
     md: "py-16 md:py-20",
     lg: "py-24 md:py-28",
@@ -49,18 +49,44 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
     full: "min-h-screen flex items-center py-16", 
   };
 
-  const MotionComponent = typeof Component === 'string'
-    ? motion(Component)
-    : motion(Component as React.ForwardRefExoticComponent<any>); 
+  const MotionComponent = React.useMemo(() => {
+    if (typeof ComponentInput === 'string') {
+      // This assumes ComponentInput is a valid HTML tag name that motion supports
+      return motion[ComponentInput as keyof typeof motion];
+    }
+    // If ComponentInput is a React component, wrap it with motion
+    return motion(ComponentInput as ComponentType<any>);
+  }, [ComponentInput]);
 
+  // Fallback in case MotionComponent couldn't be derived (e.g. invalid 'as' string)
+  if (!MotionComponent) {
+    console.error(`Motion component for type '${String(ComponentInput)}' could not be created. Defaulting to 'section'.`);
+    const FallbackComponent = motion.section;
+    return (
+        <FallbackComponent 
+            ref={ref as React.Ref<HTMLDivElement>} // Cast ref appropriately for fallback
+            className={cn(
+                "relative w-full overflow-hidden",
+                variantsStyles[variant],
+                sizesStyles[size],
+                className
+            )}
+            {...props}
+        >
+            <div className={cn("container mx-auto px-6", containerClassName)}> 
+                {children}
+            </div>
+        </FallbackComponent>
+    );
+  }
 
   return (
     <MotionComponent
-      ref={ref}
+      ref={ref as any} // Cast ref to 'any' to bypass polymorphic ref type checking issues
       className={cn(
         "relative w-full overflow-hidden",
-        variants[variant],
-        sizes[size],
+        variantsStyles[variant],
+        sizesStyles[size],
         className
       )}
       {...props} 
