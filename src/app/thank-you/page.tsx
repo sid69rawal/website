@@ -30,16 +30,14 @@ export default function ThankYouPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <>
-                <CardDescription className="text-lg text-muted-foreground mb-8">
-                  {siteConfig.thankYouPage.description}
-                </CardDescription>
-                <Button asChild className="w-full max-w-xs mx-auto btn-effect"> {/* Added btn-effect */}
-                  <Link href={siteConfig.thankYouPage.buttonLink}>
-                    {siteConfig.thankYouPage.buttonText}
-                  </Link>
-                </Button>
-              </>
+              <CardDescription className="text-lg text-muted-foreground mb-8">
+                {siteConfig.thankYouPage.description}
+              </CardDescription>
+              <Button asChild className="w-full max-w-xs mx-auto btn-effect"> {/* Added btn-effect */}
+                <Link href={siteConfig.thankYouPage.buttonLink}>
+                  {siteConfig.thankYouPage.buttonText}
+                </Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
