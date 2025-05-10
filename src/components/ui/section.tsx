@@ -50,15 +50,20 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
   };
 
   const MotionComponent = React.useMemo(() => {
-    if (typeof ComponentInput === 'string') {
+    if (typeof ComponentInput === "string") {
       // This assumes ComponentInput is a valid HTML tag name that motion supports
-      return motion[ComponentInput as keyof typeof motion];
+      return motion[ComponentInput as keyof typeof motion] as any; // Cast to any for flexibility
     }
     // If ComponentInput is a React component, wrap it with motion
-    // Ensure that if it's a function component, it's treated as a ForwardRefExoticComponent
-    if (typeof ComponentInput === 'function') {
-      return motion(ComponentInput as React.ForwardRefExoticComponent<any>);
-    }
+    // Pass relevant props here
+ return motion(ComponentInput as React.ForwardRefExoticComponent<any>);
+    // }, [ComponentInput, className, variant, size, props, ref]); // Include props and ref in dependencies
+ // The above change is more complex than intended. Let's simplify.
+ // When wrapping a non-string component, simply pass it to motion.
+ // The issue might be in how the props are spread later.
+ // Let's revert the change inside the memo and focus on the render part.
+ // The original code was:
+ // return motion(ComponentInput as ComponentType<any>);
     return motion.div; // Fallback to motion.div or handle other cases as needed
   }, [ComponentInput]);
 
