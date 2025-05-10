@@ -618,9 +618,9 @@ SidebarMenuButton.displayName = "SidebarMenuButton";
 
 const SidebarMenuAction = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { // Use ButtonHTMLAttributes
-    asChild?: boolean
-    showOnHover?: boolean
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { 
+    asChild?: boolean;
+    showOnHover?: boolean; // Added showOnHover to the type definition
   }
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
