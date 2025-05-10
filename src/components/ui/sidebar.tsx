@@ -543,6 +543,7 @@ type SidebarMenuButtonProps = {
   asChild?: boolean;
   isActive?: boolean;
   tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+  size?: "default" | "sm" | "lg";
   variant?: "default" | "outline";
 } & VariantProps<typeof sidebarMenuButtonVariants> &
   (
