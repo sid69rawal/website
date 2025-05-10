@@ -55,7 +55,11 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(({
       return motion[ComponentInput as keyof typeof motion];
     }
     // If ComponentInput is a React component, wrap it with motion
-    return motion(ComponentInput as ComponentType<any>);
+    // Ensure that if it's a function component, it's treated as a ForwardRefExoticComponent
+    if (typeof ComponentInput === 'function') {
+      return motion(ComponentInput as React.ForwardRefExoticComponent<any>);
+    }
+    return motion.div; // Fallback to motion.div or handle other cases as needed
   }, [ComponentInput]);
 
   // Fallback in case MotionComponent couldn't be derived (e.g. invalid 'as' string)
