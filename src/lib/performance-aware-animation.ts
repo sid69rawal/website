@@ -1,14 +1,16 @@
 "use client"; // Uses client-side checks (isLowEndDevice) and GSAP
 
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger type if needed
+import type { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import type only
 import { isLowEndDevice } from './utils'; // Ensure path is correct
 
 // Register ScrollTrigger if GSAP is available (client-side)
-if (typeof window !== "undefined" && gsap) {
+if (typeof window !== "undefined" && gsap && gsap.registerPlugin) {
   try {
     // Dynamically import and register ScrollTrigger if needed, or assume it's loaded elsewhere
     // import('gsap/ScrollTrigger').then(({ ScrollTrigger: ST }) => gsap.registerPlugin(ST));
+    // For now, assume ScrollTrigger is either globally registered or imported where used.
+    // If ScrollTrigger is consistently used, explicitly import and register it here or in animation-loader.
   } catch (e) {
      console.error("Could not register ScrollTrigger", e);
   }
@@ -77,13 +79,21 @@ export function createAnimationPreset(): AnimationPreset {
     
     createScrollTrigger(trigger, animation, options = {}) {
        // Guard against running on server or if ScrollTrigger isn't loaded
-      if (typeof window === "undefined" || !gsap || !(gsap as any).ScrollTrigger) return undefined;
+      if (typeof window === "undefined" || !gsap || !(gsap as any).ScrollTrigger) {
+        // Attempt to register ScrollTrigger if not already
+        if (gsap && gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
+          gsap.registerPlugin(ScrollTrigger);
+        } else {
+          console.warn("ScrollTrigger is not available or not registered with GSAP.");
+          return undefined;
+        }
+      }
 
-      const ScrollTrigger = (gsap as any).ScrollTrigger; // Access registered plugin
+      const ST = (gsap as any).ScrollTrigger; // Access registered plugin
 
       // Simplified trigger for low-end devices: just play animation once when visible
       if (lowEndDevice) {
-        return ScrollTrigger.create({
+        return ST.create({
           trigger,
           start: "top 90%", // Trigger sooner
           toggleActions: 'play none none none', // Play once
@@ -94,7 +104,7 @@ export function createAnimationPreset(): AnimationPreset {
       }
       
       // Full-featured trigger for capable devices
-      return ScrollTrigger.create({
+      return ST.create({
         trigger,
         start: "top 80%", // Default start
         toggleActions: 'play none none reverse', // Default toggle actions
@@ -105,21 +115,10 @@ export function createAnimationPreset(): AnimationPreset {
     },
     
     batchAnimate(elements, properties, staggerConfig = staggerDelays.normal) {
-       if (typeof window === "undefined" || !gsap) return undefined;
+       if (typeof window === "undefined" || !gsap || !gsap.utils || typeof gsap.utils.toArray !== 'function') return undefined;
 
-      // Ensure elements is an array or NodeList for slicing
-      let elementsArray: Element[];
-       if (elements instanceof NodeList) {
- elementsArray = Array.from<Element>(elements);
-       } else if (Array.isArray(elements)) {
-            elementsArray = elements;
-       } else if (elements instanceof Element) {
-            elementsArray = [elements]; // Handle single element case
-       } else {
-           console.warn("batchAnimate received invalid elements type:", elements);
-           return undefined; // Or handle string selector if needed
-       }
-
+      // Use gsap.utils.toArray to reliably convert DOMTarget to Element[]
+      const elementsArray: Element[] = gsap.utils.toArray(elements);
 
       const limitedElements = lowEndDevice 
         ? elementsArray.slice(0, complexity.maxAnimatedElements)
