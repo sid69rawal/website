@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
+import type { ElementType } from 'react'; // Added import for ElementType
 import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -113,7 +114,7 @@ const ShowcaseSection = () => {
         const parallaxLayer = projectRef.querySelector('.parallax-layer') as HTMLElement;
         if (!parallaxLayer) return;
         
-        const stInstance = gsap.to(parallaxLayer, { // Renamed to avoid conflict
+        const stInstance = gsap.to(parallaxLayer, { 
           yPercent: 20, 
           ease: 'none',
           scrollTrigger: {
@@ -123,7 +124,7 @@ const ShowcaseSection = () => {
             scrub: 0.5, 
           }
         });
-        if (stInstance.scrollTrigger) { // Check if scrollTrigger exists
+        if (stInstance.scrollTrigger) { 
             triggers.push(stInstance.scrollTrigger);
         }
       }
