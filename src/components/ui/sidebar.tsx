@@ -576,8 +576,8 @@ const SidebarMenuButton = React.forwardRef<
         ref={ref as any} // Need to cast ref type based on Comp
         data-sidebar="menu-button"
         data-size={size}
-        data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        data-active={isActive}        
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)} // Keep this line as is
         {...props as any} // Spread remaining props, cast to any for now due to union complexity
       />
     );
