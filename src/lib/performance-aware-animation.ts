@@ -53,7 +53,7 @@ export function createAnimationPreset(): AnimationPreset {
     easeOut: lowEndDevice ? 'power1.out' : 'power2.out',
     easeInOut: lowEndDevice ? 'power1.inOut' : 'power2.inOut',
     easeOutBack: lowEndDevice ? 'back.out(1.2)' : 'back.out(1.7)',
-    bounce: lowEndDevice ? false : 'bounce.out', // Disable bounce on low-end
+    bounce: lowEndDevice ? false : 'bounce.out', // Ensure bounce is string or false
   };
   
   const staggerDelays = {
