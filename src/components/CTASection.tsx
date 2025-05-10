@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef } from 'react';
@@ -6,6 +7,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link'; 
+import { siteConfig } from '@/config/site';
 
 const CTASection = () => {
   const controls = useAnimation();
@@ -36,19 +38,19 @@ const CTASection = () => {
           animate={controls}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">
-            Ready to Grow Your Business Online?
+            {siteConfig.ctaSection.title}
           </h2>
           <p className="text-lg md:text-xl text-white/90 mb-10 leading-relaxed">
-            Let's build a powerful website that attracts your ideal customers through Google, boosts your visibility, and drives measurable results.
+            {siteConfig.ctaSection.subtitle}
           </p>
           <Link 
-            href="/#contact" 
+            href={siteConfig.ctaSection.buttonLink} 
             className={cn(
-              "inline-block px-10 py-4 bg-white hover:bg-gray-100 text-primary rounded-lg shadow-xl hover:shadow-2xl",
+              "btn-effect inline-block px-10 py-4 bg-white hover:bg-gray-100 text-primary rounded-lg shadow-xl hover:shadow-2xl",
               "font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none focus:ring-4 focus:ring-white/50"
             )}
           >
-            Get Your Free Quote
+            {siteConfig.ctaSection.buttonText}
           </Link>
         </motion.div>
       </div>

@@ -1,8 +1,7 @@
 
 "use client";
 
-import { useEffect, useRef } from 'react';
-import type { ElementType } from 'react'; 
+import { useEffect, useRef, ElementType } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +11,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Award, Users, BarChart3 as BarChartIcon } from 'lucide-react'; 
+import { siteConfig } from '@/config/site';
 
 if (typeof window !== "undefined" && gsap) {
   gsap.registerPlugin(ScrollTrigger);
@@ -145,9 +145,9 @@ const ShowcaseSection = () => {
           initial="hidden"
           animate={sectionControls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Websites That Deliver Results</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.showcaseSection.title}</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Explore our portfolio of custom websites designed to attract customers and grow businesses.
+            {siteConfig.showcaseSection.subtitle}
           </p>
         </motion.div>
         
@@ -210,7 +210,7 @@ const ShowcaseSection = () => {
                     <Link 
                       href={project.buttonLink}
                       className={cn(
-                        "inline-block px-8 py-3 rounded-lg font-semibold text-base",
+                        "inline-block px-8 py-3 rounded-lg font-semibold text-base btn-effect", // Added btn-effect
                         "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                         project.buttonColor
                       )}
@@ -253,7 +253,7 @@ const ShowcaseSection = () => {
                         <Link 
                           href={project.buttonLink}
                           className={cn(
-                            "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit",
+                            "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", // Added btn-effect
                             "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                             project.buttonColor
                           )}
@@ -321,7 +321,7 @@ const ShowcaseSection = () => {
                       <Link 
                         href={project.buttonLink}
                         className={cn(
-                          "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit",
+                          "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", // Added btn-effect
                           "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                           project.buttonColor
                         )}

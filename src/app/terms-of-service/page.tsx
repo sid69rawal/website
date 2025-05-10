@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - YourBusinessOnline",
-  description: "Read the Terms of Service of YourBusinessOnline.",
+  title: `Terms of Service - ${siteConfig.name}`,
+  description: `Read the Terms of Service of ${siteConfig.name}.`,
 };
 
 export default function TermsOfServicePage() {
@@ -24,12 +25,12 @@ export default function TermsOfServicePage() {
 
               <h2>1. Agreement to Terms</h2>
               <p>
-                By using our website ([Your Website URL]) and services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
+                By using our website ({siteConfig.url}) and services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
               </p>
 
               <h2>2. Services Provided</h2>
               <p>
-                YourBusinessOnline provides web design, web development, SEO services, and related digital marketing services. Specifics of services provided will be outlined in individual client agreements or statements of work.
+                {siteConfig.name} provides web design, web development, SEO services, and related digital marketing services. Specifics of services provided will be outlined in individual client agreements or statements of work.
               </p>
 
               <h2>3. User Responsibilities</h2>
@@ -39,7 +40,7 @@ export default function TermsOfServicePage() {
 
               <h2>4. Intellectual Property</h2>
               <p>
-                All content on this website, including text, graphics, logos, and images, is the property of YourBusinessOnline or its content suppliers and protected by international copyright laws. For client projects, intellectual property rights for the final deliverables will be transferred to the client upon full payment, as specified in the client agreement. We retain the right to showcase work in our portfolio unless otherwise agreed.
+                All content on this website, including text, graphics, logos, and images, is the property of {siteConfig.name} or its content suppliers and protected by international copyright laws. For client projects, intellectual property rights for the final deliverables will be transferred to the client upon full payment, as specified in the client agreement. We retain the right to showcase work in our portfolio unless otherwise agreed.
               </p>
 
               <h2>5. Payment Terms</h2>
@@ -49,7 +50,7 @@ export default function TermsOfServicePage() {
 
               <h2>6. Limitation of Liability</h2>
               <p>
-                YourBusinessOnline will not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or other intangibles, arising from your use of our services or website. Our total liability for any claim arising out of or relating to these terms or our services will not exceed the amount paid by you for the services in question.
+                {siteConfig.name} will not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or other intangibles, arising from your use of our services or website. Our total liability for any claim arising out of or relating to these terms or our services will not exceed the amount paid by you for the services in question.
               </p>
 
               <h2>7. Disclaimer of Warranties</h2>
@@ -74,12 +75,11 @@ export default function TermsOfServicePage() {
 
               <h2>11. Contact Us</h2>
               <p>
-                If you have any questions about these Terms of Service, please contact us at info@yourbusinessonline.dev or by post to:
+                If you have any questions about these Terms of Service, please contact us at {siteConfig.contact.email} or by post to:
               </p>
               <p>
-                YourBusinessOnline<br />
-                123 Web Success Ave<br />
-                SEO City, Digitaland
+                {siteConfig.name}<br />
+                {siteConfig.contact.address}
               </p>
             </CardContent>
           </Card>

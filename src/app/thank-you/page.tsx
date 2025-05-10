@@ -6,9 +6,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Thank You - YourBusinessOnline",
+  title: `Thank You - ${siteConfig.name}`,
   description: "Thank you for your message. We'll be in touch soon!",
 };
 
@@ -24,16 +25,16 @@ export default function ThankYouPage() {
                 <CheckCircle className="h-10 w-10 text-green-600 dark:text-green-400" />
               </div>
               <CardTitle className="text-3xl md:text-4xl font-bold">
-                Message Sent!
+                {siteConfig.thankYouPage.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-lg text-muted-foreground mb-8">
-                Thank you for reaching out to YourBusinessOnline. We have received your message and will get back to you as soon as possible, typically within 1-2 business days.
+                {siteConfig.thankYouPage.description}
               </CardDescription>
-              <Button asChild className="w-full max-w-xs mx-auto">
-                <Link href="/">
-                  Return to Homepage
+              <Button asChild className="w-full max-w-xs mx-auto btn-effect"> {/* Added btn-effect */}
+                <Link href={siteConfig.thankYouPage.buttonLink}>
+                  {siteConfig.thankYouPage.buttonText}
                 </Link>
               </Button>
             </CardContent>

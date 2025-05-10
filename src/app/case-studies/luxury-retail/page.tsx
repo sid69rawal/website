@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Gem, ShoppingCart, Palette, Smartphone, CheckCircle } from "lucide-react"; 
+import { siteConfig } from "@/config/site";
 
 export default function LuxuryRetailCaseStudyPage() {
   return (
@@ -21,7 +22,7 @@ export default function LuxuryRetailCaseStudyPage() {
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
             <Badge variant="secondary" className="mb-2 text-sm">E-Commerce Web Development</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
-              Elevated E-Commerce Platform
+              {siteConfig.caseStudies.luxuryRetail.title}
             </CardTitle>
           </div>
         </div>
@@ -99,8 +100,7 @@ export default function LuxuryRetailCaseStudyPage() {
   );
 }
 
-// Add metadata export for static pages
 export const metadata = {
-  title: "Case Study: Elevated E-Commerce Platform - YourBusinessOnline",
-  description: "Discover how YourBusinessOnline developed a luxury e-commerce platform that increased sales and customer engagement.",
+  title: `Case Study: ${siteConfig.caseStudies.luxuryRetail.title} - ${siteConfig.name}`,
+  description: siteConfig.caseStudies.luxuryRetail.description,
 };

@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { BarChart3, Users, Zap, ShieldCheck, Eye } from "lucide-react"; 
+import { siteConfig } from "@/config/site";
 
 export default function InteractiveDashboardCaseStudyPage() {
   return (
@@ -21,7 +22,7 @@ export default function InteractiveDashboardCaseStudyPage() {
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
             <Badge variant="secondary" className="mb-2 text-sm">SaaS Platform UI/UX</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
-              Data-Driven SaaS Dashboard
+              {siteConfig.caseStudies.interactiveDashboard.title}
             </CardTitle>
           </div>
         </div>
@@ -99,8 +100,7 @@ export default function InteractiveDashboardCaseStudyPage() {
   );
 }
 
-// Add metadata export for static pages
 export const metadata = {
-  title: "Case Study: Data-Driven SaaS Dashboard - YourBusinessOnline",
-  description: "Learn how YourBusinessOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.",
+  title: `Case Study: ${siteConfig.caseStudies.interactiveDashboard.title} - ${siteConfig.name}`,
+  description: siteConfig.caseStudies.interactiveDashboard.description,
 };

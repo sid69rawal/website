@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Target, Lightbulb, Share2, Zap } from "lucide-react"; 
+import { siteConfig } from "@/config/site";
 
 export default function ProductLaunchCaseStudyPage() {
   return (
@@ -21,7 +22,7 @@ export default function ProductLaunchCaseStudyPage() {
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
              <Badge variant="destructive" className="mb-2 text-sm bg-accent/90 text-accent-foreground">Interactive Web Experience</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
-              Tech Product Launch Microsite
+              {siteConfig.caseStudies.productLaunch.title}
             </CardTitle>
           </div>
         </div>
@@ -99,8 +100,7 @@ export default function ProductLaunchCaseStudyPage() {
   );
 }
 
-// Add metadata export for static pages
 export const metadata = {
-  title: "Case Study: Tech Product Launch Microsite - YourBusinessOnline",
-  description: "See how YourBusinessOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.",
+  title: `Case Study: ${siteConfig.caseStudies.productLaunch.title} - ${siteConfig.name}`,
+  description: siteConfig.caseStudies.productLaunch.description,
 };

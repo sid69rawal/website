@@ -1,11 +1,13 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { cn } from '@/lib/utils';
-import { fadeInVariants } from '@/lib/animation'; // Removed slideUpVariants as it's not used
+import { fadeInVariants } from '@/lib/animation';
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 const HeroSection = () => {
   const controls = useAnimation();
@@ -19,7 +21,7 @@ const HeroSection = () => {
       const shapes = shapesRef.current.querySelectorAll('.shape');
       
       shapes.forEach((shapeEl) => {
-        const shape = shapeEl as HTMLElement; // Type assertion
+        const shape = shapeEl as HTMLElement; 
         gsap.to(shape, {
           x: () => gsap.utils.random(-30, 30, 1), 
           y: () => gsap.utils.random(-20, 20, 1),
@@ -49,7 +51,6 @@ const HeroSection = () => {
     <section className="relative h-screen flex items-center justify-center" id="hero">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-primary/10 dark:via-background dark:to-secondary/10 z-0 overflow-hidden">
         <div ref={shapesRef} className="absolute inset-0">
-          {/* Adjusted shape colors to be more subtle and theme-aligned */}
           <div className="shape absolute w-64 h-64 rounded-full bg-primary/5 dark:bg-primary/10 blur-2xl filter" style={{ top: '15%', left: '10%', opacity: 0.4 }}></div>
           <div className="shape absolute w-96 h-96 rounded-full bg-secondary/5 dark:bg-secondary/10 blur-2xl filter" style={{ bottom: '10%', right: '5%', opacity: 0.3 }}></div>
           <div className="shape absolute w-48 h-48 rounded-full bg-accent/5 dark:bg-accent/10 blur-xl filter" style={{ top: '20%', right: '20%', opacity: 0.5 }}></div>
@@ -67,7 +68,7 @@ const HeroSection = () => {
           animate={controls}
           transition={{ delay: 0.3 }}
         >
-          Get Your Business <span className="text-primary">Found on Google</span>
+          {siteConfig.mainHero.titlePart1}<span className="text-primary">{siteConfig.mainHero.titleHighlight}</span>
         </motion.h1>
         
         <motion.p
@@ -78,7 +79,7 @@ const HeroSection = () => {
           animate={controls}
           transition={{ delay: 0.6 }}
         >
-          We build professional websites designed to attract customers, enhance your online presence, and drive business growth through effective SEO strategies.
+          {siteConfig.mainHero.subtitle}
         </motion.p>
         
         <motion.div
@@ -90,23 +91,23 @@ const HeroSection = () => {
           transition={{ delay: 0.9 }}
         >
           <Link 
-            href="#services" 
+            href={siteConfig.mainHero.ctaPrimaryLink}
             className={cn(
               "btn-effect px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-lg hover:shadow-primary/50",
               "font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1"
             )}
           >
-            Our Services
+            {siteConfig.mainHero.ctaPrimaryText}
           </Link>
           
           <Link 
-            href="#contact" 
+            href={siteConfig.mainHero.ctaSecondaryLink}
             className={cn(
-              "px-8 py-3 border-2 border-primary text-primary hover:bg-primary/10 rounded-lg shadow-sm hover:shadow-primary/30",
+              "btn-effect px-8 py-3 border-2 border-primary text-primary hover:bg-primary/10 rounded-lg shadow-sm hover:shadow-primary/30",
               "font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1"
             )}
           >
-            Request a Quote
+            {siteConfig.mainHero.ctaSecondaryText}
           </Link>
         </motion.div>
       </div>

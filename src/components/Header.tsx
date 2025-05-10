@@ -3,18 +3,19 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Import usePathname
+import { usePathname } from 'next/navigation'; 
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from './ThemeToggle'; 
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react'; 
+import { siteConfig } from '@/config/site';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get current pathname
+  const pathname = usePathname(); 
   
   useEffect(() => {
     const handleScroll = () => {
@@ -22,9 +23,13 @@ const Header = () => {
       
       setIsScrolled(scrollTop > 50);
       
+      const isDeepLink = pathname.startsWith('/case-studies') || 
+                         pathname.startsWith(siteConfig.legal.privacyPolicy) || 
+                         pathname.startsWith(siteConfig.legal.termsOfService) ||
+                         pathname.startsWith(siteConfig.formSubmit.thankYouPage);
+
       if (scrollTop > lastScrollTop && scrollTop > 300) {
-        // Only hide if not on a case study page or other specific deep links
-        if (!pathname.startsWith('/case-studies') && !pathname.startsWith('/privacy-policy') && !pathname.startsWith('/terms-of-service')) {
+        if (!isDeepLink) {
              setIsHidden(true);
         }
       } else {
@@ -46,12 +51,7 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
   
-  const navLinks = [
-    { href: "/#services", label: "Services" },
-    { href: "/#showcase", label: "Our Work" },
-    { href: "/#features", label: "Why Us" },
-    { href: "/#contact", label: "Contact" },
-  ];
+  const navLinks = siteConfig.headerNavLinks;
 
   return (
     <motion.header 
@@ -67,14 +67,13 @@ const Header = () => {
       <nav className="container mx-auto px-6 flex items-center justify-between h-16">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-primary transition-transform duration-200 transform hover:scale-105">
-              YourBusinessOnline<span className="text-accent">.</span>
+              {siteConfig.name}<span className="text-accent">.</span>
           </Link>
         </div>
         
         <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
-            // Check if the link is active. For hash links, check if pathname is '/' and hash matches.
-            const isActive = pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1)
+            const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
                               || pathname === link.href;
             return (
               <Link 
@@ -82,7 +81,7 @@ const Header = () => {
                 href={link.href} 
                 className={cn(
                   "font-medium text-sm hover:text-primary transition-colors duration-200",
-                  isActive ? "text-primary font-semibold" : "text-foreground" // Apply active styles
+                  isActive ? "text-primary font-semibold" : "text-foreground" 
                 )}
               >
                 {link.label}
@@ -116,7 +115,7 @@ const Header = () => {
           >
             <div className="px-4 py-3 space-y-2">
               {navLinks.map((link) => {
-                 const isActive = pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1)
+                 const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
                                  || pathname === link.href;
                 return (
                   <Link 

@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - YourBusinessOnline",
-  description: "Read the Privacy Policy of YourBusinessOnline.",
+  title: `Privacy Policy - ${siteConfig.name}`,
+  description: `Read the Privacy Policy of ${siteConfig.name}.`,
 };
 
 export default function PrivacyPolicyPage() {
@@ -24,10 +25,10 @@ export default function PrivacyPolicyPage() {
 
               <h2>1. Introduction</h2>
               <p>
-                Welcome to YourBusinessOnline (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice, or our practices with regards to your personal information, please contact us at info@yourbusinessonline.dev.
+                Welcome to {siteConfig.name} (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice, or our practices with regards to your personal information, please contact us at {siteConfig.contact.email}.
               </p>
               <p>
-                This privacy notice describes how we might use your information if you visit our website at [Your Website URL] or otherwise use our services.
+                This privacy notice describes how we might use your information if you visit our website at {siteConfig.url} or otherwise use our services.
               </p>
 
               <h2>2. Information We Collect</h2>
@@ -76,12 +77,11 @@ export default function PrivacyPolicyPage() {
 
               <h2>9. How Can You Contact Us About This Notice?</h2>
               <p>
-                If you have questions or comments about this notice, you may email us at info@yourbusinessonline.dev or by post to:
+                If you have questions or comments about this notice, you may email us at {siteConfig.contact.email} or by post to:
               </p>
               <p>
-                YourBusinessOnline<br />
-                123 Web Success Ave<br />
-                SEO City, Digitaland
+                {siteConfig.name}<br />
+                {siteConfig.contact.address}
               </p>
             </CardContent>
           </Card>

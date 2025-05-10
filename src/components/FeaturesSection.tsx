@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
@@ -8,8 +9,9 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Search, LayoutTemplate, Smartphone, Zap, Users, ShieldCheck, Type } from 'lucide-react'; // Using Lucide icons
+import { Search, LayoutTemplate, Smartphone, Zap, ShieldCheck } from 'lucide-react'; 
 import type { ElementType } from 'react';
+import { siteConfig } from '@/config/site';
 
 
 if (typeof window !== "undefined" && gsap) {
@@ -75,7 +77,7 @@ const features: FeatureItem[] = [
   },
   {
     id: 5,
-    icon: ShieldCheck, // Changed from Users
+    icon: ShieldCheck, 
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Secure & Reliable Platforms',
@@ -137,7 +139,7 @@ const FeaturesSection = () => {
         onEnter: () => setActiveFeature(feature),
         onEnterBack: () => setActiveFeature(feature),
       });
-      if (st) { // Ensure st is not undefined
+      if (st) { 
         triggers.push(st);
       }
     });
@@ -157,9 +159,9 @@ const FeaturesSection = () => {
           initial="hidden"
           animate={controls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Why Choose Us for Your Website?</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.featuresSection.title}</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            We build high-performance websites that not only look great but are optimized to attract customers through Google and drive your business forward.
+            {siteConfig.featuresSection.subtitle}
           </p>
         </motion.div>
         

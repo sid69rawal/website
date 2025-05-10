@@ -7,8 +7,9 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react'; // Replaced Cubes with Box
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers, Cuboid } from 'lucide-react';
 import type { ElementType } from 'react';
+import { siteConfig } from '@/config/site';
 
 // Define an icon map to ensure bundler picks up the icons correctly
 const iconMap = {
@@ -20,12 +21,13 @@ const iconMap = {
   Settings,
   ArrowRight,
   Package,
-  Box, // Replaced Cubes with Box
+  Box, 
   Palette,
   Code,
   Gauge,
   HelpCircle,
-  Layers
+  Layers,
+  Cuboid // Added Cuboid as potential replacement for Cubes
 };
 
 interface ServiceItem {
@@ -76,7 +78,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: iconMap.Users, // Consider changing to a more relevant icon like 'Target' or 'Briefcase' if 'Users' doesn't fit 'Lead Generation'
+    icon: iconMap.Users, 
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Lead Generation Websites',
@@ -112,14 +114,14 @@ const ServicesSection = () => {
   }, [controls, isIntersecting]);
   
   const getValidIconComponent = (iconInput: ElementType | string | undefined | null, serviceTitle: string): ElementType => {
-    if (typeof iconInput === 'function' || (typeof iconInput === 'object' && iconInput !== null && 'render' in iconInput)) {
+    if (typeof iconInput === 'function' || (typeof iconInput === 'object' && iconInput !== null && ('render' in iconInput || 'displayName' in iconInput) )) { // Added displayName check for some icon libraries
       return iconInput as ElementType;
     }
-    console.error(
-        `Icon input for "${serviceTitle}" is null or undefined. Received type: ${typeof iconInput}, Value:`, 
+    console.warn( // Changed to warn as it's a fallback, not a critical error
+        `Icon input for "${serviceTitle}" is not a valid component. Received type: ${typeof iconInput}, Value:`, 
         iconInput === undefined ? 'undefined' : JSON.stringify(iconInput)
     );
-    return iconMap.Package; 
+    return iconMap.Package; // Fallback to a generic Package icon
   };
 
 
@@ -133,9 +135,9 @@ const ServicesSection = () => {
           initial="hidden"
           animate={controls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Grow Your Business Online</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.servicesSection.title}</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            We provide comprehensive web solutions to help you attract customers, enhance your Google presence, and achieve your business goals.
+            {siteConfig.servicesSection.subtitle}
           </p>
         </motion.div>
 
@@ -146,7 +148,7 @@ const ServicesSection = () => {
           animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = getValidIconComponent(service.icon as ElementType, service.title);
+            const IconComponent = getValidIconComponent(service.icon, service.title);
             
             return (
               <motion.div
@@ -158,11 +160,7 @@ const ServicesSection = () => {
                 variants={slideUpVariants}
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
-                  {IconComponent ? (
-                     <IconComponent className={cn("w-8 h-8", service.iconColor)} />
-                  ) : (
-                    <iconMap.Package className={cn("w-8 h-8", service.iconColor)} /> // Fallback icon
-                  )}
+                  <IconComponent className={cn("w-8 h-8", service.iconColor)} />
                 </div>
                 <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
                 <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">

@@ -5,27 +5,20 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Twitter, Github, Linkedin, MapPin, Phone, Mail } from 'lucide-react'; 
+import { siteConfig } from '@/config/site';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { href: "#", icon: <Twitter className="h-5 w-5" />, label: "Twitter" },
-    { href: "https://github.com/yourbusinessonline", icon: <Github className="h-5 w-5" />, label: "GitHub" }, // Example link
-    { href: "https://linkedin.com/company/yourbusinessonline", icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn" }, // Example link
-  ];
-
-  const serviceLinks = [
-    { href: "/#services", label: "Custom Web Design" },
-    { href: "/#services", label: "SEO & Google Ranking" },
-    { href: "/#services", label: "Responsive Development" },
-    { href: "/#features", label: "Lead Generation Sites" },
-    { href: "/#contact", label: "E-commerce Solutions" },
+    { href: siteConfig.links.twitter, icon: <Twitter className="h-5 w-5" />, label: "Twitter" },
+    { href: siteConfig.links.github, icon: <Github className="h-5 w-5" />, label: "GitHub" },
+    { href: siteConfig.links.linkedin, icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn" },
   ];
 
   const legalLinks = [
-    { href: "/privacy-policy", label: "Privacy Policy" },
-    { href: "/terms-of-service", label: "Terms of Service" },
+    { href: siteConfig.legal.privacyPolicy, label: "Privacy Policy" },
+    { href: siteConfig.legal.termsOfService, label: "Terms of Service" },
   ];
 
   return (
@@ -35,10 +28,10 @@ const Footer = () => {
           {/* Column 1: Brand and Social */}
           <div className="md:col-span-2 lg:col-span-1">
             <Link href="/" className="text-3xl font-bold flex items-center mb-4 text-white">
-                YourBusinessOnline<span className="text-accent">.</span>
+                {siteConfig.name}<span className="text-accent">.</span>
             </Link>
             <p className="text-gray-400 mb-6 text-sm leading-relaxed max-w-xs">
-              Helping businesses thrive online with expert website design, development, and SEO strategies focused on attracting customers via Google.
+              {siteConfig.description.substring(0, 150) + "..."} {/* Shortened description */}
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => (
@@ -62,7 +55,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-white mb-5">Our Services</h4>
             <ul className="space-y-3">
-              {serviceLinks.map(link => (
+              {siteConfig.footerServiceLinks.map(link => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-sm text-gray-400 hover:text-primary transition-colors duration-200 hover:underline">
                     {link.label}
@@ -78,18 +71,18 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start text-gray-400">
                 <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
-                <span>123 Web Success Ave, SEO City, Digitaland</span>
+                <span>{siteConfig.contact.address}</span>
               </li>
               <li className="flex items-center text-gray-400">
                 <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href="tel:+15559876543" className="hover:text-primary transition-colors duration-200 hover:underline">
-                  +1 (555) 987-6543
+                <a href={`tel:${siteConfig.contact.phone}`} className="hover:text-primary transition-colors duration-200 hover:underline">
+                  {siteConfig.contact.phone}
                 </a>
               </li>
               <li className="flex items-center text-gray-400">
                 <Mail className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href="mailto:info@yourbusinessonline.dev" className="hover:text-primary transition-colors duration-200 hover:underline">
-                  info@yourbusinessonline.dev
+                <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-primary transition-colors duration-200 hover:underline">
+                  {siteConfig.contact.email}
                 </a>
               </li>
             </ul>
@@ -109,7 +102,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
           <p className="text-gray-500 mb-4 md:mb-0">
-            &copy; {currentYear} YourBusinessOnline. All rights reserved.
+            &copy; {currentYear} {siteConfig.name}. All rights reserved.
           </p>
           <ul className="flex space-x-6">
             {legalLinks.map(link => (

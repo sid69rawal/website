@@ -1,7 +1,7 @@
 
 'use client'; // Required for usePathname
 
-import type { Metadata } from "next"; // Metadata can still be exported from client components
+import type { Metadata } from "next"; 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -17,9 +17,13 @@ import {
 import { ChevronLeft, Home } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { siteConfig } from "@/config/site"; // Import siteConfig
 
-// export const metadata: Metadata = { // Metadata needs to be defined in a server component or page.tsx
-//   title: "Client Success Stories - YourBusinessOnline",
+// This metadata would ideally be dynamic based on the specific case study page.
+// For a layout, it's better to set general metadata in page.tsx of the specific case studies
+// or in the individual case study pages.
+// export const metadata: Metadata = { 
+//   title: `Client Success Stories - ${siteConfig.name}`,
 //   description: "Discover how we've helped businesses like yours succeed online with our expert web design and SEO services.",
 // };
 
