@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
-import type { ElementType } from 'react'; // Added import for ElementType
+import type { ElementType } from 'react'; 
 import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,7 +11,7 @@ import { slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award, Users, BarChart3 as BarChartIcon } from 'lucide-react'; // Updated icons
+import { Award, Users, BarChart3 as BarChartIcon } from 'lucide-react'; 
 
 if (typeof window !== "undefined" && gsap) {
   gsap.registerPlugin(ScrollTrigger);
@@ -29,7 +30,7 @@ interface ShowcaseProject {
   imageAlt: string;
   type: 'parallax' | 'card3d' | 'gradient';
   dataAiHint?: string;
-  icon?: ElementType; // Optional icon for the project card
+  icon?: ElementType; 
 }
 
 const showcaseProjects: ShowcaseProject[] = [
@@ -43,7 +44,7 @@ const showcaseProjects: ShowcaseProject[] = [
     buttonLink: '/case-studies/luxury-retail',
     buttonColor: 'bg-primary hover:bg-primary/90 text-primary-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80',
-    imageAlt: 'Team collaborating on a website design project',
+    imageAlt: 'Team collaborating on a website design project for a luxury brand',
     type: 'parallax',
     dataAiHint: 'web design team',
     icon: Users,
@@ -58,7 +59,7 @@ const showcaseProjects: ShowcaseProject[] = [
     buttonLink: '/case-studies/interactive-dashboard',
     buttonColor: 'bg-secondary hover:bg-secondary/90 text-secondary-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80',
-    imageAlt: 'Modern data dashboard on a computer screen',
+    imageAlt: 'Modern data dashboard showing charts and graphs on a computer screen',
     type: 'card3d',
     dataAiHint: 'saas dashboard',
     icon: BarChartIcon,
@@ -73,7 +74,7 @@ const showcaseProjects: ShowcaseProject[] = [
     buttonLink: '/case-studies/product-launch',
     buttonColor: 'bg-accent hover:bg-accent/90 text-accent-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80',
-    imageAlt: 'Futuristic technology product interface',
+    imageAlt: 'Futuristic technology product interface on a sleek device',
     type: 'gradient',
     dataAiHint: 'tech product',
     icon: Award,
@@ -164,7 +165,7 @@ const ShowcaseSection = () => {
               transition={{ delay: 0.15 * index, duration: 0.6 }}
             >
               {project.type === 'parallax' && (
-                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
                   <div className="parallax-container relative h-[400px] md:h-[500px] overflow-hidden group">
                     <div 
                       className="parallax-layer absolute inset-0"
@@ -277,7 +278,7 @@ const ShowcaseSection = () => {
               )}
               
               {project.type === 'gradient' && (
-                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
                   <div className="grid grid-cols-1 md:grid-cols-5 items-center">
                     <div className="md:col-span-3 h-64 md:h-[450px] relative group">
                       <Image 

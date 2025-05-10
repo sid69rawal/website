@@ -1,4 +1,4 @@
-"use client" // Needs client-side Radix component
+"use client"; // Needs client-side Radix component
 
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
 

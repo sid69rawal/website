@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, Users, Zap, ShieldCheck, Eye } from "lucide-react"; // Updated icons
+import { BarChart3, Users, Zap, ShieldCheck, Eye } from "lucide-react"; 
 
 export default function InteractiveDashboardCaseStudyPage() {
   return (
@@ -11,7 +11,7 @@ export default function InteractiveDashboardCaseStudyPage() {
         <div className="relative h-64 md:h-96">
           <Image
             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80"
-            alt="SaaS Analytics Dashboard Interface"
+            alt="SaaS Analytics Dashboard Interface showing various charts and graphs"
             data-ai-hint="saas dashboard"
             fill
             style={{ objectFit: 'cover' }}
@@ -98,3 +98,9 @@ export default function InteractiveDashboardCaseStudyPage() {
     </Card>
   );
 }
+
+// Add metadata export for static pages
+export const metadata = {
+  title: "Case Study: Data-Driven SaaS Dashboard - YourBusinessOnline",
+  description: "Learn how YourBusinessOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.",
+};

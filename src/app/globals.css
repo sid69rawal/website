@@ -25,6 +25,16 @@
   --destructive-foreground: 60 9.1% 97.8%;
   --ring: 20 14.3% 4.1%;
   --radius: 0.5rem;
+
+  /* New Semantic Colors - Light Theme */
+  --success: 145 63% 42%;
+  --success-foreground: 0 0% 100%;
+  --warning: 45 93% 47%;
+  --warning-foreground: 20 14.3% 4.1%;
+  --info: 210 70% 50%;
+  --info-foreground: 0 0% 100%;
+  --error: 0 72% 51%; /* Consistent with destructive, but can be distinct if needed */
+  --error-foreground: 0 0% 100%;
 }
 
 .dark {
@@ -48,6 +58,16 @@
   --destructive-foreground: 0 0% 98%;
   --ring: 240 4.9% 83.9%;
   --radius: 0.5rem;
+
+  /* New Semantic Colors - Dark Theme */
+  --success: 145 50% 48%;
+  --success-foreground: 0 0% 98%;
+  --warning: 45 70% 55%;
+  --warning-foreground: 20 14.3% 4.1%; /* Keeping dark text on yellow for accessibility */
+  --info: 210 65% 55%;
+  --info-foreground: 0 0% 98%;
+  --error: 0 60% 55%;
+  --error-foreground: 0 0% 98%;
 }
 
 @layer base {
@@ -63,6 +83,12 @@
     font-family: 'Inter', sans-serif;
     @apply font-sans antialiased bg-background text-foreground;
   }
+
+  h1 { @apply text-4xl font-extrabold tracking-tight lg:text-5xl xl:text-6xl; } /* Emphasize h1 more */
+  h2 { @apply text-3xl font-bold tracking-tight lg:text-4xl; }
+  h3 { @apply text-2xl font-semibold tracking-tight lg:text-3xl; }
+  h4 { @apply text-xl font-semibold tracking-tight lg:text-2xl; }
+  p { @apply leading-7; }
 }
 
 @layer components {
@@ -75,7 +101,7 @@
   }
   
   .card-hover:hover {
-    @apply transform -translate-y-1 shadow-xl;
+    @apply transform -translate-y-1 shadow-xl dark:shadow-primary/20; /* Adjusted shadow for dark mode */
   }
   
   .btn-effect {

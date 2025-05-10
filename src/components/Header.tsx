@@ -1,9 +1,11 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // Import usePathname
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle'; // Corrected import path
+import ThemeToggle from './ThemeToggle';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react'; 
 
@@ -12,6 +14,7 @@ const Header = () => {
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get current pathname
   
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +23,10 @@ const Header = () => {
       setIsScrolled(scrollTop > 50);
       
       if (scrollTop > lastScrollTop && scrollTop > 300) {
-        setIsHidden(true);
+        // Only hide if not on a case study page or other specific deep links
+        if (!pathname.startsWith('/case-studies') && !pathname.startsWith('/privacy-policy') && !pathname.startsWith('/terms-of-service')) {
+             setIsHidden(true);
+        }
       } else {
         setIsHidden(false);
       }
@@ -30,7 +36,7 @@ const Header = () => {
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollTop]);
+  }, [lastScrollTop, pathname]);
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -41,10 +47,10 @@ const Header = () => {
   };
   
   const navLinks = [
-    { href: "#services", label: "Services" },
-    { href: "#showcase", label: "Our Work" },
-    { href: "#features", label: "Why Us" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#services", label: "Services" },
+    { href: "/#showcase", label: "Our Work" },
+    { href: "/#features", label: "Why Us" },
+    { href: "/#contact", label: "Contact" },
   ];
 
   return (
@@ -66,11 +72,23 @@ const Header = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-6">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="font-medium text-sm hover:text-primary transition-colors duration-200">
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            // Check if the link is active. For hash links, check if pathname is '/' and hash matches.
+            const isActive = pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1)
+                              || pathname === link.href;
+            return (
+              <Link 
+                key={link.href} 
+                href={link.href} 
+                className={cn(
+                  "font-medium text-sm hover:text-primary transition-colors duration-200",
+                  isActive ? "text-primary font-semibold" : "text-foreground" // Apply active styles
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <ThemeToggle />
         </div>
         
@@ -97,17 +115,24 @@ const Header = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <div className="px-4 py-3 space-y-2">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.href} 
-                  href={link.href} 
-                  className="block font-medium py-2 text-foreground hover:text-primary transition-colors duration-200"
-                  onClick={closeMobileMenu}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="pt-2">
+              {navLinks.map((link) => {
+                 const isActive = pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1)
+                                 || pathname === link.href;
+                return (
+                  <Link 
+                    key={link.href} 
+                    href={link.href} 
+                    className={cn(
+                      "block font-medium py-2 hover:text-primary transition-colors duration-200",
+                      isActive ? "text-primary font-semibold" : "text-foreground"
+                    )}
+                    onClick={closeMobileMenu}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <div className="pt-2 border-t border-border mt-2">
                 <ThemeToggle isMobile />
               </div>
             </div>

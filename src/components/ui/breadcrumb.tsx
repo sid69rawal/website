@@ -1,3 +1,5 @@
+"use client"; // For potential use with client-side navigation hooks
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
@@ -80,7 +82,7 @@ const BreadcrumbSeparator = ({
   <li
     role="presentation"
     aria-hidden="true"
-    className={cn("[&>svg]:size-3.5", className)} // Use size utility class
+    className={cn("[&>svg]:size-3.5", className)} 
     {...props}
   >
     {children ?? <ChevronRight />}
@@ -102,7 +104,7 @@ const BreadcrumbEllipsis = ({
     <span className="sr-only">More</span>
   </span>
 )
-BreadcrumbEllipsis.displayName = "BreadcrumbElipssis" // Corrected typo: Ellipsis
+BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {
   Breadcrumb,

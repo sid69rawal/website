@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Rocket, Target, Lightbulb, Share2, Zap } from "lucide-react"; // Updated icons
+import { Rocket, Target, Lightbulb, Share2, Zap } from "lucide-react"; 
 
 export default function ProductLaunchCaseStudyPage() {
   return (
@@ -11,7 +11,7 @@ export default function ProductLaunchCaseStudyPage() {
         <div className="relative h-64 md:h-96">
           <Image
             src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
-            alt="Tech Product Launch Website Interface"
+            alt="Interactive tech product launch website interface on a screen"
             data-ai-hint="tech launch"
             fill
             style={{ objectFit: 'cover' }}
@@ -98,3 +98,9 @@ export default function ProductLaunchCaseStudyPage() {
     </Card>
   );
 }
+
+// Add metadata export for static pages
+export const metadata = {
+  title: "Case Study: Tech Product Launch Microsite - YourBusinessOnline",
+  description: "See how YourBusinessOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.",
+};

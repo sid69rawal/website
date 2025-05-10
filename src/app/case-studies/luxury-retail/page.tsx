@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Gem, ShoppingCart, Palette, Smartphone, CheckCircle } from "lucide-react"; // Updated icons
+import { Gem, ShoppingCart, Palette, Smartphone, CheckCircle } from "lucide-react"; 
 
 export default function LuxuryRetailCaseStudyPage() {
   return (
@@ -11,7 +11,7 @@ export default function LuxuryRetailCaseStudyPage() {
         <div className="relative h-64 md:h-96">
           <Image
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
-            alt="Luxury fashion e-commerce website on a laptop"
+            alt="Luxury fashion e-commerce website displayed on a laptop, showcasing elegant design"
             data-ai-hint="luxury ecommerce"
             fill
             style={{ objectFit: 'cover' }}
@@ -98,3 +98,9 @@ export default function LuxuryRetailCaseStudyPage() {
     </Card>
   );
 }
+
+// Add metadata export for static pages
+export const metadata = {
+  title: "Case Study: Elevated E-Commerce Platform - YourBusinessOnline",
+  description: "Discover how YourBusinessOnline developed a luxury e-commerce platform that increased sales and customer engagement.",
+};
