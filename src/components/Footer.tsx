@@ -1,32 +1,31 @@
+
 "use client";
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Twitter, Dribbble, Github, Linkedin, MapPin, Phone, Mail, Search, LayoutTemplate, Smartphone } from 'lucide-react'; // Added relevant icons
+import { Twitter, Github, Linkedin, MapPin, Phone, Mail } from 'lucide-react'; 
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     { href: "#", icon: <Twitter className="h-5 w-5" />, label: "Twitter" },
-    // { href: "#", icon: <Dribbble className="h-5 w-5" />, label: "Dribbble" }, // Removed Dribbble as it's design-specific
-    { href: "#", icon: <Github className="h-5 w-5" />, label: "GitHub" },
-    { href: "#", icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn" },
+    { href: "https://github.com/yourbusinessonline", icon: <Github className="h-5 w-5" />, label: "GitHub" }, // Example link
+    { href: "https://linkedin.com/company/yourbusinessonline", icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn" }, // Example link
   ];
 
   const serviceLinks = [
-    { href: "#services", label: "Custom Web Design" },
-    { href: "#services", label: "SEO & Google Ranking" },
-    { href: "#services", label: "Responsive Development" },
-    { href: "#services", label: "Lead Generation Sites" },
-    { href: "#services", label: "E-commerce Solutions" },
+    { href: "/#services", label: "Custom Web Design" },
+    { href: "/#services", label: "SEO & Google Ranking" },
+    { href: "/#services", label: "Responsive Development" },
+    { href: "/#features", label: "Lead Generation Sites" },
+    { href: "/#contact", label: "E-commerce Solutions" },
   ];
 
   const legalLinks = [
-    { href: "#", label: "Privacy Policy" },
-    { href: "#", label: "Terms of Service" },
-    // { href: "#", label: "Cookies" }, // Optional
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms-of-service", label: "Terms of Service" },
   ];
 
   return (
