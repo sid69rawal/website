@@ -470,7 +470,7 @@ SidebarGroupLabel.displayName = "SidebarGroupLabel"
 
 const SidebarGroupAction = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean; showOnHover?: boolean; } // Changed from ComponentProps
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean; showOnHover?: boolean; }
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
 
@@ -536,53 +536,69 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding,color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!p-0 [&>span:last-child]:truncate group-data-[collapsible=icon]:[&>span:last-child]:hidden [&>svg]:size-4 [&>svg]:shrink-0", // Updated icon states
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding,color,background-color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!p-0 [&>span:last-child]:truncate group-data-[collapsible=icon]:[&>span:last-child]:hidden [&>svg]:size-4 [&>svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default: "text-sidebar-foreground",
+        outline:
+          "bg-transparent border border-sidebar-border shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] data-[active=true]:border-sidebar-accent",
+      },
+      size: {
+        default: "h-8 text-sm",
+        sm: "h-7 text-xs",
+        lg: "h-12 text-sm group-data-[collapsible=icon]:!size-12",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
 );
 
 type SidebarMenuButtonProps = {
   asChild?: boolean;
   isActive?: boolean;
   tooltip?: string | React.ComponentProps<typeof TooltipContent>;
-  size?: "default" | "sm" | "lg";
-  variant?: "default" | "outline";
-} & VariantProps<typeof sidebarMenuButtonVariants> &
+} & VariantProps<typeof sidebarMenuButtonVariants> & // This provides 'variant' and 'size' from cva
   (
-    | (React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: never }) // Button props, explicitly no href
-    | (React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) // Anchor props, href is required
+    | (React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: never })
+    | (React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string })
   );
 
 const SidebarMenuButton = React.forwardRef<
-  HTMLButtonElement | HTMLAnchorElement, // Allow button or anchor
+  HTMLButtonElement | HTMLAnchorElement,
   SidebarMenuButtonProps
 >(
   (
     {
       asChild = false,
       isActive = false,
-      variant = "default",
-      size = "default",
+      variant, // Now correctly typed by VariantProps
+      size,    // Now correctly typed by VariantProps
       tooltip,
       className,
       ...props
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : (props as any).href ? "a" : "button"; // Detect if it should be an anchor
+    const Comp = asChild ? Slot : (props as any).href ? "a" : "button";
     const { isMobile, state } = useSidebar();
     const isIconOnly = state === 'collapsed';
 
     const buttonContent = (
       <Comp
-        ref={ref as any} // Need to cast ref type based on Comp
+        ref={ref as any}
         data-sidebar="menu-button"
         data-size={size}
- data-active={isActive}
- className={cn([sidebarMenuButtonVariants({ variant, size }), className])}
-        {...props as any} // Spread remaining props, cast to any for now due to union complexity
+        data-active={isActive}
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+        {...props as any}
       />
     );
 
-    if (!tooltip || (isIconOnly && !isMobile)) { // Show tooltip only when icon-only and not on mobile
+    if (!tooltip || (isIconOnly && !isMobile)) {
         return buttonContent;
     }
 
@@ -595,32 +611,14 @@ const SidebarMenuButton = React.forwardRef<
         <TooltipContent
           side="right"
           align="center"
-          alignOffset={4} // Adjust offset slightly
-          className="capitalize" // Often useful for single-word labels
+          alignOffset={4}
+          className="capitalize"
           {...tooltipContentProps}
         />
       </Tooltip>
     );
   }
 );
-sidebarMenuButtonVariants({ // Moved variants definition here
-  variants: {
-    variant: {
-      default: "text-sidebar-foreground", // Base color
-      outline:
-          "bg-transparent border border-sidebar-border shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] data-[active=true]:border-sidebar-accent",
-    },
-    size: {
-      default: "h-8 text-sm",
-      sm: "h-7 text-xs",
-      lg: "h-12 text-sm group-data-[collapsible=icon]:!size-12", // Adjusted icon size for lg
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
 SidebarMenuButton.displayName = "SidebarMenuButton";
 
 
@@ -628,7 +626,7 @@ const SidebarMenuAction = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & { 
     asChild?: boolean;
-    showOnHover?: boolean; // Added showOnHover to the type definition
+    showOnHover?: boolean;
   }
 >(({ className, asChild = false, showOnHover = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
