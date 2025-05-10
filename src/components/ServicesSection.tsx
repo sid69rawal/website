@@ -7,7 +7,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Layers, Code, Package, SquareCode, Gauge, Palette, HelpCircle, ArrowRight } from 'lucide-react'; // Replaced Cubes with Package
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package } from 'lucide-react';
 import type { ElementType } from 'react';
 
 interface ServiceItem {
@@ -22,57 +22,57 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    icon: Layers,
+    icon: LayoutTemplate,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
-    title: 'CSS Animation Mastery',
-    description: 'High-performance animations using GPU-accelerated properties like transform and opacity for buttery-smooth 60fps experiences.',
-    link: '#features',
+    title: 'Custom Website Design',
+    description: 'Professionally designed, user-friendly websites tailored to your brand, built to convert visitors into customers.',
+    link: '#contact',
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Code,
+    icon: Search,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
-    title: 'GSAP Timeline Magic',
-    description: 'Complex, sequence-based animations with precise control using the industry-leading GreenSock Animation Platform.',
-    link: '#features',
+    title: 'SEO & Google Visibility',
+    description: 'Improve your search engine rankings and get found by more customers on Google with our expert SEO strategies.',
+    link: '#contact',
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Package, // Using Package icon
+    icon: Smartphone,
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
-    title: 'Three.js 3D Experiences',
-    description: 'Immersive WebGL-powered 3D scenes and interactive elements that create memorable, engaging experiences.',
-    link: '#features',
+    title: 'Responsive Development',
+    description: 'Websites that look and perform beautifully on all devices – desktops, tablets, and smartphones – for a seamless user experience.',
+    link: '#contact',
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: SquareCode,
+    icon: TrendingUp,
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
-    title: 'Lottie Vector Animations',
-    description: 'Crisp, resolution-independent animations exported from After Effects for lightweight, scalable motion graphics.',
-    link: '#features',
+    title: 'Conversion Rate Optimization',
+    description: 'We analyze user behavior and optimize your website design and content to turn more visitors into paying customers.',
+    link: '#contact',
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: Gauge,
+    icon: Users,
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
-    title: 'Performance Optimization',
-    description: 'Animation auditing and optimization to ensure sub-2.5s LCP and smooth 60fps performance across all devices.',
-    link: '#features',
+    title: 'Lead Generation Websites',
+    description: 'Strategically designed websites focused on capturing leads and growing your customer base effectively.',
+    link: '#contact',
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: Palette,
+    icon: Settings, // Using Settings as a generic "Maintenance/Support" icon
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
-    title: 'Motion Design Systems',
-    description: 'Cohesive animation libraries with standardized timings, easings, and patterns that reinforce your brand identity.',
-    link: '#features',
+    title: 'Website Maintenance & Support',
+    description: 'Ongoing support and maintenance services to keep your website secure, up-to-date, and performing optimally.',
+    link: '#contact',
     linkColor: 'text-accent hover:text-accent/80'
   }
 ];
@@ -92,6 +92,15 @@ const ServicesSection = () => {
       controls.start('visible');
     }
   }, [controls, isIntersecting]);
+  
+  const getValidIconComponent = (iconInput: ElementType | string | undefined, serviceTitle: string): ElementType => {
+    if (typeof iconInput === 'function') {
+      return iconInput;
+    }
+    console.error(`Icon input for "${serviceTitle}" is not a valid component. Received:`, iconInput);
+    return Package; // Fallback icon
+  };
+
 
   return (
     <section id="services" className="py-24 bg-background dark:bg-gray-950 theme-transition">
@@ -103,9 +112,9 @@ const ServicesSection = () => {
           initial="hidden"
           animate={controls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Our Animation Services</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Grow Your Business Online</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Leveraging cutting-edge technology to create immersive, performant animations that elevate your brand.
+            We provide comprehensive web solutions to help you attract customers, enhance your Google presence, and achieve your business goals.
           </p>
         </motion.div>
 
@@ -116,7 +125,15 @@ const ServicesSection = () => {
           animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = service.icon; // Directly use the icon from the service object
+            const IconComponent = getValidIconComponent(service.icon, service.title);
+            if (!IconComponent) {
+              console.error(`Icon for service "${service.title}" is undefined.`);
+              return (
+                <motion.div key={index} className="text-red-500 p-4 border border-red-500 rounded-lg">
+                  Error: Icon for "{service.title}" is missing.
+                </motion.div>
+              );
+            }
 
             return (
               <motion.div

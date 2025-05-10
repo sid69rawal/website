@@ -9,7 +9,7 @@ import { slideUpVariants } from '@/lib/animation';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Award } from 'lucide-react'; // Using Lucide icon
+import { Award, Users, BarChart3 as BarChartIcon } from 'lucide-react'; // Updated icons
 
 if (typeof window !== "undefined" && gsap) {
   gsap.registerPlugin(ScrollTrigger);
@@ -22,56 +22,60 @@ interface ShowcaseProject {
   description: string;
   tags: string[];
   buttonText: string;
-  buttonLink: string; // Added for Next.js Link
+  buttonLink: string;
   buttonColor: string;
   imageSrc: string;
-  imageAlt: string; // Added for accessibility
+  imageAlt: string;
   type: 'parallax' | 'card3d' | 'gradient';
   dataAiHint?: string;
+  icon?: ElementType; // Optional icon for the project card
 }
 
 const showcaseProjects: ShowcaseProject[] = [
   {
     id: 1,
-    title: 'Luxury Retail Experience',
-    subtitle: 'E-Commerce Animation Suite',
-    description: 'A complete animation system for a high-end fashion brand, featuring scroll-triggered product reveals, micro-interactions on all UI elements, and a 3D product viewer.',
-    tags: ['GSAP', 'Three.js', '60fps Performance'],
+    title: 'Elevated E-Commerce Platform',
+    subtitle: 'Luxury Brand Website Redesign',
+    description: 'Transformed an online fashion store with a sophisticated redesign, focusing on user experience and product showcasing to boost engagement and sales. Implemented custom features and a mobile-first approach.',
+    tags: ['Web Development', 'UX/UI Design', 'E-Commerce', 'Mobile Responsive'],
     buttonText: 'View Case Study',
     buttonLink: '/case-studies/luxury-retail',
     buttonColor: 'bg-primary hover:bg-primary/90 text-primary-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80',
-    imageAlt: 'Team collaborating on a project in a modern office',
+    imageAlt: 'Team collaborating on a website design project',
     type: 'parallax',
-    dataAiHint: 'team collaboration'
+    dataAiHint: 'web design team',
+    icon: Users,
   },
   {
     id: 2,
-    title: 'Interactive Dashboard UI',
-    subtitle: 'Data Visualization Motion',
-    description: 'Data visualization animations that bring complex analytics to life with fluid transitions, responsive charts, and interactive filtering controls.',
-    tags: ['Framer Motion', 'D3.js', 'Accessibility'],
+    title: 'Data-Driven SaaS Dashboard',
+    subtitle: 'Analytics Platform UI/UX',
+    description: 'Developed a user-friendly and intuitive dashboard for a SaaS analytics platform, enabling users to easily understand complex data and gain actionable insights. Focused on performance and scalability.',
+    tags: ['Web Application', 'UI/UX Design', 'Data Visualization', 'SaaS'],
     buttonText: 'Explore Dashboard',
     buttonLink: '/case-studies/interactive-dashboard',
     buttonColor: 'bg-secondary hover:bg-secondary/90 text-secondary-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80',
-    imageAlt: 'Interactive data dashboard on a screen',
+    imageAlt: 'Modern data dashboard on a computer screen',
     type: 'card3d',
-    dataAiHint: 'data dashboard'
+    dataAiHint: 'saas dashboard',
+    icon: BarChartIcon,
   },
   {
     id: 3,
-    title: 'Immersive Product Launch',
-    subtitle: 'WebGL & Storytelling',
-    description: 'A WebGL-powered 3D experience showcasing a new tech product with interactive elements, gesture controls, and seamless page transitions for impactful storytelling.',
-    tags: ['Three.js', 'GSAP', 'Lottie'],
-    buttonText: 'Discover Product',
+    title: 'Tech Product Launch Microsite',
+    subtitle: 'Interactive Web Experience',
+    description: 'Created a captivating microsite for a new technology product launch, designed to generate excitement, clearly communicate features, and drive pre-orders through an engaging user journey.',
+    tags: ['Web Design', 'Lead Generation', 'Interactive Content', 'Product Marketing'],
+    buttonText: 'Discover Product Site',
     buttonLink: '/case-studies/product-launch',
     buttonColor: 'bg-accent hover:bg-accent/90 text-accent-foreground',
     imageSrc: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80',
-    imageAlt: 'Abstract technology background with glowing lines',
+    imageAlt: 'Futuristic technology product interface',
     type: 'gradient',
-    dataAiHint: 'abstract technology'
+    dataAiHint: 'tech product',
+    icon: Award,
   }
 ];
 
@@ -80,7 +84,7 @@ const ShowcaseSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   
   const { entry, isIntersecting } = useIntersectionObserver(sectionRef, {
-    threshold: 0.05, // Lower threshold for earlier animation start
+    threshold: 0.05, 
     rootMargin: '-50px',
     freezeOnceVisible: true,
   });
@@ -91,9 +95,8 @@ const ShowcaseSection = () => {
     }
   }, [sectionControls, isIntersecting]);
   
-  // Individual project refs for GSAP parallax
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  projectRefs.current = []; // Clear on re-renders before collecting refs
+  projectRefs.current = []; 
 
   const addToRefs = (el: HTMLDivElement | null) => {
     if (el && !projectRefs.current.includes(el)) {
@@ -110,24 +113,25 @@ const ShowcaseSection = () => {
         const parallaxLayer = projectRef.querySelector('.parallax-layer') as HTMLElement;
         if (!parallaxLayer) return;
         
-        const st = gsap.to(parallaxLayer, {
-          yPercent: 20, // Use yPercent for smoother parallax
+        const stInstance = gsap.to(parallaxLayer, { // Renamed to avoid conflict
+          yPercent: 20, 
           ease: 'none',
           scrollTrigger: {
             trigger: projectRef,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 0.5, // Smoother scrubbing
-            // markers: process.env.NODE_ENV === 'development',
+            scrub: 0.5, 
           }
         });
-        triggers.push(st.scrollTrigger!);
+        if (stInstance.scrollTrigger) { // Check if scrollTrigger exists
+            triggers.push(stInstance.scrollTrigger);
+        }
       }
     });
     return () => {
       triggers.forEach(trigger => trigger.kill());
     }
-  }, [isIntersecting]); // Re-run if section becomes visible, in case refs weren't ready
+  }, [isIntersecting]); 
   
   return (
     <section id="showcase" className="py-24 bg-muted/20 dark:bg-gray-950 theme-transition relative overflow-hidden">
@@ -139,30 +143,31 @@ const ShowcaseSection = () => {
           initial="hidden"
           animate={sectionControls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Our Animation Showcase</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Websites That Deliver Results</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Explore our portfolio of performant, engaging web animations that drive results.
+            Explore our portfolio of custom websites designed to attract customers and grow businesses.
           </p>
         </motion.div>
         
         <div className="space-y-20 md:space-y-24">
-          {showcaseProjects.map((project, index) => (
+          {showcaseProjects.map((project, index) => {
+            const IconComponent = project.icon;
+            return (
             <motion.div 
               key={project.id}
               ref={addToRefs}
               className="showcase-item"
-              variants={slideUpVariants} // Each project card animates up
+              variants={slideUpVariants}
               initial="hidden"
-              animate={sectionControls} // Controlled by the main section intersection
-              transition={{ delay: 0.15 * index, duration: 0.6 }} // Staggered delay
+              animate={sectionControls}
+              transition={{ delay: 0.15 * index, duration: 0.6 }}
             >
-              {/* Parallax Card */}
               {project.type === 'parallax' && (
                 <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
                   <div className="parallax-container relative h-[400px] md:h-[500px] overflow-hidden group">
                     <div 
                       className="parallax-layer absolute inset-0"
-                      style={{ willChange: 'transform' }} // GPU acceleration hint
+                      style={{ willChange: 'transform' }}
                     >
                       <Image
                         src={project.imageSrc}
@@ -175,8 +180,9 @@ const ShowcaseSection = () => {
                         priority={index === 0}
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
                     <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
+                      {IconComponent && <IconComponent className="h-8 w-8 text-white/80 mb-2" />}
                       <h3 className="text-2xl md:text-3xl font-semibold text-white drop-shadow-md">{project.subtitle}</h3>
                     </div>
                   </div>
@@ -192,7 +198,7 @@ const ShowcaseSection = () => {
                           key={tag}
                           className={cn(
                             "px-3 py-1.5 rounded-full text-xs font-medium",
-                            "bg-primary/10 text-primary dark:bg-primary/20" // Simplified common tag style
+                            "bg-primary/10 text-primary dark:bg-primary/20"
                           )}
                         >
                           {tag}
@@ -213,10 +219,9 @@ const ShowcaseSection = () => {
                 </div>
               )}
               
-              {/* 3D Card */}
               {project.type === 'card3d' && (
                 <div 
-                  className="card-3d bg-card dark:bg-gray-800 rounded-xl shadow-2xl perspective-1000 hover:shadow-primary/30"
+                  className="card-3d bg-card dark:bg-gray-800 rounded-xl shadow-2xl perspective-1000 hover:shadow-secondary/30"
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   <div 
@@ -225,6 +230,7 @@ const ShowcaseSection = () => {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center">
                       <div className="p-6 md:p-8 order-2 md:order-1">
+                        {IconComponent && <IconComponent className="h-7 w-7 text-secondary mb-3" />}
                         <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h3>
                         <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed">
                           {project.description}
@@ -253,7 +259,7 @@ const ShowcaseSection = () => {
                           {project.buttonText}
                         </Link>
                       </div>
-                      <div className="h-64 md:h-full order-1 md:order-2 rounded-t-lg md:rounded-r-lg md:rounded-t-none overflow-hidden">
+                      <div className="h-64 md:h-full order-1 md:order-2 rounded-t-lg md:rounded-r-lg md:rounded-t-none overflow-hidden group">
                         <Image 
                           src={project.imageSrc}
                           alt={project.imageAlt}
@@ -269,7 +275,6 @@ const ShowcaseSection = () => {
                 </div>
               )}
               
-              {/* Gradient Card */}
               {project.type === 'gradient' && (
                 <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
                   <div className="grid grid-cols-1 md:grid-cols-5 items-center">
@@ -284,10 +289,12 @@ const ShowcaseSection = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
                       <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
-                        <div className="inline-flex items-center px-4 py-2 bg-accent/80 backdrop-blur-sm rounded-full mb-3 text-sm font-semibold text-accent-foreground">
-                          <Award className="mr-2 h-4 w-4" />
-                          <span>Awwwards Nominee</span>
-                        </div>
+                         {IconComponent && (
+                            <div className="inline-flex items-center px-4 py-2 bg-accent/80 backdrop-blur-sm rounded-full mb-3 text-sm font-semibold text-accent-foreground">
+                                <IconComponent className="mr-2 h-4 w-4" />
+                                <span>Featured Project</span>
+                            </div>
+                         )}
                         <h3 className="text-2xl md:text-3xl font-semibold drop-shadow-md">{project.subtitle}</h3>
                       </div>
                     </div>
@@ -324,7 +331,8 @@ const ShowcaseSection = () => {
                 </div>
               )}
             </motion.div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>

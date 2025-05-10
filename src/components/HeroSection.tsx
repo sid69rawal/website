@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { cn } from '@/lib/utils';
-import { fadeInVariants, slideUpVariants } from '@/lib/animation';
+import { fadeInVariants } from '@/lib/animation'; // Removed slideUpVariants as it's not used
 import Link from 'next/link';
 
 const HeroSection = () => {
@@ -21,7 +21,7 @@ const HeroSection = () => {
       shapes.forEach((shapeEl) => {
         const shape = shapeEl as HTMLElement; // Type assertion
         gsap.to(shape, {
-          x: () => gsap.utils.random(-30, 30, 1), // Ensure random values are numbers
+          x: () => gsap.utils.random(-30, 30, 1), 
           y: () => gsap.utils.random(-20, 20, 1),
           scale: () => gsap.utils.random(0.8, 1.2, 0.1),
           opacity: () => gsap.utils.random(0.3, 0.7, 0.1),
@@ -33,7 +33,6 @@ const HeroSection = () => {
       });
     };
     
-    // Ensure GSAP is available and then animate
     if (typeof window !== "undefined" && gsap) {
       animateShapes();
     }
@@ -50,12 +49,12 @@ const HeroSection = () => {
     <section className="relative h-screen flex items-center justify-center" id="hero">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-primary/10 dark:via-background dark:to-secondary/10 z-0 overflow-hidden">
         <div ref={shapesRef} className="absolute inset-0">
-          <div className="shape absolute w-64 h-64 rounded-full bg-primary/10 dark:bg-primary/20 blur-2xl filter" style={{ top: '15%', left: '10%', opacity: 0.5 }}></div>
-          <div className="shape absolute w-96 h-96 rounded-full bg-secondary/10 dark:bg-secondary/20 blur-2xl filter" style={{ bottom: '10%', right: '5%', opacity: 0.4 }}></div>
-          <div className="shape absolute w-48 h-48 rounded-full bg-accent/10 dark:bg-accent/20 blur-xl filter" style={{ top: '20%', right: '20%', opacity: 0.6 }}></div>
-           {/* Add more shapes for variety */}
-          <div className="shape absolute w-32 h-32 rounded-full bg-primary/5 dark:bg-primary/10 blur-lg filter" style={{ top: '50%', left: '30%', opacity: 0.3 }}></div>
-          <div className="shape absolute w-72 h-72 rounded-lg bg-secondary/5 dark:bg-secondary/10 blur-xl filter -rotate-45" style={{ bottom: '25%', left: '15%', opacity: 0.25 }}></div>
+          {/* Adjusted shape colors to be more subtle and theme-aligned */}
+          <div className="shape absolute w-64 h-64 rounded-full bg-primary/5 dark:bg-primary/10 blur-2xl filter" style={{ top: '15%', left: '10%', opacity: 0.4 }}></div>
+          <div className="shape absolute w-96 h-96 rounded-full bg-secondary/5 dark:bg-secondary/10 blur-2xl filter" style={{ bottom: '10%', right: '5%', opacity: 0.3 }}></div>
+          <div className="shape absolute w-48 h-48 rounded-full bg-accent/5 dark:bg-accent/10 blur-xl filter" style={{ top: '20%', right: '20%', opacity: 0.5 }}></div>
+          <div className="shape absolute w-32 h-32 rounded-full bg-primary/5 dark:bg-primary/10 blur-lg filter" style={{ top: '50%', left: '30%', opacity: 0.2 }}></div>
+          <div className="shape absolute w-72 h-72 rounded-lg bg-secondary/5 dark:bg-secondary/10 blur-xl filter -rotate-45" style={{ bottom: '25%', left: '15%', opacity: 0.2 }}></div>
         </div>
       </div>
       
@@ -68,7 +67,7 @@ const HeroSection = () => {
           animate={controls}
           transition={{ delay: 0.3 }}
         >
-          Crafting <span className="text-primary">World-Class</span> Web Animations
+          Get Your Business <span className="text-primary">Found on Google</span>
         </motion.h1>
         
         <motion.p
@@ -79,7 +78,7 @@ const HeroSection = () => {
           animate={controls}
           transition={{ delay: 0.6 }}
         >
-          Transform your digital experience with buttery-smooth, GPU-accelerated animations that captivate and convert.
+          We build professional websites designed to attract customers, enhance your online presence, and drive business growth through effective SEO strategies.
         </motion.p>
         
         <motion.div
@@ -91,13 +90,13 @@ const HeroSection = () => {
           transition={{ delay: 0.9 }}
         >
           <Link 
-            href="#showcase" 
+            href="#services" 
             className={cn(
               "btn-effect px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-lg hover:shadow-primary/50",
               "font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1"
             )}
           >
-            View Our Work
+            Our Services
           </Link>
           
           <Link 
@@ -107,7 +106,7 @@ const HeroSection = () => {
               "font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1"
             )}
           >
-            Get in Touch
+            Request a Quote
           </Link>
         </motion.div>
       </div>

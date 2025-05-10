@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle } from "lucide-react";
+import { Gem, ShoppingCart, Palette, Smartphone, CheckCircle } from "lucide-react"; // Updated icons
 
 export default function LuxuryRetailCaseStudyPage() {
   return (
@@ -11,85 +11,87 @@ export default function LuxuryRetailCaseStudyPage() {
         <div className="relative h-64 md:h-96">
           <Image
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
-            alt="Luxury Retail Experience"
-            data-ai-hint="team collaboration"
+            alt="Luxury fashion e-commerce website on a laptop"
+            data-ai-hint="luxury ecommerce"
             fill
             style={{ objectFit: 'cover' }}
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
-            <Badge variant="secondary" className="mb-2 text-sm">E-Commerce Animation Suite</Badge>
+            <Badge variant="secondary" className="mb-2 text-sm">E-Commerce Web Development</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
-              Luxury Retail Experience
+              Elevated E-Commerce Platform
             </CardTitle>
           </div>
         </div>
       </CardHeader>
       <CardContent className="p-6 md:p-8 space-y-6">
         <CardDescription className="text-lg text-muted-foreground">
-          A complete animation system for a high-end fashion brand, featuring scroll-triggered product reveals, micro-interactions on all UI elements, and a 3D product viewer. This project aimed to elevate the online shopping experience to match the brand's luxurious in-store atmosphere.
+          A comprehensive website redesign and e-commerce solution for a high-end fashion brand. The project focused on creating a luxurious online shopping experience that mirrored the brand's exclusive in-store atmosphere, ultimately aiming to increase customer engagement and online sales.
         </CardDescription>
 
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Project Goals</h3>
           <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-            <li>Enhance user engagement and perceived value through sophisticated animations.</li>
-            <li>Improve product discovery with visually appealing reveal animations.</li>
-            <li>Maintain 60fps performance across all devices, including mobile.</li>
-            <li>Integrate a seamless 3D product viewer for key items.</li>
+            <li>Enhance the brand's online prestige and user perception of luxury.</li>
+            <li>Improve product discovery and showcase items with high-quality visuals.</li>
+            <li>Increase online conversion rates and average order value.</li>
+            <li>Deliver a seamless and performant shopping experience across all devices.</li>
+            <li>Attract new high-value customers through an improved online presence.</li>
           </ul>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Technologies Used</h3>
+          <h3 className="text-xl font-semibold text-foreground">Technologies & Strategies</h3>
           <div className="flex flex-wrap gap-2">
-            <Badge variant="outline">GSAP</Badge>
-            <Badge variant="outline">Three.js</Badge>
-            <Badge variant="outline">Next.js</Badge>
-            <Badge variant="outline">Performance Optimization</Badge>
-            <Badge variant="outline">UI/UX Micro-interactions</Badge>
+            <Badge variant="outline">Next.js (React)</Badge>
+            <Badge variant="outline">Custom E-commerce Backend</Badge>
+            <Badge variant="outline">UX/UI Design</Badge>
+            <Badge variant="outline">Mobile-First Development</Badge>
+            <Badge variant="outline">Conversion Rate Optimization (CRO)</Badge>
+            <Badge variant="outline">High-Resolution Image Optimization</Badge>
           </div>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Key Features & Animations</h3>
+          <h3 className="text-xl font-semibold text-foreground">Key Features & Enhancements</h3>
           <ul className="space-y-3">
             <li className="flex items-start">
-              <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
+              <Palette className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground">Scroll-Triggered Product Reveals</h4>
-                <p className="text-sm text-muted-foreground">Products elegantly fade and slide into view as the user scrolls, creating a dynamic browsing experience.</p>
+                <h4 className="font-medium text-foreground">Sophisticated Visual Design</h4>
+                <p className="text-sm text-muted-foreground">Crafted a visually stunning interface with elegant typography and high-quality imagery to reflect the brand's luxury status.</p>
               </div>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
+              <ShoppingCart className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground">Interactive 3D Product Viewer</h4>
-                <p className="text-sm text-muted-foreground">Allows users to rotate and zoom into select products, providing a tactile and engaging way to explore details.</p>
+                <h4 className="font-medium text-foreground">Streamlined Checkout Process</h4>
+                <p className="text-sm text-muted-foreground">Redesigned the checkout flow to be intuitive and quick, reducing cart abandonment and improving conversion rates.</p>
               </div>
             </li>
             <li className="flex items-start">
-              <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
+              <Gem className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground">Fluid Add-to-Cart Animations</h4>
-                <p className="text-sm text-muted-foreground">Subtle yet satisfying animations confirm user actions, like adding items to the cart or wishlist.</p>
+                <h4 className="font-medium text-foreground">Enhanced Product Pages</h4>
+                <p className="text-sm text-muted-foreground">Developed detailed product pages with multiple views, zoom functionality, and rich descriptions to provide an immersive shopping experience.</p>
               </div>
             </li>
              <li className="flex items-start">
-              <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
+              <Smartphone className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground">Optimized Page Transitions</h4>
-                <p className="text-sm text-muted-foreground">Smooth and quick transitions between pages and product views to maintain user flow and reduce perceived loading times.</p>
+                <h4 className="font-medium text-foreground">Flawless Mobile Experience</h4>
+                <p className="text-sm text-muted-foreground">Ensured the entire site was perfectly responsive and optimized for mobile users, catering to on-the-go luxury shoppers.</p>
               </div>
             </li>
           </ul>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Results</h3>
+          <h3 className="text-xl font-semibold text-foreground">Results & Client Growth</h3>
           <p className="text-muted-foreground">
-            The new animation system led to a 25% increase in average session duration and a 15% uplift in conversion rates. User feedback highlighted the enhanced visual appeal and a more premium feel to the online store. Performance metrics remained excellent, with LCP under 2 seconds.
+            The new e-commerce platform led to a 35% increase in online sales within the first six months. Average session duration grew by 25%, and customer feedback consistently praised the site's elegance and ease of use. The client also saw a significant rise in organic search traffic due to improved site structure and performance.
           </p>
         </div>
       </CardContent>

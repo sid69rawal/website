@@ -3,30 +3,30 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Twitter, Dribbble, Github, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
+import { Twitter, Dribbble, Github, Linkedin, MapPin, Phone, Mail, Search, LayoutTemplate, Smartphone } from 'lucide-react'; // Added relevant icons
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     { href: "#", icon: <Twitter className="h-5 w-5" />, label: "Twitter" },
-    { href: "#", icon: <Dribbble className="h-5 w-5" />, label: "Dribbble" },
+    // { href: "#", icon: <Dribbble className="h-5 w-5" />, label: "Dribbble" }, // Removed Dribbble as it's design-specific
     { href: "#", icon: <Github className="h-5 w-5" />, label: "GitHub" },
     { href: "#", icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn" },
   ];
 
   const serviceLinks = [
-    { href: "#services", label: "CSS Animations" },
-    { href: "#services", label: "GSAP Timelines" },
-    { href: "#services", label: "Three.js Experiences" },
-    { href: "#services", label: "Lottie Animations" },
-    { href: "#services", label: "Performance Audits" },
+    { href: "#services", label: "Custom Web Design" },
+    { href: "#services", label: "SEO & Google Ranking" },
+    { href: "#services", label: "Responsive Development" },
+    { href: "#services", label: "Lead Generation Sites" },
+    { href: "#services", label: "E-commerce Solutions" },
   ];
 
   const legalLinks = [
     { href: "#", label: "Privacy Policy" },
     { href: "#", label: "Terms of Service" },
-    { href: "#", label: "Cookies" },
+    // { href: "#", label: "Cookies" }, // Optional
   ];
 
   return (
@@ -36,10 +36,10 @@ const Footer = () => {
           {/* Column 1: Brand and Social */}
           <div className="md:col-span-2 lg:col-span-1">
             <Link href="/" className="text-3xl font-bold flex items-center mb-4 text-white">
-                MotionCraft<span className="text-accent">.</span>
+                YourBusinessOnline<span className="text-accent">.</span>
             </Link>
             <p className="text-gray-400 mb-6 text-sm leading-relaxed max-w-xs">
-              Crafting world-class web animations that captivate users and drive business results through performant, GPU-accelerated motion.
+              Helping businesses thrive online with expert website design, development, and SEO strategies focused on attracting customers via Google.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => (
@@ -61,7 +61,7 @@ const Footer = () => {
           
           {/* Column 2: Services */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-5">Services</h4>
+            <h4 className="text-lg font-semibold text-white mb-5">Our Services</h4>
             <ul className="space-y-3">
               {serviceLinks.map(link => (
                 <li key={link.label}>
@@ -75,31 +75,31 @@ const Footer = () => {
           
           {/* Column 3: Contact */}
           <div>
-            <h4 className="text-lg font-semibold text-white mb-5">Contact</h4>
+            <h4 className="text-lg font-semibold text-white mb-5">Get in Touch</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start text-gray-400">
                 <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
-                <span>123 Animation Blvd, Design District, Webville</span>
+                <span>123 Web Success Ave, SEO City, Digitaland</span>
               </li>
               <li className="flex items-center text-gray-400">
                 <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href="tel:+15551234567" className="hover:text-primary transition-colors duration-200 hover:underline">
-                  +1 (555) 123-4567
+                <a href="tel:+15559876543" className="hover:text-primary transition-colors duration-200 hover:underline">
+                  +1 (555) 987-6543
                 </a>
               </li>
               <li className="flex items-center text-gray-400">
                 <Mail className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href="mailto:hello@motioncraft.io" className="hover:text-primary transition-colors duration-200 hover:underline">
-                  hello@motioncraft.io
+                <a href="mailto:info@yourbusinessonline.dev" className="hover:text-primary transition-colors duration-200 hover:underline">
+                  info@yourbusinessonline.dev
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Newsletter or other info - Optional */}
+          {/* Column 4: Newsletter or other info */}
            <div>
-            <h4 className="text-lg font-semibold text-white mb-5">Stay Updated</h4>
-            <p className="text-sm text-gray-400 mb-3">Get the latest on web animation trends and our work.</p>
+            <h4 className="text-lg font-semibold text-white mb-5">Stay Informed</h4>
+            <p className="text-sm text-gray-400 mb-3">Get tips on improving your online presence and our latest offers.</p>
             <form onSubmit={(e) => e.preventDefault()} className="flex">
                 <input type="email" placeholder="Your email" className="w-full px-3 py-2 text-sm bg-gray-700 border border-gray-600 rounded-l-md focus:ring-primary focus:border-primary outline-none text-white placeholder-gray-500" />
                 <button type="submit" className="px-4 py-2 bg-primary text-white font-semibold text-sm rounded-r-md hover:bg-primary/90 transition-colors">Subscribe</button>
@@ -110,7 +110,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
           <p className="text-gray-500 mb-4 md:mb-0">
-            &copy; {currentYear} MotionCraft. All rights reserved.
+            &copy; {currentYear} YourBusinessOnline. All rights reserved.
           </p>
           <ul className="flex space-x-6">
             {legalLinks.map(link => (

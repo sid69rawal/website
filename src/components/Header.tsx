@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link'; // Changed from wouter Link
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from './ThemeToggle'; // Corrected import path
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react'; // Using Lucide icons
+import { Menu, X } from 'lucide-react'; 
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,7 +25,7 @@ const Header = () => {
         setIsHidden(false);
       }
       
-      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // For Mobile or negative scrolling
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -42,8 +42,8 @@ const Header = () => {
   
   const navLinks = [
     { href: "#services", label: "Services" },
-    { href: "#showcase", label: "Work" },
-    { href: "#features", label: "Features" },
+    { href: "#showcase", label: "Our Work" },
+    { href: "#features", label: "Why Us" },
     { href: "#contact", label: "Contact" },
   ];
 
@@ -55,13 +55,13 @@ const Header = () => {
         isScrolled ? "bg-background/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md py-2" : "py-4",
       )}
       initial={{ y: 0 }}
-      animate={{ y: isHidden && !isMobileMenuOpen ? -100 : 0 }} // Keep header visible if mobile menu is open
+      animate={{ y: isHidden && !isMobileMenuOpen ? -100 : 0 }} 
       transition={{ duration: 0.3 }}
     >
       <nav className="container mx-auto px-6 flex items-center justify-between h-16">
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-primary transition-transform duration-200 transform hover:scale-105">
-              MotionCraft<span className="text-accent">.</span>
+              YourBusinessOnline<span className="text-accent">.</span>
           </Link>
         </div>
         

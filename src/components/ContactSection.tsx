@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Loader2, Send, CheckCircle } from 'lucide-react'; // Using Lucide icons
-import { useToast } from '@/hooks/use-toast'; // Using ShadCN toast
-import { handleContactFormSubmission } from '@/app/actions/contactActions'; // Server Action
+import { Loader2, Send, CheckCircle } from 'lucide-react'; 
+import { useToast } from '@/hooks/use-toast'; 
+import { handleContactFormSubmission } from '@/app/actions/contactActions'; 
 
 const ContactSection = () => {
   const controls = useAnimation();
@@ -37,15 +37,15 @@ const ContactSection = () => {
         setIsSubmitted(true);
         toast({
           title: "Message Sent!",
-          description: "We'll get back to you soon.",
-          variant: "default",
+          description: "We'll get back to you soon to discuss your project.",
+          variant: "default", // Ensuring this is explicitly 'default' or a success-like variant
         });
         formRef.current?.reset(); 
-        setTimeout(() => setIsSubmitted(false), 3000); // Reset submitted state for UI
+        setTimeout(() => setIsSubmitted(false), 3000);
       } else {
         toast({
-          title: "Error",
-          description: result.error || "Failed to send message. Please try again.",
+          title: "Error Sending Message",
+          description: result.error || "Failed to send message. Please try again or contact us directly.",
           variant: "destructive",
         });
       }
@@ -63,9 +63,9 @@ const ContactSection = () => {
             initial="hidden"
             animate={controls}
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Get in Touch</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">Let's Build Your Success Online</h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-              Ready to discuss your animation project? Fill out the form below or reach out directly.
+              Interested in a new website or improving your Google visibility? Fill out the form, and we'll be in touch to discuss how we can help.
             </p>
           </motion.div>
           
@@ -105,18 +105,18 @@ const ContactSection = () => {
               </div>
               
               <div>
-                <label htmlFor="project" className="block text-sm font-medium text-foreground mb-1.5">Project Type</label>
+                <label htmlFor="project" className="block text-sm font-medium text-foreground mb-1.5">I'm interested in...</label>
                 <Select name="project" required>
                   <SelectTrigger className="w-full bg-background dark:bg-gray-700" aria-label="Project Type">
-                    <SelectValue placeholder="Select a project type" />
+                    <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="website">Website Animation Overhaul</SelectItem>
-                    <SelectItem value="landing">Landing Page Animation</SelectItem>
-                    <SelectItem value="ecommerce">E-commerce Animation Suite</SelectItem>
-                    <SelectItem value="webapp">Web Application UI Motion</SelectItem>
-                    <SelectItem value="3d">3D Interactive Experience</SelectItem>
-                    <SelectItem value="other">Other / Custom Project</SelectItem>
+                    <SelectItem value="new_website">New Website Development</SelectItem>
+                    <SelectItem value="website_redesign">Website Redesign & SEO</SelectItem>
+                    <SelectItem value="seo_services">SEO & Google Visibility Improvement</SelectItem>
+                    <SelectItem value="ecommerce_solution">E-commerce Website Solution</SelectItem>
+                    <SelectItem value="consultation">General Consultation / Undecided</SelectItem>
+                    <SelectItem value="other">Other Specific Project</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -128,7 +128,7 @@ const ContactSection = () => {
                   name="message" 
                   rows={5}
                   className="bg-background dark:bg-gray-700"
-                  placeholder="Tell us about your project requirements..."
+                  placeholder="Tell us a bit about your project, goals, and any current website (if applicable)..."
                   required
                   aria-label="Your Message"
                 ></Textarea>
@@ -154,7 +154,7 @@ const ContactSection = () => {
                     </>
                   ) : (
                     <>
-                      Send Message <Send className="ml-2 h-5 w-5" />
+                      Send Project Inquiry <Send className="ml-2 h-5 w-5" />
                     </>
                   )}
                 </Button>
