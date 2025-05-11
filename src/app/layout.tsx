@@ -9,16 +9,19 @@ import { siteConfig } from "@/config/site";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
+  title: {
+    default: siteConfig.title, // Use the updated title from siteConfig
+    template: `%s - ${siteConfig.name}`, // Template for page-specific titles
+  },
+  description: siteConfig.description, // Use the updated description (tagline) from siteConfig
   manifest: "/manifest.json",
-  metadataBase: new URL(siteConfig.url), // Recommended for absolute URLs in metadata
+  metadataBase: new URL(siteConfig.url), 
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: siteConfig.title, // Use updated title for OG
+    description: siteConfig.description, // Use updated description for OG
     siteName: siteConfig.name,
     images: [
       {
@@ -31,13 +34,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: siteConfig.title, // Use updated title for Twitter
+    description: siteConfig.description, // Use updated description for Twitter
     images: [siteConfig.ogImage],
-    // creator: "@yourtwitterhandle", // Add if you have a Twitter handle
+    // creator: "@yourtwitterhandle", 
   },
   icons: {
-    icon: "/favicon.ico", // Assuming you have a favicon.ico
+    icon: "/favicon.ico", 
     // shortcut: "/favicon-16x16.png",
     // apple: "/apple-touch-icon.png",
   }
@@ -51,14 +54,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* PWA Support - theme-color and apple-specific meta tags */}
-        {/* Use primary color from globals.css if possible, or keep a fixed color */}
         <meta name="theme-color" content="#6B46C1" /> 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
-
-        {/* Font Awesome CDN - for existing icons, consider migrating to lucide-react later */}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
       <body className={inter.className}>

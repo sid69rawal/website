@@ -2,26 +2,26 @@
 
 export const siteConfig = {
   name: "GetUrBizOnline",
-  title: "GetUrBizOnline - Web Design, SEO & Google Visibility Experts",
-  description: "Partner with us to build a high-performing website that attracts customers through Google and drives business growth. Expert web design and SEO services.",
-  url: "https://geturbiz.online", // Updated to be a valid URL. Replace with your actual domain for production.
-  ogImage: "https://geturbiz.online/og-image.png", // Replace with your actual OG image URL
+  title: "GetUrBizOnline | Web Design & SEO Experts", // Updated title format
+  description: "We build Google-friendly websites that attract customers and grow your business.", // Refined tagline
+  url: "https://geturbiz.online", 
+  ogImage: "https://geturbiz.online/og-image.png", 
 
   links: {
-    twitter: "#", // Replace with actual Twitter link
-    github: "https://github.com/yourbusinessonline", // Example link
-    linkedin: "https://linkedin.com/company/yourbusinessonline", // Example link
+    twitter: "#", 
+    github: "https://github.com/yourbusinessonline", 
+    linkedin: "https://linkedin.com/company/yourbusinessonline", 
   },
   contact: {
     address: "Toronto, ON Canada & India",
     phone: "+1 416-857-8831 & +91 92594-18994",
-    email: "sidrawal1200@gmail.com", // General contact email
+    email: "sidrawal1200@gmail.com", 
     jurisdiction: "Canada & India",
   },
   formSubmit: {
-    email: "sidrawal1200@gmail.com", // Email for FormSubmit.co
-    subject: "New Project Inquiry from YourBusinessOnline Website",
-    thankYouPage: "/", // Redirect to main page after submission
+    email: "sidrawal1200@gmail.com", 
+    subject: "New Project Inquiry from GetUrBizOnline Website", // Updated site name in subject
+    thankYouPage: "/", 
   },
   legal: {
     privacyPolicy: "/privacy-policy",
@@ -44,10 +44,10 @@ export const siteConfig = {
     titlePart1: "Get Your Business ",
     titleHighlight: "Found on Google",
     subtitle: "We build professional websites designed to attract customers, enhance your online presence, and drive business growth through effective SEO strategies.",
-    ctaPrimaryText: "Our Services",
-    ctaPrimaryLink: "#services",
-    ctaSecondaryText: "Request a Quote",
-    ctaSecondaryLink: "#contact",
+    ctaPrimaryText: "Get Your Free Quote", // Updated to prominent CTA
+    ctaPrimaryLink: "#contact",             // Link for prominent CTA
+    ctaSecondaryText: "Explore Our Services", // Updated secondary CTA
+    ctaSecondaryLink: "#services",          // Link for secondary CTA
   },
   servicesSection: {
     title: "Grow Your Business Online",
@@ -96,15 +96,15 @@ export const siteConfig = {
   caseStudies: {
     interactiveDashboard: {
       title: "Data-Driven SaaS Dashboard",
-      description: "Learn how YourBusinessOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.",
+      description: "Learn how GetUrBizOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.", // Updated site name
     },
     luxuryRetail: {
       title: "Elevated E-Commerce Platform",
-      description: "Discover how YourBusinessOnline developed a luxury e-commerce platform that increased sales and customer engagement.",
+      description: "Discover how GetUrBizOnline developed a luxury e-commerce platform that increased sales and customer engagement.", // Updated site name
     },
     productLaunch: {
       title: "Tech Product Launch Microsite",
-      description: "See how YourBusinessOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.",
+      description: "See how GetUrBizOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.", // Updated site name
     }
   }
 };
