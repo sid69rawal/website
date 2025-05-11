@@ -3,13 +3,20 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { staggerContainerVariants, slideUpVariants } from '@/lib/animation';
+import { slideUpVariants } from '@/lib/animation'; // Keep for section title
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers, Cuboid } from 'lucide-react';
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Cuboid, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
 import type { ElementType } from 'react';
 import { siteConfig } from '@/config/site';
+
+// GSAP Plugin Registration (ensure it's done once, animation.ts might also do this)
+if (typeof window !== "undefined" && gsap && ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Define an icon map to ensure bundler picks up the icons correctly
 const iconMap = {
@@ -21,17 +28,16 @@ const iconMap = {
   Settings,
   ArrowRight,
   Package,
-  Box, 
+  Cuboid, 
   Palette,
   Code,
   Gauge,
   HelpCircle,
   Layers,
-  Cuboid // Added Cuboid as potential replacement for Cubes
 };
 
 interface ServiceItem {
-  icon: ElementType; 
+  iconName: keyof typeof iconMap; 
   iconBgColor: string;
   iconColor: string;
   title: string;
@@ -42,7 +48,7 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    icon: iconMap.LayoutTemplate,
+    iconName: 'LayoutTemplate',
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Custom Website Design',
@@ -51,7 +57,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: iconMap.Search,
+    iconName: 'Search',
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'SEO & Google Visibility',
@@ -60,7 +66,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: iconMap.Smartphone,
+    iconName: 'Smartphone',
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Responsive Development',
@@ -69,7 +75,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-accent hover:text-accent/80'
   },
   {
-    icon: iconMap.TrendingUp,
+    iconName: 'TrendingUp',
     iconBgColor: 'bg-primary/10 dark:bg-primary/20',
     iconColor: 'text-primary',
     title: 'Conversion Rate Optimization',
@@ -78,7 +84,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-primary hover:text-primary/80'
   },
   {
-    icon: iconMap.Users, 
+    iconName: 'Users', 
     iconBgColor: 'bg-secondary/10 dark:bg-secondary/20',
     iconColor: 'text-secondary',
     title: 'Lead Generation Websites',
@@ -87,7 +93,7 @@ const services: ServiceItem[] = [
     linkColor: 'text-secondary hover:text-secondary/80'
   },
   {
-    icon: iconMap.Settings, 
+    iconName: 'Settings', 
     iconBgColor: 'bg-accent/10 dark:bg-accent/20',
     iconColor: 'text-accent',
     title: 'Website Maintenance & Support',
@@ -100,36 +106,52 @@ const services: ServiceItem[] = [
 
 const ServicesSection = () => {
   const controls = useAnimation();
-  const ref = useRef<HTMLDivElement>(null);
-  const { entry, isIntersecting } = useIntersectionObserver(ref, {
-    threshold: 0.1,
+  const sectionRef = useRef<HTMLDivElement>(null); // Ref for the main section container
+  const { entry, isIntersecting } = useIntersectionObserver(sectionRef, {
+    threshold: 0.1, // When 10% of the section title is visible
     rootMargin: '-50px',
     freezeOnceVisible: true,
   });
 
+  // Framer Motion animation for the section title/subtitle
   useEffect(() => {
     if (isIntersecting) {
       controls.start('visible');
     }
   }, [controls, isIntersecting]);
   
-  const getValidIconComponent = (iconInput: ElementType | string | undefined | null, serviceTitle: string): ElementType => {
-    if (typeof iconInput === 'function' || (typeof iconInput === 'object' && iconInput !== null && ('render' in iconInput || 'displayName' in iconInput) )) { // Added displayName check for some icon libraries
-      return iconInput as ElementType;
-    }
-    console.warn( // Changed to warn as it's a fallback, not a critical error
-        `Icon input for "${serviceTitle}" is not a valid component. Received type: ${typeof iconInput}, Value:`, 
-        iconInput === undefined ? 'undefined' : JSON.stringify(iconInput)
-    );
-    return iconMap.Package; // Fallback to a generic Package icon
-  };
+  // GSAP animations for service cards
+  useEffect(() => {
+    if (isIntersecting && typeof window !== 'undefined' && gsap && ScrollTrigger) {
+      const serviceCards = gsap.utils.toArray('.service-card-item') as HTMLElement[];
 
+      serviceCards.forEach((card, index) => {
+        gsap.fromTo(card,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6, // Slightly longer duration for impact
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 90%', // Trigger when 90% of the card is visible from the top
+              toggleActions: 'play none none none',
+              once: true, 
+            },
+            delay: (index % 3) * 0.15, // Stagger cards in the same "row" (approx 3 per row)
+          }
+        );
+      });
+      // ScrollTrigger.refresh(); // May not be needed if setupGSAPAnimations in page.tsx handles resize.
+    }
+  }, [isIntersecting]); // Re-run if the section comes into view
 
   return (
     <section id="services" className="py-24 bg-background dark:bg-gray-950 theme-transition">
       <div className="container mx-auto px-6">
         <motion.div
-          ref={ref}
+          ref={sectionRef} // Attach ref to the title/subtitle container
           className="text-center mb-20"
           variants={slideUpVariants}
           initial="hidden"
@@ -141,23 +163,23 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
-        <motion.div
+        {/* Grid for service cards - no longer a motion.div for stagger container */}
+        <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
-          variants={staggerContainerVariants}
-          initial="hidden"
-          animate={controls}
         >
           {services.map((service, index) => {
-            const IconComponent = getValidIconComponent(service.icon, service.title);
+            const IconComponent = iconMap[service.iconName] || Package; // Fallback to Package icon
             
             return (
-              <motion.div
+              // Regular div for each card, GSAP will animate it
+              <div
                 key={index}
                 className={cn(
-                  "bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
-                  "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+                  "service-card-item bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
+                  "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group",
+                  "opacity-0" // Initially hidden, GSAP will animate to opacity: 1
                 )}
-                variants={slideUpVariants}
+                // Removed Framer Motion variants from here
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
                   <IconComponent className={cn("w-8 h-8", service.iconColor)} />
@@ -174,13 +196,14 @@ const ServicesSection = () => {
                   Learn more
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
 export default ServicesSection;
+
