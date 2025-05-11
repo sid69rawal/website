@@ -1,27 +1,36 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  weight: ['400', '500']
+});
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.title, // Use the updated title from siteConfig
-    template: `%s - ${siteConfig.name}`, // Template for page-specific titles
+    default: siteConfig.title, 
+    template: `%s - ${siteConfig.name}`, 
   },
-  description: siteConfig.description, // Use the updated description (tagline) from siteConfig
+  description: siteConfig.description, 
   manifest: "/manifest.json",
   metadataBase: new URL(siteConfig.url), 
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.title, // Use updated title for OG
-    description: siteConfig.description, // Use updated description for OG
+    title: siteConfig.title, 
+    description: siteConfig.description, 
     siteName: siteConfig.name,
     images: [
       {
@@ -34,8 +43,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title, // Use updated title for Twitter
-    description: siteConfig.description, // Use updated description for Twitter
+    title: siteConfig.title, 
+    description: siteConfig.description, 
     images: [siteConfig.ogImage],
     // creator: "@yourtwitterhandle", 
   },
@@ -54,13 +63,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#6B46C1" /> 
+        <meta name="theme-color" content="hsl(var(--primary))" /> 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+        {/* Font Awesome CDN link removed */}
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

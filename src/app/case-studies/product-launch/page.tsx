@@ -8,29 +8,30 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function ProductLaunchCaseStudyPage() {
   return (
-    <Card className="overflow-hidden shadow-xl">
+    <Card className="overflow-hidden shadow-xl rounded-lg">
       <CardHeader className="p-0">
         <div className="relative">
           <AspectRatio ratio={16 / 9}>
             <Image
               src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
               alt="Interactive tech product launch website interface on a screen"
-              data-ai-hint="tech launch"
+              data-ai-hint="tech product launch"
               fill
               style={{ objectFit: 'cover' }}
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
             />
           </AspectRatio>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
-             <Badge variant="destructive" className="mb-2 text-sm bg-accent/90 text-accent-foreground">Interactive Web Experience</Badge>
+             <Badge variant="destructive" className="mb-2 text-sm font-semibold bg-accent/90 text-accent-foreground">Interactive Web Experience</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
               {siteConfig.caseStudies.productLaunch.title}
             </CardTitle>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 md:p-8 space-y-8"> {/* Increased space-y for more whitespace */}
+      <CardContent className="p-6 md:p-8 space-y-8">
         
           <CardDescription className="text-lg text-muted-foreground">
             Developed an engaging and interactive microsite for a cutting-edge technology product launch. The project aimed to create a memorable online experience that effectively showcased product features, told a compelling story, and maximized pre-order conversions.
@@ -38,7 +39,7 @@ export default function ProductLaunchCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Core Ambitions</h3>
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground"> {/* Increased space-y */}
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
               <li>Generate significant online buzz and media attention for the new product.</li>
               <li>Clearly communicate unique product benefits and features to the target audience.</li>
               <li>Create a highly shareable and memorable digital experience.</li>
@@ -61,7 +62,7 @@ export default function ProductLaunchCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Highlight Features & User Journey</h3>
-            <ul className="space-y-4"> {/* Increased space-y */}
+            <ul className="space-y-4">
               <li className="flex items-start">
                 <Rocket className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
                 <div>

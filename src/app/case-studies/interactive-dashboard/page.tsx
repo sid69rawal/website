@@ -1,36 +1,37 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, Users, Zap, ShieldCheck, Eye } from "lucide-react"; 
+import { BarChart3, Users, Zap, Eye } from "lucide-react"; 
 import { siteConfig } from "@/config/site";
 import React from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function InteractiveDashboardCaseStudyPage() {
   return (
-    <Card className="overflow-hidden shadow-xl">
+    <Card className="overflow-hidden shadow-xl rounded-lg">
       <CardHeader className="p-0">
         <div className="relative">
           <AspectRatio ratio={16 / 9}>
             <Image
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80"
               alt="SaaS Analytics Dashboard Interface showing various charts and graphs"
-              data-ai-hint="saas dashboard"
+              data-ai-hint="analytics dashboard interface"
               fill
               style={{ objectFit: 'cover' }}
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
             />
           </AspectRatio>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
-            <Badge variant="secondary" className="mb-2 text-sm">SaaS Platform UI/UX</Badge>
+            <Badge variant="secondary" className="mb-2 text-sm font-semibold">SaaS Platform UI/UX</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
               {siteConfig.caseStudies.interactiveDashboard.title}
             </CardTitle>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 md:p-8 space-y-8"> {/* Increased space-y for more whitespace */}
+      <CardContent className="p-6 md:p-8 space-y-8">
         
           <CardDescription className="text-lg text-muted-foreground">
             This project involved designing and developing a highly interactive and user-friendly dashboard for a SaaS analytics platform. The primary goal was to make complex data easily understandable and actionable for their clients, thereby improving user retention and satisfaction.
@@ -38,7 +39,7 @@ export default function InteractiveDashboardCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Project Objectives</h3>
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground"> {/* Increased space-y */}
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
               <li>Enhance user understanding of complex data sets through intuitive visualizations.</li>
               <li>Improve overall user experience with a responsive and easy-to-navigate interface.</li>
               <li>Increase user engagement and time spent on the platform.</li>
@@ -51,7 +52,7 @@ export default function InteractiveDashboardCaseStudyPage() {
             <h3 className="text-xl font-semibold text-foreground">Core Technologies & Approach</h3>
             <div className="flex flex-wrap gap-2">
               <Badge variant="outline">React</Badge>
-              <Badge variant="outline">Data Visualization Libraries (e.g., Recharts)</Badge>
+              <Badge variant="outline">Data Visualization Libraries</Badge>
               <Badge variant="outline">API Integration</Badge>
               <Badge variant="outline">UX/UI Design Principles</Badge>
               <Badge variant="outline">Performance Optimization</Badge>
@@ -61,7 +62,7 @@ export default function InteractiveDashboardCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Key Features Delivered</h3>
-            <ul className="space-y-4"> {/* Increased space-y */}
+            <ul className="space-y-4">
               <li className="flex items-start">
                 <BarChart3 className="h-5 w-5 text-secondary mr-3 mt-1 shrink-0" />
                 <div>

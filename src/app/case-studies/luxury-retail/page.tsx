@@ -1,36 +1,37 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Gem, ShoppingCart, Palette, Smartphone, CheckCircle } from "lucide-react"; 
+import { Gem, ShoppingCart, Palette, Smartphone } from "lucide-react"; 
 import { siteConfig } from "@/config/site";
 import React from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function LuxuryRetailCaseStudyPage() {
   return (
-    <Card className="overflow-hidden shadow-xl">
+    <Card className="overflow-hidden shadow-xl rounded-lg">
       <CardHeader className="p-0">
         <div className="relative">
           <AspectRatio ratio={16 / 9}>
             <Image
               src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80"
               alt="Luxury fashion e-commerce website displayed on a laptop, showcasing elegant design"
-              data-ai-hint="luxury ecommerce"
+              data-ai-hint="luxury fashion ecommerce"
               fill
               style={{ objectFit: 'cover' }}
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
             />
           </AspectRatio>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
-            <Badge variant="secondary" className="mb-2 text-sm">E-Commerce Web Development</Badge>
+            <Badge variant="secondary" className="mb-2 text-sm font-semibold">E-Commerce Web Development</Badge>
             <CardTitle className="text-3xl md:text-4xl font-bold text-white">
               {siteConfig.caseStudies.luxuryRetail.title}
             </CardTitle>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 md:p-8 space-y-8"> {/* Increased space-y for more whitespace */}
+      <CardContent className="p-6 md:p-8 space-y-8">
         
           <CardDescription className="text-lg text-muted-foreground">
             A comprehensive website redesign and e-commerce solution for a high-end fashion brand. The project focused on creating a luxurious online shopping experience that mirrored the brand's exclusive in-store atmosphere, ultimately aiming to increase customer engagement and online sales.
@@ -38,7 +39,7 @@ export default function LuxuryRetailCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Project Goals</h3>
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground"> {/* Increased space-y */}
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
               <li>Enhance the brand's online prestige and user perception of luxury.</li>
               <li>Improve product discovery and showcase items with high-quality visuals.</li>
               <li>Increase online conversion rates and average order value.</li>
@@ -54,14 +55,14 @@ export default function LuxuryRetailCaseStudyPage() {
               <Badge variant="outline">Custom E-commerce Backend</Badge>
               <Badge variant="outline">UX/UI Design</Badge>
               <Badge variant="outline">Mobile-First Development</Badge>
-              <Badge variant="outline">Conversion Rate Optimization (CRO)</Badge>
+              <Badge variant="outline">Conversion Rate Optimization</Badge>
               <Badge variant="outline">High-Resolution Image Optimization</Badge>
             </div>
           </div>
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Key Features & Enhancements</h3>
-            <ul className="space-y-4"> {/* Increased space-y */}
+            <ul className="space-y-4">
               <li className="flex items-start">
                 <Palette className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
                 <div>
