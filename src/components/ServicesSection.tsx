@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -6,19 +5,18 @@ import { motion, useAnimation } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { slideUpVariants } from '@/lib/animation'; // Keep for section title
+import { slideUpVariants } from '@/lib/animation'; 
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Cuboid, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
 import type { ElementType } from 'react';
 import { siteConfig } from '@/config/site';
 
-// GSAP Plugin Registration (ensure it's done once, animation.ts might also do this)
+
 if (typeof window !== "undefined" && gsap && ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Define an icon map to ensure bundler picks up the icons correctly
 const iconMap = {
   LayoutTemplate,
   Search,
@@ -28,7 +26,7 @@ const iconMap = {
   Settings,
   ArrowRight,
   Package,
-  Cuboid, 
+  Box, 
   Palette,
   Code,
   Gauge,
@@ -103,24 +101,31 @@ const services: ServiceItem[] = [
   }
 ];
 
+const getValidIconComponent = (iconName: keyof typeof iconMap, serviceTitle: string): ElementType => {
+  const Icon = iconMap[iconName];
+  if (!Icon) {
+    console.error(`Icon input for "${serviceTitle}" is null or undefined.`);
+    return Package; // Default fallback icon
+  }
+  return Icon;
+};
+
 
 const ServicesSection = () => {
   const controls = useAnimation();
-  const sectionRef = useRef<HTMLDivElement>(null); // Ref for the main section container
+  const sectionRef = useRef<HTMLDivElement>(null); 
   const { entry, isIntersecting } = useIntersectionObserver(sectionRef, {
-    threshold: 0.1, // When 10% of the section title is visible
+    threshold: 0.1, 
     rootMargin: '-50px',
     freezeOnceVisible: true,
   });
 
-  // Framer Motion animation for the section title/subtitle
   useEffect(() => {
     if (isIntersecting) {
       controls.start('visible');
     }
   }, [controls, isIntersecting]);
   
-  // GSAP animations for service cards
   useEffect(() => {
     if (isIntersecting && typeof window !== 'undefined' && gsap && ScrollTrigger) {
       const serviceCards = gsap.utils.toArray('.service-card-item') as HTMLElement[];
@@ -131,60 +136,58 @@ const ServicesSection = () => {
           {
             opacity: 1,
             y: 0,
-            duration: 0.6, // Slightly longer duration for impact
+            duration: 0.6, 
             ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 90%', // Trigger when 90% of the card is visible from the top
+              start: 'top 90%', 
               toggleActions: 'play none none none',
               once: true, 
             },
-            delay: (index % 3) * 0.15, // Stagger cards in the same "row" (approx 3 per row)
+            delay: (index % 3) * 0.15, 
           }
         );
       });
-      // ScrollTrigger.refresh(); // May not be needed if setupGSAPAnimations in page.tsx handles resize.
     }
-  }, [isIntersecting]); // Re-run if the section comes into view
+  }, [isIntersecting]); 
 
   return (
-    <section id="services" className="py-24 bg-background dark:bg-gray-950 theme-transition">
+    <section id="services" className="py-20 md:py-24 lg:py-28 bg-background dark:bg-gray-950 theme-transition"> {/* Increased py padding */}
       <div className="container mx-auto px-6">
         <motion.div
-          ref={sectionRef} // Attach ref to the title/subtitle container
-          className="text-center mb-20"
+          ref={sectionRef} 
+          className="text-center mb-16 md:mb-20" // Increased bottom margin
           variants={slideUpVariants}
           initial="hidden"
           animate={controls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.servicesSection.title}</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 md:mb-6 text-foreground">{siteConfig.servicesSection.title}</h2> {/* Increased mb */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             {siteConfig.servicesSection.subtitle}
           </p>
         </motion.div>
 
-        {/* Grid for service cards - no longer a motion.div for stagger container */}
+        
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12" // Increased gap
         >
           {services.map((service, index) => {
-            const IconComponent = iconMap[service.iconName] || Package; // Fallback to Package icon
+            const IconComponent = getValidIconComponent(service.iconName, service.title);
             
             return (
-              // Regular div for each card, GSAP will animate it
+              
               <div
                 key={index}
                 className={cn(
                   "service-card-item bg-card dark:bg-gray-800 rounded-xl shadow-lg p-8 theme-transition",
                   "flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group",
-                  "opacity-0" // Initially hidden, GSAP will animate to opacity: 1
+                  "opacity-0" 
                 )}
-                // Removed Framer Motion variants from here
               >
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
                   <IconComponent className={cn("w-8 h-8", service.iconColor)} />
                 </div>
-                <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3>
+                <h3 className="text-xl lg:text-2xl font-semibold mb-4 text-card-foreground">{service.title}</h3> {/* Increased mb */}
                 <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
                   {service.description}
                 </p>
@@ -206,4 +209,3 @@ const ServicesSection = () => {
 };
 
 export default ServicesSection;
-

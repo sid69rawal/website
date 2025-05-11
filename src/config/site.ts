@@ -2,8 +2,8 @@
 
 export const siteConfig = {
   name: "GetUrBizOnline",
-  title: "GetUrBizOnline | Web Design & SEO Experts", // Updated title format
-  description: "We build Google-friendly websites that attract customers and grow your business.", // Refined tagline
+  title: "GetUrBizOnline | Web Design & SEO Experts", 
+  description: "We build Google-friendly websites that attract customers and grow your business.", 
   url: "https://geturbiz.online", 
   ogImage: "https://geturbiz.online/og-image.png", 
 
@@ -20,7 +20,7 @@ export const siteConfig = {
   },
   formSubmit: {
     email: "sidrawal1200@gmail.com", 
-    subject: "New Project Inquiry from GetUrBizOnline Website", // Updated site name in subject
+    subject: "New Project Inquiry from GetUrBizOnline Website",
     thankYouPage: "/", 
   },
   legal: {
@@ -44,10 +44,10 @@ export const siteConfig = {
     titlePart1: "Get Your Business ",
     titleHighlight: "Found on Google",
     subtitle: "We build professional websites designed to attract customers, enhance your online presence, and drive business growth through effective SEO strategies.",
-    ctaPrimaryText: "Get Your Free Quote", // Updated to prominent CTA
-    ctaPrimaryLink: "#contact",             // Link for prominent CTA
-    ctaSecondaryText: "Explore Our Services", // Updated secondary CTA
-    ctaSecondaryLink: "#services",          // Link for secondary CTA
+    ctaPrimaryText: "Get Your Free Quote", 
+    ctaPrimaryLink: "#contact",            
+    ctaSecondaryText: "Explore Our Services", 
+    ctaSecondaryLink: "#services",         
   },
   servicesSection: {
     title: "Grow Your Business Online",
@@ -55,7 +55,48 @@ export const siteConfig = {
   },
   showcaseSection: {
     title: "Websites That Deliver Results",
-    subtitle: "Explore our portfolio of custom websites designed to attract customers and grow businesses."
+    subtitle: "Explore our portfolio of custom websites designed to attract customers and grow businesses.",
+    projects: [ // This structure might be better if showcaseProjects is directly part of siteConfig
+      {
+        id: 1,
+        title: 'Elevated E-Commerce Platform',
+        subtitle: 'Luxury Brand Website Redesign',
+        description: 'Transformed an online fashion store with a sophisticated redesign, focusing on user experience and product showcasing to boost engagement and sales. Implemented custom features and a mobile-first approach.',
+        tags: ['Web Development', 'UX/UI Design', 'E-Commerce', 'Mobile Responsive'],
+        buttonText: 'View Case Study',
+        buttonLink: '/case-studies/luxury-retail',
+        imageSrc: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80',
+        imageAlt: 'Team collaborating on a website design project for a luxury brand',
+        dataAiHint: 'web design team',
+        imageAspectRatio: 16/9,
+      },
+      {
+        id: 2,
+        title: 'Data-Driven SaaS Dashboard',
+        subtitle: 'Analytics Platform UI/UX',
+        description: 'Developed a user-friendly and intuitive dashboard for a SaaS analytics platform, enabling users to easily understand complex data and gain actionable insights. Focused on performance and scalability.',
+        tags: ['Web Application', 'UI/UX Design', 'Data Visualization', 'SaaS'],
+        buttonText: 'Explore Dashboard',
+        buttonLink: '/case-studies/interactive-dashboard',
+        imageSrc: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80',
+        imageAlt: 'Modern data dashboard showing charts and graphs on a computer screen',
+        dataAiHint: 'saas dashboard',
+        imageAspectRatio: 4/3,
+      },
+      {
+        id: 3,
+        title: 'Tech Product Launch Microsite',
+        subtitle: 'Interactive Web Experience',
+        description: 'Created a captivating microsite for a new technology product launch, designed to generate excitement, clearly communicate features, and drive pre-orders through an engaging user journey.',
+        tags: ['Web Design', 'Lead Generation', 'Interactive Content', 'Product Marketing'],
+        buttonText: 'Discover Product Site',
+        buttonLink: '/case-studies/product-launch',
+        imageSrc: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80',
+        imageAlt: 'Futuristic technology product interface on a sleek device',
+        dataAiHint: 'tech product',
+        imageAspectRatio: 4/3,
+      }
+    ]
   },
   featuresSection: {
     title: "Why Choose Us for Your Website?",
@@ -93,18 +134,18 @@ export const siteConfig = {
     buttonText: "Go back to Homepage",
     buttonLink: "/",
   },
-  caseStudies: {
+  caseStudies: { // For individual case study pages
     interactiveDashboard: {
       title: "Data-Driven SaaS Dashboard",
-      description: "Learn how GetUrBizOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.", // Updated site name
+      description: "Learn how GetUrBizOnline developed an interactive SaaS dashboard to improve data understanding and user engagement.",
     },
     luxuryRetail: {
       title: "Elevated E-Commerce Platform",
-      description: "Discover how GetUrBizOnline developed a luxury e-commerce platform that increased sales and customer engagement.", // Updated site name
+      description: "Discover how GetUrBizOnline developed a luxury e-commerce platform that increased sales and customer engagement.",
     },
     productLaunch: {
       title: "Tech Product Launch Microsite",
-      description: "See how GetUrBizOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.", // Updated site name
+      description: "See how GetUrBizOnline created an interactive microsite for a product launch that boosted pre-orders and brand visibility.",
     }
   }
 };

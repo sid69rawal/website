@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
@@ -12,6 +11,7 @@ import Image from 'next/image';
 import { Search, LayoutTemplate, Smartphone, Zap, ShieldCheck } from 'lucide-react'; 
 import type { ElementType } from 'react';
 import { siteConfig } from '@/config/site';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 
 if (typeof window !== "undefined" && gsap) {
@@ -150,16 +150,16 @@ const FeaturesSection = () => {
   }, []);
   
   return (
-    <section id="features" className="py-24 bg-muted/30 dark:bg-gray-900 theme-transition">
+    <section id="features" className="py-20 md:py-24 lg:py-28 bg-muted/30 dark:bg-gray-900 theme-transition"> {/* Increased py padding */}
       <div className="container mx-auto px-6">
         <motion.div 
           ref={sectionRef}
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-16 md:mb-20" // Consistent with other sections
           variants={slideUpVariants}
           initial="hidden"
           animate={controls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.featuresSection.title}</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 md:mb-6 text-foreground">{siteConfig.featuresSection.title}</h2> {/* Increased mb */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             {siteConfig.featuresSection.subtitle}
           </p>
@@ -167,22 +167,24 @@ const FeaturesSection = () => {
         
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
           <motion.div
-            className="w-full lg:w-1/2 lg:sticky lg:top-24 mb-10 lg:mb-0" // Modified for responsive sticky and stacking
+            className="w-full lg:w-1/2 lg:sticky lg:top-24 mb-10 lg:mb-0" 
             variants={slideUpVariants}
             initial="hidden"
             animate={controls}
           >
-            <div ref={imageContainerRef} className="bg-card dark:bg-gray-800 p-2 rounded-xl shadow-2xl theme-transition aspect-video relative overflow-hidden">
-              <Image 
-                src={activeFeature.image}
-                alt={activeFeature.imageAlt}
-                data-ai-hint={activeFeature.dataAiHint}
-                fill
-                style={{ objectFit: 'cover' }}
-                className="rounded-lg transition-opacity duration-300"
-                priority={activeFeature.id === 1}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+            <div ref={imageContainerRef} className="bg-card dark:bg-gray-800 p-2 rounded-xl shadow-2xl theme-transition relative overflow-hidden">
+              <AspectRatio ratio={4/3} className="rounded-lg overflow-hidden"> {/* Enforce aspect ratio */}
+                <Image 
+                  src={activeFeature.image}
+                  alt={activeFeature.imageAlt}
+                  data-ai-hint={activeFeature.dataAiHint}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="transition-opacity duration-300"
+                  priority={activeFeature.id === 1}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </AspectRatio>
             </div>
           </motion.div>
           
@@ -208,7 +210,7 @@ const FeaturesSection = () => {
                       <IconComponent className="text-xl md:text-3xl w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div>
-                      <h3 className="text-lg md:text-2xl font-semibold mb-1.5 md:mb-2 text-foreground">{feature.title}</h3>
+                      <h3 className="text-lg md:text-2xl font-semibold mb-2 md:mb-2.5 text-foreground">{feature.title}</h3> {/* Adjusted mb */}
                       <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                         {feature.description}
                       </p>

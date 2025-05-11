@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRef } from 'react';
@@ -28,28 +27,27 @@ const ContactSection = () => {
   }
   
   const formSubmitEmail = siteConfig.formSubmit.email;
-  // Ensure _next URL is absolute for FormSubmit.co, redirecting to the main page
-  const redirectUrl = `${siteConfig.url}${siteConfig.formSubmit.thankYouPage}`; // thankYouPage is now '/'
+  const redirectUrl = `${siteConfig.url}${siteConfig.formSubmit.thankYouPage}`; 
 
   return (
-    <section id="contact" className="py-24 bg-muted/30 dark:bg-gray-900 theme-transition">
+    <section id="contact" className="py-20 md:py-24 lg:py-28 bg-muted/30 dark:bg-gray-900 theme-transition"> {/* Increased py padding */}
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           <motion.div 
             ref={ref}
-            className="text-center mb-16"
+            className="text-center mb-16 md:mb-20" // Increased bottom margin
             variants={slideUpVariants}
             initial="hidden"
             animate={controls}
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.contactSection.title}</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 md:mb-6 text-foreground">{siteConfig.contactSection.title}</h2> {/* Increased mb */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
               {siteConfig.contactSection.subtitle}
             </p>
           </motion.div>
           
           <motion.div
-            className="bg-card dark:bg-gray-800 rounded-xl shadow-xl p-8 md:p-10 theme-transition"
+            className="bg-card dark:bg-gray-800 rounded-xl shadow-xl p-8 md:p-10 lg:p-12 theme-transition" // Increased padding
             variants={slideUpVariants}
             initial="hidden"
             animate={controls}
@@ -59,7 +57,7 @@ const ContactSection = () => {
               ref={formRef} 
               action={`https://formsubmit.co/${formSubmitEmail}`} 
               method="POST" 
-              className="space-y-6"
+              className="space-y-8" // Increased space-y
             >
               <input type="hidden" name="_subject" value={siteConfig.formSubmit.subject} />
               <input type="hidden" name="_captcha" value="false" /> 
@@ -67,9 +65,9 @@ const ContactSection = () => {
               <input type="hidden" name="_template" value="table" />
 
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"> {/* Increased gap */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">{siteConfig.contactSection.formFields.name}</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">{siteConfig.contactSection.formFields.name}</label> {/* Increased mb */}
                   <Input 
                     type="text" 
                     id="name" 
@@ -81,7 +79,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">{siteConfig.contactSection.formFields.email}</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">{siteConfig.contactSection.formFields.email}</label> {/* Increased mb */}
                   <Input 
                     type="email" 
                     id="email" 
@@ -95,7 +93,7 @@ const ContactSection = () => {
               </div>
               
               <div>
-                <label htmlFor="project" className="block text-sm font-medium text-foreground mb-1.5">{siteConfig.contactSection.formFields.projectInterest}</label>
+                <label htmlFor="project" className="block text-sm font-medium text-foreground mb-2">{siteConfig.contactSection.formFields.projectInterest}</label> {/* Increased mb */}
                 <Select name="project" required>
                   <SelectTrigger className="w-full bg-background dark:bg-gray-700" aria-label="Project Type">
                     <SelectValue placeholder="Select a service" />
@@ -109,7 +107,7 @@ const ContactSection = () => {
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">{siteConfig.contactSection.formFields.message}</label>
+                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">{siteConfig.contactSection.formFields.message}</label> {/* Increased mb */}
                 <Textarea 
                   id="message" 
                   name="message" 
@@ -125,8 +123,8 @@ const ContactSection = () => {
                 <Button 
                   type="submit" 
                   className={cn(
-                    "w-full px-6 py-3 text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/50 transform hover:-translate-y-1",
-                    "flex items-center justify-center relative overflow-hidden btn-effect", // Added btn-effect
+                    "w-full px-6 py-3.5 text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/50 transform hover:-translate-y-1", // Increased py
+                    "flex items-center justify-center relative overflow-hidden btn-effect", 
                   )}
                   aria-live="polite" 
                 >

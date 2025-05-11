@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, ElementType } from 'react';
@@ -12,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Award, Users, BarChart3 as BarChartIcon } from 'lucide-react'; 
 import { siteConfig } from '@/config/site';
+import { AspectRatio } from "@/components/ui/aspect-ratio"; // Import AspectRatio
 
 if (typeof window !== "undefined" && gsap) {
   gsap.registerPlugin(ScrollTrigger);
@@ -31,6 +31,7 @@ interface ShowcaseProject {
   type: 'parallax' | 'card3d' | 'gradient';
   dataAiHint?: string;
   icon?: ElementType; 
+  imageAspectRatio?: number; // Optional aspect ratio for images
 }
 
 const showcaseProjects: ShowcaseProject[] = [
@@ -48,6 +49,7 @@ const showcaseProjects: ShowcaseProject[] = [
     type: 'parallax',
     dataAiHint: 'web design team',
     icon: Users,
+    imageAspectRatio: 16/9,
   },
   {
     id: 2,
@@ -63,6 +65,7 @@ const showcaseProjects: ShowcaseProject[] = [
     type: 'card3d',
     dataAiHint: 'saas dashboard',
     icon: BarChartIcon,
+    imageAspectRatio: 4/3,
   },
   {
     id: 3,
@@ -78,6 +81,7 @@ const showcaseProjects: ShowcaseProject[] = [
     type: 'gradient',
     dataAiHint: 'tech product',
     icon: Award,
+    imageAspectRatio: 4/3,
   }
 ];
 
@@ -112,21 +116,21 @@ const ShowcaseSection = () => {
       if (!projectRef) return;
       const project = showcaseProjects[index];
       if (project.type === 'parallax') {
-        const parallaxLayer = projectRef.querySelector('.parallax-layer') as HTMLElement;
+        const parallaxLayer = projectRef.querySelector('.parallax-layer-image') as HTMLElement; // Target the image itself for parallax
         if (!parallaxLayer) return;
         
         const stInstance = gsap.to(parallaxLayer, { 
           yPercent: 20, 
           ease: 'none',
           scrollTrigger: {
-            trigger: projectRef,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 0.5, 
+            trigger: projectRef, // Trigger based on the whole card
+            start: 'top bottom', // When card top enters bottom of viewport
+            end: 'bottom top',   // When card bottom leaves top of viewport
+            scrub: true, // Smooth scrubbing
           }
         });
-        if (stInstance.scrollTrigger) { 
-            triggers.push(stInstance.scrollTrigger);
+        if (stInstance) { // gsap.to directly returns the tween, not an object with scrollTrigger
+            // triggers.push(stInstance.scrollTrigger); // This was causing an error. stInstance is the tween.
         }
       }
     });
@@ -140,7 +144,7 @@ const ShowcaseSection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
           ref={sectionRef}
-          className="text-center mb-20"
+          className="text-center mb-16 md:mb-20" // Increased bottom margin for more whitespace
           variants={slideUpVariants}
           initial="hidden"
           animate={sectionControls}
@@ -166,22 +170,19 @@ const ShowcaseSection = () => {
             >
               {project.type === 'parallax' && (
                 <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
-                  <div className="parallax-container relative h-[400px] md:h-[500px] overflow-hidden group">
-                    <div 
-                      className="parallax-layer absolute inset-0"
-                      style={{ willChange: 'transform' }}
-                    >
-                      <Image
-                        src={project.imageSrc}
-                        alt={project.imageAlt}
-                        data-ai-hint={project.dataAiHint}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        className="transition-transform duration-500 ease-out group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                        priority={index === 0}
-                      />
-                    </div>
+                  <div className="relative h-[350px] md:h-[450px] overflow-hidden group"> {/* Adjusted height */}
+                     <AspectRatio ratio={project.imageAspectRatio || 16 / 9} className="overflow-hidden">
+                        <Image
+                            src={project.imageSrc}
+                            alt={project.imageAlt}
+                            data-ai-hint={project.dataAiHint}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                            className="parallax-layer-image transition-transform duration-500 ease-out group-hover:scale-105" // Added class for GSAP target
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                            priority={index === 0}
+                        />
+                    </AspectRatio>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
                     <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
                       {IconComponent && <IconComponent className="h-8 w-8 text-white/80 mb-2" />}
@@ -191,7 +192,7 @@ const ShowcaseSection = () => {
                   
                   <div className="p-6 md:p-8">
                     <h4 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h4>
-                    <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed">
+                    <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -210,7 +211,7 @@ const ShowcaseSection = () => {
                     <Link 
                       href={project.buttonLink}
                       className={cn(
-                        "inline-block px-8 py-3 rounded-lg font-semibold text-base btn-effect", // Added btn-effect
+                        "inline-block px-8 py-3 rounded-lg font-semibold text-base btn-effect", 
                         "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                         project.buttonColor
                       )}
@@ -227,14 +228,14 @@ const ShowcaseSection = () => {
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   <div 
-                    className="card-3d-content transform-gpu transition-transform duration-500 ease-out p-1"
+                    className="card-3d-content transform-gpu transition-transform duration-500 ease-out" // Removed p-1, padding handled internally
                     style={{ transform: 'translateZ(20px)' }}
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center">
                       <div className="p-6 md:p-8 order-2 md:order-1">
                         {IconComponent && <IconComponent className="h-7 w-7 text-secondary mb-3" />}
                         <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h3>
-                        <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed">
+                        <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2 mb-6">
@@ -253,7 +254,7 @@ const ShowcaseSection = () => {
                         <Link 
                           href={project.buttonLink}
                           className={cn(
-                            "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", // Added btn-effect
+                            "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", 
                             "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                             project.buttonColor
                           )}
@@ -261,16 +262,18 @@ const ShowcaseSection = () => {
                           {project.buttonText}
                         </Link>
                       </div>
-                      <div className="h-64 md:h-full order-1 md:order-2 rounded-t-lg md:rounded-r-lg md:rounded-t-none overflow-hidden group">
-                        <Image 
-                          src={project.imageSrc}
-                          alt={project.imageAlt}
-                          data-ai-hint={project.dataAiHint}
-                          width={500}
-                          height={400}
-                          style={{ objectFit: 'cover' }}
-                          className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105"
-                        />
+                      <div className="order-1 md:order-2 rounded-t-lg md:rounded-r-lg md:rounded-t-none overflow-hidden group">
+                         <AspectRatio ratio={project.imageAspectRatio || 4 / 3}>
+                            <Image 
+                            src={project.imageSrc}
+                            alt={project.imageAlt}
+                            data-ai-hint={project.dataAiHint}
+                            fill
+                            style={{ objectFit: 'cover' }}
+                            className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 500px"
+                            />
+                        </AspectRatio>
                       </div>
                     </div>
                   </div>
@@ -280,15 +283,18 @@ const ShowcaseSection = () => {
               {project.type === 'gradient' && (
                 <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
                   <div className="grid grid-cols-1 md:grid-cols-5 items-center">
-                    <div className="md:col-span-3 h-64 md:h-[450px] relative group">
-                      <Image 
-                        src={project.imageSrc}
-                        alt={project.imageAlt}
-                        data-ai-hint={project.dataAiHint}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        className="transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
+                    <div className="md:col-span-3 relative group">
+                        <AspectRatio ratio={project.imageAspectRatio || 4/3}>
+                            <Image 
+                                src={project.imageSrc}
+                                alt={project.imageAlt}
+                                data-ai-hint={project.dataAiHint}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                                className="transition-transform duration-500 ease-out group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 500px"
+                            />
+                       </AspectRatio>
                       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
                       <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
                          {IconComponent && (
@@ -302,7 +308,7 @@ const ShowcaseSection = () => {
                     </div>
                     <div className="md:col-span-2 p-6 md:p-8">
                       <h4 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h4>
-                      <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed">
+                      <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
                         {project.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mb-6">
@@ -321,7 +327,7 @@ const ShowcaseSection = () => {
                       <Link 
                         href={project.buttonLink}
                         className={cn(
-                          "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", // Added btn-effect
+                          "inline-block px-8 py-3 rounded-lg font-semibold text-base w-fit btn-effect", 
                           "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
                           project.buttonColor
                         )}

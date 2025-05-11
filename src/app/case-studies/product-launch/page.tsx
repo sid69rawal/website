@@ -1,24 +1,26 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Target, Lightbulb, Share2 } from "lucide-react"; 
 import { siteConfig } from "@/config/site";
 import React from "react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function ProductLaunchCaseStudyPage() {
   return (
     <Card className="overflow-hidden shadow-xl">
       <CardHeader className="p-0">
-        <div className="relative h-64 md:h-96">
-          <Image
-            src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
-            alt="Interactive tech product launch website interface on a screen"
-            data-ai-hint="tech launch"
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
+        <div className="relative">
+          <AspectRatio ratio={16 / 9}>
+            <Image
+              src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80"
+              alt="Interactive tech product launch website interface on a screen"
+              data-ai-hint="tech launch"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </AspectRatio>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 md:p-8">
              <Badge variant="destructive" className="mb-2 text-sm bg-accent/90 text-accent-foreground">Interactive Web Experience</Badge>
@@ -28,15 +30,15 @@ export default function ProductLaunchCaseStudyPage() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 md:p-8 space-y-6">
-        <>
+      <CardContent className="p-6 md:p-8 space-y-8"> {/* Increased space-y for more whitespace */}
+        
           <CardDescription className="text-lg text-muted-foreground">
             Developed an engaging and interactive microsite for a cutting-edge technology product launch. The project aimed to create a memorable online experience that effectively showcased product features, told a compelling story, and maximized pre-order conversions.
           </CardDescription>
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Core Ambitions</h3>
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground"> {/* Increased space-y */}
               <li>Generate significant online buzz and media attention for the new product.</li>
               <li>Clearly communicate unique product benefits and features to the target audience.</li>
               <li>Create a highly shareable and memorable digital experience.</li>
@@ -59,7 +61,7 @@ export default function ProductLaunchCaseStudyPage() {
 
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-foreground">Highlight Features & User Journey</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4"> {/* Increased space-y */}
               <li className="flex items-start">
                 <Rocket className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
                 <div>
@@ -97,7 +99,7 @@ export default function ProductLaunchCaseStudyPage() {
               The product launch microsite was a major success, exceeding pre-order targets by 40%. It generated significant social media buzz, was featured on prominent tech blogs, and substantially boosted brand visibility. The interactive experience effectively educated potential customers, leading to a higher quality of leads.
             </p>
           </div>
-        </>
+        
       </CardContent>
     </Card>
   );

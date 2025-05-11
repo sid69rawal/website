@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -48,7 +47,7 @@ const HeroSection = () => {
   }, [controls]);
   
   return (
-    <section className="relative h-screen flex items-center justify-center" id="hero">
+    <section className="relative h-screen flex items-center justify-center py-16 md:py-24" id="hero"> {/* Added py padding */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-primary/10 dark:via-background dark:to-secondary/10 z-0 overflow-hidden">
         <div ref={shapesRef} className="absolute inset-0">
           <div className="shape absolute w-64 h-64 rounded-full bg-primary/5 dark:bg-primary/10 blur-2xl filter" style={{ top: '15%', left: '10%', opacity: 0.4 }}></div>
@@ -62,7 +61,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 relative z-10 text-center">
         <motion.h1 
           id="hero-title"
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-foreground"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 md:mb-10 tracking-tight text-foreground" /* Increased mb */
           variants={fadeInVariants}
           initial="hidden"
           animate={controls}
@@ -73,7 +72,7 @@ const HeroSection = () => {
         
         <motion.p
           id="hero-subtitle"
-          className="text-xl md:text-2xl text-muted-foreground mb-10 leading-relaxed max-w-3xl mx-auto"
+          className="text-xl md:text-2xl text-muted-foreground mb-10 md:mb-12 leading-relaxed max-w-3xl mx-auto" /* Increased mb */
           variants={fadeInVariants}
           initial="hidden"
           animate={controls}
@@ -84,7 +83,7 @@ const HeroSection = () => {
         
         <motion.div
           id="hero-cta"
-          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6" /* Increased space-x */
           variants={fadeInVariants}
           initial="hidden"
           animate={controls}
