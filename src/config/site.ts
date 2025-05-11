@@ -1,7 +1,7 @@
 // src/config/site.ts
 
 export const siteConfig = {
-  name: "YourBusinessOnline",
+  name: "GetUrBizOnline",
   title: "YourBusinessOnline - Web Design, SEO & Google Visibility Experts",
   description: "Partner with us to build a high-performing website that attracts customers through Google and drives business growth. Expert web design and SEO services.",
   url: "https://yourbusinessonline.dev", // Replace with your actual domain for production
@@ -13,10 +13,10 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/company/yourbusinessonline", // Example link
   },
   contact: {
-    address: "123 Web Success Ave, SEO City, Digitaland",
-    phone: "+1 (555) 987-6543",
-    email: "info@yourbusinessonline.dev", // General contact email
-    jurisdiction: "State of Delaware, USA", // Added jurisdiction
+    address: "Toronto, ON Canada & India",
+    phone: "+1 416-857-8831 & +91 92594-18994",
+    email: "sidrawal1200@gmail.com", // General contact email
+    jurisdiction: "Canada & India", // Updated jurisdiction
   },
   formSubmit: {
     email: "sidrawal1200@gmail.com", // Email for FormSubmit.co

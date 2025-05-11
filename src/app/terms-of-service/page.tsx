@@ -67,7 +67,7 @@ export default function TermsOfServicePage() {
 
                 <h2>9. Governing Law</h2>
                 <p>
-                  These Terms of Service shall be governed by and construed in accordance with the laws of {siteConfig.contact.jurisdiction}, without regard to its conflict of law provisions.
+                  These Terms of Service shall be governed by and construed in accordance with the laws of {siteConfig.contact.jurisdiction}, without regard to its conflict of law provisions. Any disputes arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in {siteConfig.contact.jurisdiction}.
                 </p>
 
                 <h2>10. Changes to Terms</h2>

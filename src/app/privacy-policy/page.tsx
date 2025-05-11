@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
               <CardTitle className="text-3xl md:text-4xl font-bold text-center">Privacy Policy</CardTitle>
             </CardHeader>
             <CardContent className="prose dark:prose-invert max-w-none">
-              <>
+              
                 <p className="text-muted-foreground text-center mb-8">Last updated: {new Date().toLocaleDateString()}</p>
 
                 <h2>1. Introduction</h2>
@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
 
                 <h2>7. Your Privacy Rights</h2>
                 <p>
-                  In some regions (like the European Economic Area), you have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; and (iv) if applicable, to data portability.
+                  Depending on your location (e.g., Canada, India, European Economic Area), you may have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; and (iv) if applicable, to data portability.
                 </p>
 
                 <h2>8. Updates to This Notice</h2>
@@ -85,7 +85,7 @@ export default function PrivacyPolicyPage() {
                   {siteConfig.name}<br />
                   {siteConfig.contact.address}
                 </address>
-              </>
+              
             </CardContent>
           </Card>
         </div>
