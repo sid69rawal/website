@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'; 
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle'; 
+import ThemeToggle from '@/components/ThemeToggle'; 
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react'; 
 import { siteConfig } from '@/config/site';
@@ -25,8 +25,7 @@ const Header = () => {
       
       const isDeepLink = pathname.startsWith('/case-studies') || 
                          pathname.startsWith(siteConfig.legal.privacyPolicy) || 
-                         pathname.startsWith(siteConfig.legal.termsOfService) ||
-                         pathname.startsWith(siteConfig.formSubmit.thankYouPage);
+                         pathname.startsWith(siteConfig.legal.termsOfService);
 
       if (scrollTop > lastScrollTop && scrollTop > 300) {
         if (!isDeepLink) {

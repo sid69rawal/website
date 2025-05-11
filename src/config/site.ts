@@ -20,7 +20,7 @@ export const siteConfig = {
   formSubmit: {
     email: "sidrawal1200@gmail.com", // Email for FormSubmit.co
     subject: "New Project Inquiry from YourBusinessOnline Website",
-    thankYouPage: "/thank-you", // Relative path for Next.js Link, absolute for FormSubmit _next
+    thankYouPage: "/", // Redirect to main page after submission
   },
   legal: {
     privacyPolicy: "/privacy-policy",
@@ -84,12 +84,6 @@ export const siteConfig = {
       ],
       submitButtonText: "Send Project Inquiry"
     }
-  },
-  thankYouPage: {
-    title: "Message Sent!",
-    description: "Thank you for reaching out to YourBusinessOnline. We have received your message and will get back to you as soon as possible, typically within 1-2 business days.",
-    buttonText: "Return to Homepage",
-    buttonLink: "/",
   },
   notFoundPage: {
     title: "404 - Page Not Found",

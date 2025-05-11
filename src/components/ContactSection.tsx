@@ -28,8 +28,8 @@ const ContactSection = () => {
   }
   
   const formSubmitEmail = siteConfig.formSubmit.email;
-  // Ensure _next URL is absolute for FormSubmit.co
-  const thankYouUrl = `${siteConfig.url}${siteConfig.formSubmit.thankYouPage}`;
+  // Ensure _next URL is absolute for FormSubmit.co, redirecting to the main page
+  const redirectUrl = `${siteConfig.url}${siteConfig.formSubmit.thankYouPage}`; // thankYouPage is now '/'
 
   return (
     <section id="contact" className="py-24 bg-muted/30 dark:bg-gray-900 theme-transition">
@@ -63,7 +63,7 @@ const ContactSection = () => {
             >
               <input type="hidden" name="_subject" value={siteConfig.formSubmit.subject} />
               <input type="hidden" name="_captcha" value="false" /> 
-              <input type="hidden" name="_next" value={thankYouUrl} /> 
+              <input type="hidden" name="_next" value={redirectUrl} /> 
               <input type="hidden" name="_template" value="table" />
 
 
