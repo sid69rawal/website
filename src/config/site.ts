@@ -16,6 +16,7 @@ export const siteConfig = {
     address: "123 Web Success Ave, SEO City, Digitaland",
     phone: "+1 (555) 987-6543",
     email: "info@yourbusinessonline.dev", // General contact email
+    jurisdiction: "State of Delaware, USA", // Added jurisdiction
   },
   formSubmit: {
     email: "sidrawal1200@gmail.com", // Email for FormSubmit.co

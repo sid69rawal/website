@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
               <CardTitle className="text-3xl md:text-4xl font-bold text-center">Terms of Service</CardTitle>
             </CardHeader>
             <CardContent className="prose dark:prose-invert max-w-none">
-              <>
+              
                 <p className="text-muted-foreground text-center mb-8">Last updated: {new Date().toLocaleDateString()}</p>
 
                 <h2>1. Agreement to Terms</h2>
@@ -83,7 +83,7 @@ export default function TermsOfServicePage() {
                   {siteConfig.name}<br />
                   {siteConfig.contact.address}
                 </address>
-              </>
+              
             </CardContent>
           </Card>
         </div>
