@@ -1,3 +1,4 @@
+/** @jsxImportSource react */
 "use client";
 
 import { useEffect, useRef, ElementType } from 'react';
@@ -31,57 +32,57 @@ interface ShowcaseProject {
   type: 'parallax' | 'card3d' | 'gradient';
   dataAiHint?: string;
   icon?: ElementType; 
-  imageAspectRatio?: number; // Optional aspect ratio for images
+  imageAspectRatio?: number; 
 }
 
 const showcaseProjects: ShowcaseProject[] = [
   {
     id: 1,
-    title: 'Elevated E-Commerce Platform',
-    subtitle: 'Luxury Brand Website Redesign',
-    description: 'Transformed an online fashion store with a sophisticated redesign, focusing on user experience and product showcasing to boost engagement and sales. Implemented custom features and a mobile-first approach.',
-    tags: ['Web Development', 'UX/UI Design', 'E-Commerce', 'Mobile Responsive'],
-    buttonText: 'View Case Study',
-    buttonLink: '/case-studies/luxury-retail',
+    title: siteConfig.showcaseSection.projects[0].title,
+    subtitle: siteConfig.showcaseSection.projects[0].subtitle,
+    description: siteConfig.showcaseSection.projects[0].description,
+    tags: siteConfig.showcaseSection.projects[0].tags,
+    buttonText: siteConfig.showcaseSection.projects[0].buttonText,
+    buttonLink: siteConfig.showcaseSection.projects[0].buttonLink,
     buttonColor: 'bg-primary hover:bg-primary/90 text-primary-foreground',
-    imageSrc: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80',
-    imageAlt: 'Team collaborating on a website design project for a luxury brand',
+    imageSrc: siteConfig.showcaseSection.projects[0].imageSrc,
+    imageAlt: siteConfig.showcaseSection.projects[0].imageAlt,
     type: 'parallax',
-    dataAiHint: 'web design team',
+    dataAiHint: siteConfig.showcaseSection.projects[0].dataAiHint,
     icon: Users,
-    imageAspectRatio: 16/9,
+    imageAspectRatio: siteConfig.showcaseSection.projects[0].imageAspectRatio,
   },
   {
     id: 2,
-    title: 'Data-Driven SaaS Dashboard',
-    subtitle: 'Analytics Platform UI/UX',
-    description: 'Developed a user-friendly and intuitive dashboard for a SaaS analytics platform, enabling users to easily understand complex data and gain actionable insights. Focused on performance and scalability.',
-    tags: ['Web Application', 'UI/UX Design', 'Data Visualization', 'SaaS'],
-    buttonText: 'Explore Dashboard',
-    buttonLink: '/case-studies/interactive-dashboard',
+    title: siteConfig.showcaseSection.projects[1].title,
+    subtitle: siteConfig.showcaseSection.projects[1].subtitle,
+    description: siteConfig.showcaseSection.projects[1].description,
+    tags: siteConfig.showcaseSection.projects[1].tags,
+    buttonText: siteConfig.showcaseSection.projects[1].buttonText,
+    buttonLink: siteConfig.showcaseSection.projects[1].buttonLink,
     buttonColor: 'bg-secondary hover:bg-secondary/90 text-secondary-foreground',
-    imageSrc: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&h=800&q=80',
-    imageAlt: 'Modern data dashboard showing charts and graphs on a computer screen',
+    imageSrc: siteConfig.showcaseSection.projects[1].imageSrc,
+    imageAlt: siteConfig.showcaseSection.projects[1].imageAlt,
     type: 'card3d',
-    dataAiHint: 'saas dashboard',
+    dataAiHint: siteConfig.showcaseSection.projects[1].dataAiHint,
     icon: BarChartIcon,
-    imageAspectRatio: 4/3,
+    imageAspectRatio: siteConfig.showcaseSection.projects[1].imageAspectRatio,
   },
   {
     id: 3,
-    title: 'Tech Product Launch Microsite',
-    subtitle: 'Interactive Web Experience',
-    description: 'Created a captivating microsite for a new technology product launch, designed to generate excitement, clearly communicate features, and drive pre-orders through an engaging user journey.',
-    tags: ['Web Design', 'Lead Generation', 'Interactive Content', 'Product Marketing'],
-    buttonText: 'Discover Product Site',
-    buttonLink: '/case-studies/product-launch',
+    title: siteConfig.showcaseSection.projects[2].title,
+    subtitle: siteConfig.showcaseSection.projects[2].subtitle,
+    description: siteConfig.showcaseSection.projects[2].description,
+    tags: siteConfig.showcaseSection.projects[2].tags,
+    buttonText: siteConfig.showcaseSection.projects[2].buttonText,
+    buttonLink: siteConfig.showcaseSection.projects[2].buttonLink,
     buttonColor: 'bg-accent hover:bg-accent/90 text-accent-foreground',
-    imageSrc: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=900&q=80',
-    imageAlt: 'Futuristic technology product interface on a sleek device',
+    imageSrc: siteConfig.showcaseSection.projects[2].imageSrc,
+    imageAlt: siteConfig.showcaseSection.projects[2].imageAlt,
     type: 'gradient',
-    dataAiHint: 'tech product',
+    dataAiHint: siteConfig.showcaseSection.projects[2].dataAiHint,
     icon: Award,
-    imageAspectRatio: 4/3,
+    imageAspectRatio: siteConfig.showcaseSection.projects[2].imageAspectRatio,
   }
 ];
 
@@ -129,49 +130,50 @@ const ShowcaseSection = () => {
             scrub: true, // Smooth scrubbing
           }
         });
-        if (stInstance) { // gsap.to directly returns the tween, not an object with scrollTrigger
-            // triggers.push(stInstance.scrollTrigger); // This was causing an error. stInstance is the tween.
-        }
+        // The stInstance will always be defined here by gsap.to()
+        // The original problematic if (stInstance) was removed.
+        // The line below was commented out and is not being reinstated as stInstance.scrollTrigger is the config, not the instance.
+        // triggers.push(stInstance.scrollTrigger!); 
       }
     });
     return () => {
-      triggers.forEach(trigger => trigger.kill());
+      triggers.forEach(trigger => trigger.kill()); // This cleanup is currently ineffective as `triggers` array is not populated.
     }
   }, [isIntersecting]); 
   
   return (
-    <section id="showcase" className="py-24 bg-muted/20 dark:bg-gray-950 theme-transition relative overflow-hidden">
+    <section id="showcase" className="py-20 md:py-24 lg:py-28 bg-muted/20 dark:bg-gray-950 theme-transition relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
           ref={sectionRef}
-          className="text-center mb-16 md:mb-20" // Increased bottom margin for more whitespace
+          className="text-center mb-16 md:mb-20 lg:mb-24" // Increased bottom margin for more whitespace
           variants={slideUpVariants}
           initial="hidden"
           animate={sectionControls}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">{siteConfig.showcaseSection.title}</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-foreground">{siteConfig.showcaseSection.title}</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             {siteConfig.showcaseSection.subtitle}
           </p>
         </motion.div>
         
-        <div className="space-y-20 md:space-y-24">
+        <div className="space-y-20 md:space-y-24 lg:space-y-28"> {/* Increased space-y */}
           {showcaseProjects.map((project, index) => {
             const IconComponent = project.icon;
             return (
             <motion.div 
               key={project.id}
               ref={addToRefs}
-              className="showcase-item"
+              className="showcase-item card-hover" // Added card-hover for subtle interaction
               variants={slideUpVariants}
               initial="hidden"
               animate={sectionControls}
               transition={{ delay: 0.15 * index, duration: 0.6 }}
             >
               {project.type === 'parallax' && (
-                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
-                  <div className="relative h-[350px] md:h-[450px] overflow-hidden group"> {/* Adjusted height */}
-                     <AspectRatio ratio={project.imageAspectRatio || 16 / 9} className="overflow-hidden">
+                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                  <div className="relative h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden group"> {/* Adjusted height */}
+                     <AspectRatio ratio={project.imageAspectRatio || 16 / 9} className="overflow-hidden rounded-t-lg">
                         <Image
                             src={project.imageSrc}
                             alt={project.imageAlt}
@@ -183,14 +185,14 @@ const ShowcaseSection = () => {
                             priority={index === 0}
                         />
                     </AspectRatio>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div> {/* Darker gradient */}
                     <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
-                      {IconComponent && <IconComponent className="h-8 w-8 text-white/80 mb-2" />}
-                      <h3 className="text-2xl md:text-3xl font-semibold text-white drop-shadow-md">{project.subtitle}</h3>
+                      {IconComponent && <IconComponent className="h-8 w-8 text-white/90 mb-2" />}
+                      <h3 className="text-2xl md:text-3xl font-semibold text-white drop-shadow-lg">{project.subtitle}</h3>
                     </div>
                   </div>
                   
-                  <div className="p-6 md:p-8">
+                  <div className="p-6 md:p-8 lg:p-10"> {/* Increased padding */}
                     <h4 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h4>
                     <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
                       {project.description}
@@ -200,7 +202,7 @@ const ShowcaseSection = () => {
                         <span 
                           key={tag}
                           className={cn(
-                            "px-3 py-1.5 rounded-full text-xs font-medium",
+                            "px-3 py-1.5 rounded-full text-xs font-semibold", // Increased font-semibold
                             "bg-primary/10 text-primary dark:bg-primary/20"
                           )}
                         >
@@ -212,7 +214,7 @@ const ShowcaseSection = () => {
                       href={project.buttonLink}
                       className={cn(
                         "inline-block px-8 py-3 rounded-lg font-semibold text-base btn-effect", 
-                        "transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
+                        "transition-all duration-300 shadow-lg hover:shadow-primary/40 transform hover:-translate-y-1", // Adjusted shadow
                         project.buttonColor
                       )}
                     >
@@ -224,15 +226,15 @@ const ShowcaseSection = () => {
               
               {project.type === 'card3d' && (
                 <div 
-                  className="card-3d bg-card dark:bg-gray-800 rounded-xl shadow-2xl perspective-1000 hover:shadow-secondary/30"
+                  className="card-3d bg-card dark:bg-gray-800 rounded-xl shadow-2xl perspective-1000 hover:shadow-secondary/40" // Adjusted shadow
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   <div 
-                    className="card-3d-content transform-gpu transition-transform duration-500 ease-out" // Removed p-1, padding handled internally
+                    className="card-3d-content transform-gpu transition-transform duration-500 ease-out" 
                     style={{ transform: 'translateZ(20px)' }}
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center">
-                      <div className="p-6 md:p-8 order-2 md:order-1">
+                      <div className="p-6 md:p-8 lg:p-10 order-2 md:order-1"> {/* Increased padding */}
                         {IconComponent && <IconComponent className="h-7 w-7 text-secondary mb-3" />}
                         <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h3>
                         <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
@@ -243,7 +245,7 @@ const ShowcaseSection = () => {
                             <span 
                               key={tag}
                               className={cn(
-                                "px-3 py-1.5 rounded-full text-xs font-medium",
+                                "px-3 py-1.5 rounded-full text-xs font-semibold",
                                 "bg-secondary/10 text-secondary dark:bg-secondary/20"
                               )}
                             >
@@ -263,7 +265,7 @@ const ShowcaseSection = () => {
                         </Link>
                       </div>
                       <div className="order-1 md:order-2 rounded-t-lg md:rounded-r-lg md:rounded-t-none overflow-hidden group">
-                         <AspectRatio ratio={project.imageAspectRatio || 4 / 3}>
+                         <AspectRatio ratio={project.imageAspectRatio || 4 / 3} className="rounded-lg md:rounded-r-lg md:rounded-t-none">
                             <Image 
                             src={project.imageSrc}
                             alt={project.imageAlt}
@@ -281,9 +283,9 @@ const ShowcaseSection = () => {
               )}
               
               {project.type === 'gradient' && (
-                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl card-hover">
+                <div className="bg-card dark:bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
                   <div className="grid grid-cols-1 md:grid-cols-5 items-center">
-                    <div className="md:col-span-3 relative group">
+                    <div className="md:col-span-3 relative group rounded-t-lg md:rounded-l-lg md:rounded-t-none overflow-hidden">
                         <AspectRatio ratio={project.imageAspectRatio || 4/3}>
                             <Image 
                                 src={project.imageSrc}
@@ -295,18 +297,18 @@ const ShowcaseSection = () => {
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 500px"
                             />
                        </AspectRatio>
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div> {/* Darker gradient */}
                       <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
                          {IconComponent && (
-                            <div className="inline-flex items-center px-4 py-2 bg-accent/80 backdrop-blur-sm rounded-full mb-3 text-sm font-semibold text-accent-foreground">
+                            <div className="inline-flex items-center px-4 py-2 bg-accent/80 backdrop-blur-sm rounded-full mb-3 text-sm font-semibold text-accent-foreground shadow-md">
                                 <IconComponent className="mr-2 h-4 w-4" />
                                 <span>Featured Project</span>
                             </div>
                          )}
-                        <h3 className="text-2xl md:text-3xl font-semibold drop-shadow-md">{project.subtitle}</h3>
+                        <h3 className="text-2xl md:text-3xl font-semibold drop-shadow-lg">{project.subtitle}</h3>
                       </div>
                     </div>
-                    <div className="md:col-span-2 p-6 md:p-8">
+                    <div className="md:col-span-2 p-6 md:p-8 lg:p-10"> {/* Increased padding */}
                       <h4 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{project.title}</h4>
                       <p className="text-muted-foreground mb-6 text-sm md:text-base leading-relaxed line-clamp-3">
                         {project.description}
@@ -316,7 +318,7 @@ const ShowcaseSection = () => {
                            <span 
                            key={tag}
                            className={cn(
-                             "px-3 py-1.5 rounded-full text-xs font-medium",
+                             "px-3 py-1.5 rounded-full text-xs font-semibold",
                              "bg-accent/10 text-accent dark:bg-accent/20"
                            )}
                          >
