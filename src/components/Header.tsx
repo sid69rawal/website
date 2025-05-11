@@ -12,35 +12,18 @@ import { siteConfig } from '@/config/site';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname(); 
   
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      
       setIsScrolled(scrollTop > 50);
-      
-      const isDeepLink = pathname.startsWith('/case-studies') || 
-                         pathname.startsWith(siteConfig.legal.privacyPolicy) || 
-                         pathname.startsWith(siteConfig.legal.termsOfService);
-
-      if (scrollTop > lastScrollTop && scrollTop > 300) {
-        if (!isDeepLink) {
-             setIsHidden(true);
-        }
-      } else {
-        setIsHidden(false);
-      }
-      
-      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollTop, pathname]);
+  }, []);
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -60,7 +43,7 @@ const Header = () => {
         isScrolled ? "bg-background/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md py-2" : "py-4",
       )}
       initial={{ y: 0 }}
-      animate={{ y: isHidden && !isMobileMenuOpen ? -100 : 0 }} 
+      // Removed animate prop that was hiding the header on scroll
       transition={{ duration: 0.3 }}
     >
       <nav className="container mx-auto px-6 flex items-center justify-between h-16">
@@ -72,8 +55,15 @@ const Header = () => {
         
         <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
-            const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
-                              || pathname === link.href;
+            // Check if the current pathname matches the link's href.
+            // For hash links on the homepage, also check if the window hash matches.
+            let isActive = pathname === link.href;
+            if (link.href.startsWith('/#') && pathname === '/') {
+              if (typeof window !== 'undefined') {
+                isActive = window.location.hash === link.href.substring(1);
+              }
+            }
+            
             return (
               <Link 
                 key={link.href} 
@@ -82,6 +72,13 @@ const Header = () => {
                   "font-medium text-sm hover:text-primary transition-colors duration-200",
                   isActive ? "text-primary font-semibold" : "text-foreground" 
                 )}
+                onClick={() => {
+                  // If it's a hash link, ensure smooth scrolling behavior
+                  if (link.href.startsWith('/#')) {
+                    // Let default browser behavior handle smooth scroll for hash links
+                    // For more complex scenarios, implement smooth scroll logic here
+                  }
+                }}
               >
                 {link.label}
               </Link>
@@ -115,8 +112,12 @@ const Header = () => {
             <>
               <div className="px-4 py-3 space-y-2">
                 {navLinks.map((link) => {
-                  const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
-                    || pathname === link.href;
+                  let isActive = pathname === link.href;
+                  if (link.href.startsWith('/#') && pathname === '/') {
+                     if (typeof window !== 'undefined') {
+                       isActive = window.location.hash === link.href.substring(1);
+                     }
+                  }
                   return (
                     <Link
                       key={link.href}
