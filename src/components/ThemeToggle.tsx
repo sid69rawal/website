@@ -24,13 +24,12 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'); // Use resolvedTheme for toggle logic
   };
 
-  // It's important to check resolvedTheme to determine the actual current theme,
-  // as `theme` can be "system".
   const isDark = resolvedTheme === 'dark';
 
   // Placeholder classes to avoid className mismatch during hydration
-  const placeholderButtonClasses = "p-2 rounded-full transition-colors duration-200 hover:bg-muted";
-  const placeholderMobileButtonClasses = "w-full text-left font-medium hover:text-primary transition-colors duration-200 flex items-center py-2";
+  const placeholderButtonClasses = "p-2 rounded-full transition-colors duration-200 hover:bg-muted min-w-[44px] min-h-[44px]";
+  const placeholderMobileButtonClasses = "w-full font-medium hover:text-primary transition-colors duration-200 flex items-center justify-center text-xl py-3 min-h-[44px]";
+
 
   if (isMobile) {
     if (!mounted) {
@@ -41,7 +40,7 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
           aria-label="Toggle theme" // Generic aria-label
           disabled // Disable until theme is known
         >
-          <Sun className="mr-2 h-4 w-4 opacity-50" /> {/* Default/placeholder icon */}
+          <Sun className="mr-2 h-5 w-5 opacity-50" /> {/* Default/placeholder icon */}
           <span className="opacity-50">Loading theme...</span>
         </button>
       );
@@ -50,17 +49,20 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
     return (
       <button
         onClick={toggle}
-        className="w-full text-left font-medium hover:text-primary transition-colors duration-200 flex items-center py-2"
+        className={cn(
+          "w-full font-medium hover:text-primary transition-colors duration-200 flex items-center justify-center text-xl py-3 min-h-[44px]",
+          isDark ? "text-foreground" : "text-foreground" // Ensure consistent text color
+        )}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       >
         {isDark ? (
           <>
-            <Sun className="mr-2 h-4 w-4" />
+            <Sun className="mr-2 h-5 w-5" />
             <span>Light Mode</span>
           </>
         ) : (
           <>
-            <Moon className="mr-2 h-4 w-4" />
+            <Moon className="mr-2 h-5 w-5" />
             <span>Dark Mode</span>
           </>
         )}
@@ -102,7 +104,7 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
         onClick={toggle}
         aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         className={cn(
-          "p-2 rounded-full transition-colors duration-200",
+          "p-2 rounded-full transition-colors duration-200 min-w-[44px] min-h-[44px]", // Ensured min tap target size
           isDark ? "hover:bg-gray-700" : "hover:bg-gray-200 dark:hover:bg-gray-700"
         )}
       >
