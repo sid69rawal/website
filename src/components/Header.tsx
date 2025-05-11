@@ -14,9 +14,11 @@ import { siteConfig } from '@/config/site';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Added for hydration fix
   const pathname = usePathname(); 
   
   useEffect(() => {
+    setIsClient(true); // Set to true after component mounts on client
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       setIsScrolled(scrollTop > 50);
@@ -27,13 +29,11 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    // Prevent body scroll when mobile menu is open
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    // Cleanup function
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -61,7 +61,7 @@ const Header = () => {
     >
       <nav className={cn(
         "container mx-auto px-6 flex items-center justify-between",
-        isScrolled ? "h-12" : "h-16" // h-12 is 48px, fits within 50px
+        isScrolled ? "h-12" : "h-16" 
       )}>
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-primary transition-transform duration-200 transform hover:scale-105">
@@ -72,11 +72,9 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-4">
           {navLinks.map((link) => {
             let isActive = pathname === link.href;
-            if (link.href.startsWith('/#') && pathname === '/') {
-              if (typeof window !== 'undefined') {
-                // For initial load or if hash changes programmatically
-                isActive = window.location.hash === link.href.substring(1);
-              }
+            // Defer hash checking to client-side after mount
+            if (isClient && link.href.startsWith('/#') && pathname === '/') {
+              isActive = window.location.hash === link.href.substring(1);
             }
             
             return (
@@ -88,10 +86,8 @@ const Header = () => {
                   isActive ? "text-primary font-semibold underline decoration-primary underline-offset-4" : "text-foreground" 
                 )}
                 onClick={() => {
-                  // No special onClick for closeMobileMenu needed here as it's desktop
                   if (link.href.startsWith('/#')) {
-                    // Smooth scroll for hash links
-                    const elementId = link.href.substring(2); // remove '/#'
+                    const elementId = link.href.substring(2); 
                     const element = document.getElementById(elementId);
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });
@@ -143,10 +139,9 @@ const Header = () => {
             <div className="flex flex-col items-center space-y-6 text-center">
               {navLinks.map((link) => {
                 let isActive = pathname === link.href;
-                if (link.href.startsWith('/#') && pathname === '/') {
-                   if (typeof window !== 'undefined') {
-                     isActive = window.location.hash === link.href.substring(1);
-                   }
+                 // Defer hash checking to client-side after mount
+                if (isClient && link.href.startsWith('/#') && pathname === '/') {
+                   isActive = window.location.hash === link.href.substring(1);
                 }
                 return (
                   <Link
@@ -159,11 +154,9 @@ const Header = () => {
                   onClick={() => {
                     closeMobileMenu();
                     if (link.href.startsWith('/#')) {
-                      // Smooth scroll for hash links
-                      const elementId = link.href.substring(2); // remove '/#'
+                      const elementId = link.href.substring(2); 
                       const element = document.getElementById(elementId);
                       if (element) {
-                        // Timeout to allow menu to close before scrolling
                         setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 300);
                       }
                     }
