@@ -1,5 +1,5 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card"; // Removed CardTitle import
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
@@ -8,7 +8,7 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: `Privacy Policy - ${siteConfig.name}`,
-  description: `Read the Privacy Policy of ${siteConfig.name}.`,
+  description: `Read the GetUrBizOnline Privacy Policy. We detail how we collect, use, and protect your personal data when you use our web design and SEO services.`,
 };
 
 export default function PrivacyPolicyPage() {
@@ -19,7 +19,8 @@ export default function PrivacyPolicyPage() {
         <div className="container mx-auto px-6">
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle className="text-3xl md:text-4xl font-bold text-center">Privacy Policy</CardTitle>
+              {/* Changed CardTitle to a direct h1 tag */}
+              <h1 className="text-3xl md:text-4xl font-bold text-center text-foreground">Privacy Policy</h1>
             </CardHeader>
             <CardContent className="prose dark:prose-invert max-w-none">
               
@@ -94,3 +95,4 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
+

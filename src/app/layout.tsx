@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -22,7 +23,8 @@ export const metadata: Metadata = {
     default: siteConfig.title, 
     template: `%s - ${siteConfig.name}`, 
   },
-  description: siteConfig.description, 
+  // Updated default description for better homepage SEO
+  description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
   manifest: "/manifest.json",
   metadataBase: new URL(siteConfig.url), 
   openGraph: {
@@ -30,7 +32,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     title: siteConfig.title, 
-    description: siteConfig.description, 
+    // Use the more specific homepage description for default OG
+    description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
     siteName: siteConfig.name,
     images: [
       {
@@ -44,7 +47,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title, 
-    description: siteConfig.description, 
+    // Use the more specific homepage description for default Twitter card
+    description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
     images: [siteConfig.ogImage],
     // creator: "@yourtwitterhandle", 
   },
@@ -85,3 +89,4 @@ export default function RootLayout({
     </html>
   );
 }
+
