@@ -29,7 +29,6 @@ export default function InteractiveDashboardCaseStudyPage() {
         </div>
       </CardHeader>
       <CardContent className="p-6 md:p-8 space-y-6">
-        <React.Fragment>
           <CardDescription className="text-lg text-muted-foreground">
             This project involved designing and developing a highly interactive and user-friendly dashboard for a SaaS analytics platform. The primary goal was to make complex data easily understandable and actionable for their clients, thereby improving user retention and satisfaction.
           </CardDescription>
@@ -97,7 +96,6 @@ export default function InteractiveDashboardCaseStudyPage() {
               The new dashboard significantly improved user engagement metrics for the SaaS client. Users reported a 25% increase in ease of finding critical data, and task completion times for generating reports decreased by 30%. This led to higher client satisfaction and contributed to a 15% increase in user retention for the platform.
             </p>
           </div>
-        </React.Fragment>
       </CardContent>
     </Card>
   );

@@ -29,7 +29,6 @@ export default function ProductLaunchCaseStudyPage() {
         </div>
       </CardHeader>
       <CardContent className="p-6 md:p-8 space-y-6">
-        <React.Fragment>
           <CardDescription className="text-lg text-muted-foreground">
             Developed an engaging and interactive microsite for a cutting-edge technology product launch. The project aimed to create a memorable online experience that effectively showcased product features, told a compelling story, and maximized pre-order conversions.
           </CardDescription>
@@ -97,7 +96,6 @@ export default function ProductLaunchCaseStudyPage() {
               The product launch microsite was a major success, exceeding pre-order targets by 40%. It generated significant social media buzz, was featured on prominent tech blogs, and substantially boosted brand visibility. The interactive experience effectively educated potential customers, leading to a higher quality of leads.
             </p>
           </div>
-        </React.Fragment>
       </CardContent>
     </Card>
   );

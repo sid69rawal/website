@@ -29,7 +29,6 @@ export default function LuxuryRetailCaseStudyPage() {
         </div>
       </CardHeader>
       <CardContent className="p-6 md:p-8 space-y-6">
-        <React.Fragment>
           <CardDescription className="text-lg text-muted-foreground">
             A comprehensive website redesign and e-commerce solution for a high-end fashion brand. The project focused on creating a luxurious online shopping experience that mirrored the brand's exclusive in-store atmosphere, ultimately aiming to increase customer engagement and online sales.
           </CardDescription>
@@ -97,7 +96,6 @@ export default function LuxuryRetailCaseStudyPage() {
               The new e-commerce platform led to a 35% increase in online sales within the first six months. Average session duration grew by 25%, and customer feedback consistently praised the site's elegance and ease of use. The client also saw a significant rise in organic search traffic due to improved site structure and performance.
             </p>
           </div>
-        </React.Fragment>
       </CardContent>
     </Card>
   );
