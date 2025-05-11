@@ -21,10 +21,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./client/src/*"],
       "@shared/*": ["./shared/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/contact/route.js"],
-  "exclude": ["node_modules", "client"]
+  "include": ["next-env.d.ts", "client/src/**/*.ts", "client/src/**/*.tsx", ".next/types/**/*.ts", "shared/**/*.ts"],
+  "exclude": ["node_modules"]
 }

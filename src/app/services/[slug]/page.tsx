@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { siteConfig, ServiceConfig } from '@/config/site'; // Removed serviceIconMap as it's not used here directly
+import { siteConfig, ServiceConfig } from '@/config/site';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -23,8 +23,6 @@ import {
 
 // Dynamically import Lucide icons
 const IconComponents = LucideIcons as unknown as { [key: string]: React.FC<LucideIcons.LucideProps> };
-
-// Removed ServicePageProps interface, types will be inline
 
 export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
   return siteConfig.allServices
@@ -194,15 +192,3 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
     </div>
   );
 }
-
-// Helper to get icon component (consider moving to a shared utils if used elsewhere)
-// This function is not directly used in this file after iconName removal, but keeping if it's used by other logic not visible.
-// If not, it can be removed. For now, IconComponents access is direct.
-/*
-function getIconComponent(iconName?: string): React.FC<LucideIcons.LucideProps> {
-  if (!iconName || !IconComponents[iconName]) {
-    return CheckCircle; // Default icon
-  }
-  return IconComponents[iconName];
-}
-*/
