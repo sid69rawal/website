@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -8,7 +9,7 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { slideUpVariants } from '@/lib/animation'; 
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, Box, Palette, Code, Gauge, HelpCircle, Layers } from 'lucide-react';
+import { Search, LayoutTemplate, Smartphone, TrendingUp, Users, Settings, ArrowRight, Package, BoxIcon, Palette, Code, Gauge, HelpCircle, Layers, Briefcase } from 'lucide-react';
 import type { ElementType } from 'react';
 import { siteConfig } from '@/config/site';
 
@@ -17,6 +18,7 @@ if (typeof window !== "undefined" && gsap && ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Define an icon map to ensure bundler picks up the icons correctly
 const iconMap = {
   LayoutTemplate,
   Search,
@@ -25,13 +27,14 @@ const iconMap = {
   Users,
   Settings,
   ArrowRight,
-  Package,
-  Box, 
+  Package, // Fallback
+  BoxIcon, 
   Palette,
   Code,
   Gauge,
   HelpCircle,
   Layers,
+  Briefcase, // Example: Using Briefcase for "E-commerce Solutions"
 };
 
 interface ServiceItem {
@@ -90,21 +93,21 @@ const services: ServiceItem[] = [
     link: '#contact',
     linkColor: 'text-secondary hover:text-secondary/80'
   },
-  {
-    iconName: 'Settings', 
-    iconBgColor: 'bg-accent/10 dark:bg-accent/20',
-    iconColor: 'text-accent',
-    title: 'Website Maintenance & Support',
-    description: 'Ongoing support and maintenance services to keep your website secure, up-to-date, and performing optimally.',
-    link: '#contact',
-    linkColor: 'text-accent hover:text-accent/80'
-  }
+  // {
+  //   iconName: 'Settings', 
+  //   iconBgColor: 'bg-accent/10 dark:bg-accent/20',
+  //   iconColor: 'text-accent',
+  //   title: 'Website Maintenance & Support',
+  //   description: 'Ongoing support and maintenance services to keep your website secure, up-to-date, and performing optimally.',
+  //   link: '#contact',
+  //   linkColor: 'text-accent hover:text-accent/80'
+  // }
 ];
 
 const getValidIconComponent = (iconName: keyof typeof iconMap, serviceTitle: string): ElementType => {
   const Icon = iconMap[iconName];
   if (!Icon) {
-    console.error(`Icon input for "${serviceTitle}" is null or undefined.`);
+    console.error(`Icon input for "${serviceTitle}" is null or undefined. Defaulting to 'Package'.`);
     return Package; // Default fallback icon
   }
   return Icon;
@@ -187,7 +190,7 @@ const ServicesSection = () => {
                 <div className={cn("w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-md", service.iconBgColor)}>
                   <IconComponent className={cn("w-8 h-8", service.iconColor)} />
                 </div>
-                <h3 className="text-xl lg:text-2xl font-semibold mb-4 text-card-foreground">{service.title}</h3> {/* Increased mb */}
+                <h3 className="text-xl lg:text-2xl font-semibold mb-3 text-card-foreground">{service.title}</h3> {/* Increased mb */}
                 <p className="text-muted-foreground mb-6 text-sm leading-relaxed flex-grow">
                   {service.description}
                 </p>
