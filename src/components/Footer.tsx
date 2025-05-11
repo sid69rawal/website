@@ -1,10 +1,9 @@
-
 "use client";
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Twitter, Github, Linkedin, MapPin, Phone, Mail } from 'lucide-react'; 
+import { Twitter, Github, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
 const Footer = () => {
@@ -21,8 +20,8 @@ const Footer = () => {
     { href: siteConfig.legal.termsOfService, label: "Terms of Service" },
   ];
 
-  const phoneNumbers = siteConfig.contact.phone.split(' & ');
-  const locations = siteConfig.contact.address.split(' & ');
+  // Use the structured address and phone parts from siteConfig
+  const { addressParts, phoneParts, email } = siteConfig.contact;
 
   return (
     <footer className="py-16 bg-gray-800 dark:bg-gray-900 text-gray-300 theme-transition">
@@ -38,9 +37,9 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => (
-                <motion.a 
+                <motion.a
                   key={link.label}
-                  href={link.href} 
+                  href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
@@ -53,12 +52,12 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Column 2: Services */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-5">Our Services</h4>
             <ul className="space-y-3">
-              {siteConfig.footerServiceLinks.map(link => (
+              {siteConfig.footerServiceLinks.map(link => ( // Uses updated links from siteConfig
                 <li key={link.label}>
                   <Link href={link.href} className="text-sm text-gray-400 hover:text-primary transition-colors duration-200 hover:underline">
                     {link.label}
@@ -67,29 +66,29 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          
+
           {/* Column 3: Contact */}
           <div>
             <h4 className="text-lg font-semibold text-white mb-5">Get in Touch</h4>
             <ul className="space-y-3 text-sm">
-              {locations.map((location, index) => (
-                <li key={index} className="flex items-start text-gray-400">
+              {addressParts.map((part, index) => (
+                <li key={`address-${index}`} className="flex items-start text-gray-400">
                   <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
-                  <span>{location.trim()}</span>
+                  <span>{part.location}</span>
                 </li>
               ))}
-              {phoneNumbers.map((phone, index) => (
-                <li key={index} className="flex items-center text-gray-400">
+              {phoneParts.map((part, index) => (
+                <li key={`phone-${index}`} className="flex items-center text-gray-400">
                   <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors duration-200 hover:underline">
-                    {phone.trim()}
+                  <a href={`tel:${part.number.replace(/\s/g, '')}`} className="hover:text-primary transition-colors duration-200 hover:underline">
+                    {part.number} ({part.country})
                   </a>
                 </li>
               ))}
               <li className="flex items-center text-gray-400">
                 <Mail className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-primary transition-colors duration-200 hover:underline">
-                  {siteConfig.contact.email}
+                <a href={`mailto:${email}`} className="hover:text-primary transition-colors duration-200 hover:underline">
+                  {email}
                 </a>
               </li>
             </ul>
@@ -106,7 +105,7 @@ const Footer = () => {
           </div>
 
         </div>
-        
+
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
           <p className="text-gray-500 mb-4 md:mb-0">
             &copy; {currentYear} {siteConfig.name}. All rights reserved.
@@ -127,4 +126,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -7,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: '--font-inter',
 });
@@ -20,20 +19,18 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.title, 
-    template: `%s - ${siteConfig.name}`, 
+    default: siteConfig.title,
+    template: `%s - ${siteConfig.name}`,
   },
-  // Updated default description for better homepage SEO
-  description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
+  description: siteConfig.description, // Using the updated general description
   manifest: "/manifest.json",
-  metadataBase: new URL(siteConfig.url), 
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.title, 
-    // Use the more specific homepage description for default OG
-    description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
+    title: siteConfig.title,
+    description: siteConfig.description,
     siteName: siteConfig.name,
     images: [
       {
@@ -46,16 +43,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title, 
-    // Use the more specific homepage description for default Twitter card
-    description: "GetUrBizOnline offers expert web design and SEO services in Toronto & India to help your business get found on Google and attract more customers. Get a free quote!", 
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: [siteConfig.ogImage],
-    // creator: "@yourtwitterhandle", 
+    // creator: "@yourtwitterhandle", // Add if you have one
   },
   icons: {
-    icon: "/favicon.ico", 
-    // shortcut: "/favicon-16x16.png",
-    // apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico",
+    // shortcut: "/favicon-16x16.png", // Add if available
+    // apple: "/apple-touch-icon.png", // Add if available
   }
 };
 
@@ -67,11 +63,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="hsl(var(--primary))" /> 
+        <meta name="theme-color" content="hsl(var(--primary))" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
-        {/* Font Awesome CDN link removed */}
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
         <ThemeProvider
@@ -89,4 +84,3 @@ export default function RootLayout({
     </html>
   );
 }
-
