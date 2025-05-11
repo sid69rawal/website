@@ -16,15 +16,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/case-studies/layout": [
+    "/services/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/case-studies/layout.js"
+      "static/chunks/app/services/[slug]/page.js"
     ],
-    "/case-studies/luxury-retail/page": [
+    "/services/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/case-studies/luxury-retail/page.js"
+      "static/chunks/app/services/page.js"
     ]
   }
 }
