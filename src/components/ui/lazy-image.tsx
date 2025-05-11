@@ -1,6 +1,6 @@
 "use client"; // Needs client-side hooks and refs
 
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import NextImage, { ImageProps as NextImageProps } from 'next/image'; // Use Next.js Image
 import { Loader2, Image as ImageIcon } from 'lucide-react'; // Use lucide icons
@@ -24,7 +24,8 @@ export function LazyImage({
   rootMargin = '200px 0px',
   width, // Extract width and height for the placeholder aspect ratio
   height,
-  ...props // Pass remaining props like sizes, priority, etc., to NextImage
+  priority, // Explicitly destructure priority
+  ...props // Pass remaining props like sizes, fill, etc., to NextImage
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -32,8 +33,8 @@ export function LazyImage({
   const imgRef = useRef<HTMLDivElement>(null); // Ref on the container div
 
   // Calculate aspect ratio for placeholder
-  const aspectRatio = (typeof width === 'number' && typeof height === 'number' && height !== 0) 
-    ? (width / height) 
+  const aspectRatio = (typeof width === 'number' && typeof height === 'number' && height !== 0)
+    ? (width / height)
     : 16 / 9; // Default aspect ratio
 
   // Set up intersection observer
@@ -81,7 +82,7 @@ export function LazyImage({
   }
 
   return (
-    <div 
+    <div
       ref={imgRef}
       className={cn(
         'lazy-image-container relative overflow-hidden',
@@ -128,8 +129,9 @@ export function LazyImage({
             )}
             onLoadingComplete={handleLoadingComplete}
             onError={handleError}
-            loading="lazy" // Default Next.js lazy loading
-            {...props} // Pass remaining props (like priority, sizes, fill)
+            priority={priority} // Pass priority prop
+            loading={priority ? undefined : "lazy"} // If priority is true, next/image handles loading as 'eager'
+            {...props} // Pass remaining props (like sizes, fill)
           />
       )}
     </div>
