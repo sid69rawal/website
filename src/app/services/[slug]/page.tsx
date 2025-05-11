@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { siteConfig, ServiceConfig, serviceIconMap } from '@/config/site';
+import { siteConfig, ServiceConfig } from '@/config/site'; // Removed serviceIconMap as it's not used here directly
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,18 +21,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-
-interface ServicePageProps {
-  params: {
-    slug: string;
-  };
-}
-
 // Dynamically import Lucide icons
 const IconComponents = LucideIcons as unknown as { [key: string]: React.FC<LucideIcons.LucideProps> };
 
+// Removed ServicePageProps interface, types will be inline
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
   return siteConfig.allServices
     .filter(service => service.slug !== "website-maintenance-support")
     .map((service) => ({
@@ -40,7 +34,7 @@ export async function generateStaticParams() {
     }));
 }
 
-export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const service = siteConfig.allServices.find(s => s.slug === params.slug);
 
   if (!service) {
@@ -61,7 +55,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   };
 }
 
-export default function ServiceDetailPage({ params }: ServicePageProps) {
+export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
   const service = siteConfig.allServices.find(s => s.slug === params.slug);
 
   if (!service) {
@@ -88,7 +82,8 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link href="/services">Services</Link>
+                    {/* Direct link to the main services page */}
+                    <Link href="/services">Services</Link> 
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
@@ -201,9 +196,13 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 }
 
 // Helper to get icon component (consider moving to a shared utils if used elsewhere)
+// This function is not directly used in this file after iconName removal, but keeping if it's used by other logic not visible.
+// If not, it can be removed. For now, IconComponents access is direct.
+/*
 function getIconComponent(iconName?: string): React.FC<LucideIcons.LucideProps> {
   if (!iconName || !IconComponents[iconName]) {
     return CheckCircle; // Default icon
   }
   return IconComponents[iconName];
 }
+*/
