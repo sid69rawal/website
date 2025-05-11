@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Target, Lightbulb, Share2, Zap } from "lucide-react"; 
 import { siteConfig } from "@/config/site";
+import React from "react";
 
 export default function ProductLaunchCaseStudyPage() {
   return (
@@ -28,73 +29,75 @@ export default function ProductLaunchCaseStudyPage() {
         </div>
       </CardHeader>
       <CardContent className="p-6 md:p-8 space-y-6">
-        <CardDescription className="text-lg text-muted-foreground">
-          Developed an engaging and interactive microsite for a cutting-edge technology product launch. The project aimed to create a memorable online experience that effectively showcased product features, told a compelling story, and maximized pre-order conversions.
-        </CardDescription>
+        <React.Fragment>
+          <CardDescription className="text-lg text-muted-foreground">
+            Developed an engaging and interactive microsite for a cutting-edge technology product launch. The project aimed to create a memorable online experience that effectively showcased product features, told a compelling story, and maximized pre-order conversions.
+          </CardDescription>
 
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Core Ambitions</h3>
-          <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-            <li>Generate significant online buzz and media attention for the new product.</li>
-            <li>Clearly communicate unique product benefits and features to the target audience.</li>
-            <li>Create a highly shareable and memorable digital experience.</li>
-            <li>Drive pre-order sign-ups and build an early adopter community.</li>
-            <li>Position the brand as an innovator in its market.</li>
-          </ul>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Key Technologies & Strategies</h3>
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="outline">React / Next.js</Badge>
-            <Badge variant="outline">Interactive Storytelling</Badge>
-            <Badge variant="outline">Lead Capture Forms</Badge>
-            <Badge variant="outline">Performance Optimization</Badge>
-            <Badge variant="outline">Social Media Integration</Badge>
-            <Badge variant="outline">Analytics Tracking</Badge>
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-foreground">Core Ambitions</h3>
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              <li>Generate significant online buzz and media attention for the new product.</li>
+              <li>Clearly communicate unique product benefits and features to the target audience.</li>
+              <li>Create a highly shareable and memorable digital experience.</li>
+              <li>Drive pre-order sign-ups and build an early adopter community.</li>
+              <li>Position the brand as an innovator in its market.</li>
+            </ul>
           </div>
-        </div>
 
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Highlight Features & User Journey</h3>
-          <ul className="space-y-3">
-            <li className="flex items-start">
-              <Rocket className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-medium text-foreground">Engaging Product Reveal</h4>
-                <p className="text-sm text-muted-foreground">A dynamic, interactive sequence that unveiled the product, allowing users to explore its design and core value propositions.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <Lightbulb className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-medium text-foreground">Story-Driven Content Sections</h4>
-                <p className="text-sm text-muted-foreground">Guided users through the product's narrative with compelling content and visuals, highlighting key benefits and use cases.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <Target className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-medium text-foreground">Clear Call-to-Actions for Pre-Orders</h4>
-                <p className="text-sm text-muted-foreground">Strategically placed CTAs and a streamlined pre-order form made it easy for interested users to sign up.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-               <Share2 className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
-              <div>
-                <h4 className="font-medium text-foreground">Social Sharing Integration</h4>
-                <p className="text-sm text-muted-foreground">Encouraged users to share the excitement with integrated social media sharing options, amplifying reach.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-foreground">Key Technologies & Strategies</h3>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="outline">React / Next.js</Badge>
+              <Badge variant="outline">Interactive Storytelling</Badge>
+              <Badge variant="outline">Lead Capture Forms</Badge>
+              <Badge variant="outline">Performance Optimization</Badge>
+              <Badge variant="outline">Social Media Integration</Badge>
+              <Badge variant="outline">Analytics Tracking</Badge>
+            </div>
+          </div>
 
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Outcomes & Impact</h3>
-          <p className="text-muted-foreground">
-            The product launch microsite was a major success, exceeding pre-order targets by 40%. It generated significant social media buzz, was featured on prominent tech blogs, and substantially boosted brand visibility. The interactive experience effectively educated potential customers, leading to a higher quality of leads.
-          </p>
-        </div>
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-foreground">Highlight Features & User Journey</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <Rocket className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
+                <div>
+                  <h4 className="font-medium text-foreground">Engaging Product Reveal</h4>
+                  <p className="text-sm text-muted-foreground">A dynamic, interactive sequence that unveiled the product, allowing users to explore its design and core value propositions.</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <Lightbulb className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
+                <div>
+                  <h4 className="font-medium text-foreground">Story-Driven Content Sections</h4>
+                  <p className="text-sm text-muted-foreground">Guided users through the product's narrative with compelling content and visuals, highlighting key benefits and use cases.</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <Target className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
+                <div>
+                  <h4 className="font-medium text-foreground">Clear Call-to-Actions for Pre-Orders</h4>
+                  <p className="text-sm text-muted-foreground">Strategically placed CTAs and a streamlined pre-order form made it easy for interested users to sign up.</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                 <Share2 className="h-5 w-5 text-accent mr-3 mt-1 shrink-0" />
+                <div>
+                  <h4 className="font-medium text-foreground">Social Sharing Integration</h4>
+                  <p className="text-sm text-muted-foreground">Encouraged users to share the excitement with integrated social media sharing options, amplifying reach.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-foreground">Outcomes & Impact</h3>
+            <p className="text-muted-foreground">
+              The product launch microsite was a major success, exceeding pre-order targets by 40%. It generated significant social media buzz, was featured on prominent tech blogs, and substantially boosted brand visibility. The interactive experience effectively educated potential customers, leading to a higher quality of leads.
+            </p>
+          </div>
+        </React.Fragment>
       </CardContent>
     </Card>
   );
