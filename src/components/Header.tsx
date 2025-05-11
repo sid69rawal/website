@@ -113,16 +113,17 @@ const Header = () => {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <div className="px-4 py-3 space-y-2">
-              {navLinks.map((link) => {
-                 const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
-                                 || pathname === link.href;
-                return (
-                  <Link 
-                    key={link.href} 
-                    href={link.href} 
-                    className={cn(
-                      "block font-medium py-2 hover:text-primary transition-colors duration-200",
+            <>
+              <div className="px-4 py-3 space-y-2">
+                {navLinks.map((link) => {
+                  const isActive = (pathname === '/' && typeof window !== 'undefined' && window.location.hash === link.href.substring(1))
+                    || pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={cn(
+                        "block font-medium py-2 hover:text-primary transition-colors duration-200",
                       isActive ? "text-primary font-semibold" : "text-foreground"
                     )}
                     onClick={closeMobileMenu}
@@ -130,11 +131,12 @@ const Header = () => {
                     {link.label}
                   </Link>
                 );
-              })}
-              <div className="pt-2 border-t border-border mt-2">
-                <ThemeToggle isMobile />
+                })}
+                <div className="pt-2 border-t border-border mt-2">
+                  <ThemeToggle isMobile />
+                </div>
               </div>
-            </div>
+            </>
           </motion.div>
         )}
       </AnimatePresence>
