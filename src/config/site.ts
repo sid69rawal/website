@@ -2,7 +2,7 @@
 
 export const siteConfig = {
   name: "GetUrBizOnline",
-  title: "YourBusinessOnline - Web Design, SEO & Google Visibility Experts",
+  title: "GetUrBizOnline - Web Design, SEO & Google Visibility Experts",
   description: "Partner with us to build a high-performing website that attracts customers through Google and drives business growth. Expert web design and SEO services.",
   url: "https://geturbiz.online", // Updated to be a valid URL. Replace with your actual domain for production.
   ogImage: "https://geturbiz.online/og-image.png", // Replace with your actual OG image URL

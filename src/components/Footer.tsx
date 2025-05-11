@@ -22,6 +22,7 @@ const Footer = () => {
   ];
 
   const phoneNumbers = siteConfig.contact.phone.split(' & ');
+  const locations = siteConfig.contact.address.split(' & ');
 
   return (
     <footer className="py-16 bg-gray-800 dark:bg-gray-900 text-gray-300 theme-transition">
@@ -71,15 +72,17 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-white mb-5">Get in Touch</h4>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start text-gray-400">
-                <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
-                <span>{siteConfig.contact.address}</span>
-              </li>
+              {locations.map((location, index) => (
+                <li key={index} className="flex items-start text-gray-400">
+                  <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
+                  <span>{location.trim()}</span>
+                </li>
+              ))}
               {phoneNumbers.map((phone, index) => (
                 <li key={index} className="flex items-center text-gray-400">
                   <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
                   <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors duration-200 hover:underline">
-                    {phone}
+                    {phone.trim()}
                   </a>
                 </li>
               ))}
