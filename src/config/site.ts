@@ -4,8 +4,8 @@ export const siteConfig = {
   name: "GetUrBizOnline",
   title: "YourBusinessOnline - Web Design, SEO & Google Visibility Experts",
   description: "Partner with us to build a high-performing website that attracts customers through Google and drives business growth. Expert web design and SEO services.",
-  url: "https://yourbusinessonline.dev", // Replace with your actual domain for production
-  ogImage: "https://yourbusinessonline.dev/og-image.png", // Replace with your actual OG image URL
+  url: "https://geturbiz.online", // Updated to be a valid URL. Replace with your actual domain for production.
+  ogImage: "https://geturbiz.online/og-image.png", // Replace with your actual OG image URL
 
   links: {
     twitter: "#", // Replace with actual Twitter link
@@ -16,7 +16,7 @@ export const siteConfig = {
     address: "Toronto, ON Canada & India",
     phone: "+1 416-857-8831 & +91 92594-18994",
     email: "sidrawal1200@gmail.com", // General contact email
-    jurisdiction: "Canada & India", // Updated jurisdiction
+    jurisdiction: "Canada & India",
   },
   formSubmit: {
     email: "sidrawal1200@gmail.com", // Email for FormSubmit.co

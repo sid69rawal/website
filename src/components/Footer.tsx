@@ -21,6 +21,8 @@ const Footer = () => {
     { href: siteConfig.legal.termsOfService, label: "Terms of Service" },
   ];
 
+  const phoneNumbers = siteConfig.contact.phone.split(' & ');
+
   return (
     <footer className="py-16 bg-gray-800 dark:bg-gray-900 text-gray-300 theme-transition">
       <div className="container mx-auto px-6">
@@ -73,12 +75,14 @@ const Footer = () => {
                 <MapPin className="h-4 w-4 mr-3 mt-0.5 shrink-0 text-primary" />
                 <span>{siteConfig.contact.address}</span>
               </li>
-              <li className="flex items-center text-gray-400">
-                <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
-                <a href={`tel:${siteConfig.contact.phone}`} className="hover:text-primary transition-colors duration-200 hover:underline">
-                  {siteConfig.contact.phone}
-                </a>
-              </li>
+              {phoneNumbers.map((phone, index) => (
+                <li key={index} className="flex items-center text-gray-400">
+                  <Phone className="h-4 w-4 mr-3 shrink-0 text-primary" />
+                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors duration-200 hover:underline">
+                    {phone}
+                  </a>
+                </li>
+              ))}
               <li className="flex items-center text-gray-400">
                 <Mail className="h-4 w-4 mr-3 shrink-0 text-primary" />
                 <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-primary transition-colors duration-200 hover:underline">
@@ -120,3 +124,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
