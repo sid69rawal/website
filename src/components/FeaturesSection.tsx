@@ -154,7 +154,7 @@ const FeaturesSection = () => {
       <div className="container mx-auto px-6">
         <motion.div 
           ref={sectionRef}
-          className="text-center mb-20"
+          className="text-center mb-16 md:mb-20"
           variants={slideUpVariants}
           initial="hidden"
           animate={controls}
@@ -165,9 +165,9 @@ const FeaturesSection = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
           <motion.div
-            className="sticky top-24"
+            className="w-full lg:w-1/2 lg:sticky lg:top-24 mb-10 lg:mb-0" // Modified for responsive sticky and stacking
             variants={slideUpVariants}
             initial="hidden"
             animate={controls}
@@ -186,7 +186,7 @@ const FeaturesSection = () => {
             </div>
           </motion.div>
           
-          <div className="space-y-12 lg:space-y-16">
+          <div className="w-full lg:w-1/2 space-y-10 md:space-y-12 lg:space-y-16">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
@@ -199,17 +199,17 @@ const FeaturesSection = () => {
                   animate={controls}
                   transition={{ delay: 0.1 * index, duration: 0.5 }}
                 >
-                  <div className="flex items-start space-x-5">
+                  <div className="flex items-start space-x-4 md:space-x-5">
                     <div className={cn(
-                      "w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center shrink-0 shadow-md", 
+                      "w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center shrink-0 shadow-md", 
                       feature.iconBgColor, 
                       feature.iconColor
                     )}>
-                      <IconComponent className="text-2xl md:text-3xl w-7 h-7" />
+                      <IconComponent className="text-xl md:text-3xl w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div>
-                      <h3 className="text-xl md:text-2xl font-semibold mb-2 text-foreground">{feature.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h3 className="text-lg md:text-2xl font-semibold mb-1.5 md:mb-2 text-foreground">{feature.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                         {feature.description}
                       </p>
                     </div>
